@@ -4,36 +4,32 @@ game.trace={}
 game.bullet={}
 game.frag={}
 game.spark={}
-
-game.bg=require "logic/bg_quad"
+game.msg=require "scr/game/message"
+game.bg=require "scr/map/bg_quad"
 
 game.userSide="blue"
-
 game.cursorAura=0
 game.ctrlMode="turn" --move or turn 
 game.teamCtrl=false
 game.ctrlGroup=nil
 game.wheelMove=0
 game.ctrlTrace={}
-game.ctrl=require "logic/ctrlMode"
-game.groupCtrl= require "logic/groupCtrl"
+game.ctrl=require "scr/game/ctrlMode"
+game.groupCtrl= require "scr/game/groupCtrl"
 game.ctrl.mode="fleet"
 
----game.npc= require "logic/npc"
---require "level_1"
-game.miniMap= require "logic/miniMap"
-
-game.ui= require "logic/gameUI"
+game.ui= require "scr/ui/gameUI"
 game.mum={}--母舰
 
 game.isLocating=false
 
 game.selectedTarget=nil
-game.cmdCtrl=require "logic/cmd"
+game.cmdCtrl=require "scr/game/cmd"
 game.locatedTarget=nil
 
 --game.rule=require "tasks/protectTheMotherShip"
-game.rule=require "tasks/designer"
+--game.rule=require "tasks/designer"
+game.rule=require "tasks/encounter"
 ---game.debug=true
 game.money=0
 game.rock={}
@@ -44,7 +40,7 @@ game.showFog=true
 game.showAll=false
 game.groupStore={}
 
-game.event=require "logic/event"
+game.event=require "scr/game/event"
 game.time=0
 for i=1,game.fogRate do  --二维数组,每次更新先清空 
 	game.fog[i]={}
@@ -55,24 +51,6 @@ end
 
 function game:new()
 	game.rule:new()
-	--[[
-	game.event:new(
-		nil,
-		"always",
-		function(self,arg)
-			return game.time>3
-		end,
-		nil,
-		function(self,arg)
-			game.pause=true
-			if game.time>5 then
-				game.pause=false
-				self.isOver=true
-			end
-		end,
-		nil,
-		false
-	)]]
 end
 
 
@@ -82,20 +60,20 @@ end
 
 function game:newBullet(parent,type,x,y,rot,level,speed,type)
 	if type=="impulse" then
-		table.insert(self.bullet, Impulse(parent,level,x,y,rot,speed))
+		table.insert(self.bullet, res.weaponClass.impulse(parent,level,x,y,rot,speed))
 	elseif type=="laser" then
-		table.insert(self.bullet, Laser(parent,level,x,y,rot))
+		table.insert(self.bullet, res.weaponClass.laser(parent,level,x,y,rot))
 	elseif type=="missile" then
-		table.insert(self.bullet, Missile(parent,level,x,y,rot))
+		table.insert(self.bullet, res.weaponClass.missile(parent,level,x,y,rot))
 	elseif type=="tesla" then
-		table.insert(self.bullet, Tesla(parent,level,x,y))
+		table.insert(self.bullet, res.weaponClass.tesla(parent,level,x,y))
 	elseif type=="proton" then
-		table.insert(self.bullet, Proton(parent,level,x,y,rot))
+		table.insert(self.bullet, res.weaponClass.proton(parent,level,x,y,rot))
 	end
 end
 
 function game:newSpark(x,y)
-	table.insert(self.spark, Spark(x,y))
+	table.insert(self.spark, res.otherClass.spark(x,y))
 end
 
 function game:pay(who,what,amount)
@@ -126,13 +104,13 @@ function game:bg2scr(x,y)
 end
 
 function game:bg2mini(x,y)
-	return x*game.miniMap.w/(game.bg.limit.r-game.bg.limit.l)+game.miniMap.x, 
-		y*game.miniMap.h/(game.bg.limit.r-game.bg.limit.l)+game.miniMap.y
+	return x*game.ui.miniMap.w/(game.bg.limit.r-game.bg.limit.l)+game.ui.miniMap.x, 
+		y*game.ui.miniMap.h/(game.bg.limit.r-game.bg.limit.l)+game.ui.miniMap.y
 end
 
 function game:mini2bg(x,y)
-	return (x-game.miniMap.x)*(game.bg.limit.r-game.bg.limit.l)/game.miniMap.w,
-	(y-game.miniMap.y)*(game.bg.limit.b-game.bg.limit.t)/game.miniMap.h
+	return (x-game.ui.miniMap.x)*(game.bg.limit.r-game.bg.limit.l)/game.ui.miniMap.w,
+	(y-game.ui.miniMap.y)*(game.bg.limit.b-game.bg.limit.t)/game.ui.miniMap.h
 end
 
 
@@ -167,7 +145,7 @@ function game:update(dt)
 	game.bx,game.by= game:scr2bg(game.mx,game.my)
 	if game.pause then return end
 	game.cmdCtrl:call(game.cmd)
-	self.miniMap:update()
+	
 	self.ctrl:update()
 
 	self.groupCtrl:update()
@@ -214,11 +192,23 @@ function game:draw()
 	end)
 
 	self.ctrl:draw()
-	love.graphics.setLineWidth(1)
-	loveframes.draw()
+	
+	self.msg:draw()
 	self.ui:draw()
-	self.miniMap:draw()
 	self:drawCursor()	
+	if self.indicator then
+		self.indicatorAura=self.indicatorAura or 50
+		local x,y=game:bg2scr(unpack(self.indicator))
+		if self.indicatorAura>0 then
+			love.graphics.setColor(0,255,0)
+			love.graphics.getLineWidth(1)
+			love.graphics.circle("line", x,y,self.indicatorAura)
+			self.indicatorAura=self.indicatorAura-3
+		else
+			self.indicatorAura=50
+		end
+	end
+	
 end
 
 
@@ -356,7 +346,7 @@ end
 
 
 function game:mousepressed(key)
-	
+	game.msg.mousepressed(key)
 	if key=="wu" then
 		self.wheelMove=1
 	elseif key=="wd" then
@@ -365,6 +355,9 @@ function game:mousepressed(key)
 end
 
 function game:keypressed(key)
+	
+	game.msg.keypressed(key)
+	if game.keyLock then return end
 	if key=="escape" then
 		game.cmd=nil
 		game.isLocating=false
@@ -383,6 +376,10 @@ function game:keypressed(key)
 		game.cmd="form"
 	end
 
+	if key==" "  then
+		game:getFocus()
+	end
+
 	if key=="f" then
 		game.fullscreen=not game.fullscreen
 		if game.fullscreen then 
@@ -395,7 +392,7 @@ function game:keypressed(key)
 		scaleY=resolution[2]/designResolution[2]
 		w=resolution[1]
 		h=resolution[2]
-		game.miniMap:reSize()
+		game.ui.miniMap:reSize()
 		game.ui.uiReset()
 	end
 
@@ -506,7 +503,7 @@ end
 
 
 function game:frameDraw()
-	
+	love.graphics.setLineWidth(1)
 	for i,v in ipairs(self.ship) do
 		if v.isSelected then
 			love.graphics.setColor(0,255,0)
@@ -514,28 +511,32 @@ function game:frameDraw()
 			love.graphics.line(v.x+v.r,v.y+v.r*0.8,v.x+v.r,v.y+v.r,v.x+v.r*0.8,v.y+v.r)
 			love.graphics.line(v.x-v.r,v.y+v.r*0.8,v.x-v.r,v.y+v.r,v.x-v.r*0.8,v.y+v.r)
 			love.graphics.line(v.x+v.r*0.8,v.y-v.r,v.x+v.r,v.y-v.r,v.x+v.r,v.y-v.r*0.8)
-			local top=v.y-v.r-6*v.size
-			love.graphics.setLineWidth(1)
+			
+			local top=v.y-v.r-5*v.size
+			
 
-			local hp=v.hp/v.hpMax
-			love.graphics.setColor(0,255,0)
-			love.graphics.rectangle("fill",v.x-v.r,top,2*v.r*hp,v.size)
-			top=top+v.size
-
+			local energy=v.energy/v.energyMax
 			local armor=v.armor/v.armorMax
-			love.graphics.setColor(color.yellow)
-			love.graphics.rectangle("fill",v.x-v.r,top,2*v.r*armor,v.size)
-			top=top+v.size
 
-			local shield=v.shield/v.shieldMax
-			love.graphics.setColor(color.purple)
-			love.graphics.rectangle("fill",v.x-v.r,top,2*v.r*shield,v.size)
-			top=top+v.size
 
-			love.graphics.setColor(color.black)
-			love.graphics.line(v.x-v.r,v.y-v.r-6*v.size,v.x-v.r,top)
-			love.graphics.line(v.x+v.r,v.y-v.r-6*v.size,v.x+v.r,top)
+			love.graphics.setColor(0,255,0)
+			love.graphics.rectangle("fill",v.x-v.r,top,2*v.r*armor,v.size*2)
+			local boxCount=math.floor(v.armorMax/50)
+			local boxLenth=2*v.r/boxCount
+			for i=1,boxCount do
+				love.graphics.setColor(0,0,0)
+				love.graphics.rectangle("line", v.x-v.r+(i-1)*boxLenth, top, boxLenth,v.size*2)
+			end
 
+			top=top+v.size*2
+			love.graphics.setColor(255,0,255)
+			love.graphics.rectangle("fill",v.x-v.r,top,2*v.r*energy,v.size*2)
+			local boxCount=math.floor(v.energyMax/50)
+			local boxLenth=2*v.r/boxCount
+			for i=1,boxCount do
+				love.graphics.setColor(0,0,0)
+				love.graphics.rectangle("line", v.x-v.r+(i-1)*boxLenth, top, boxLenth,v.size*2)
+			end
 		end
 	end
 	

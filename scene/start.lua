@@ -3,7 +3,7 @@ local scene = Gamestate.new()
 
 
 function scene:init()
-	require "logic/game"
+	require "scr/game/game"
 	game:new()
 end
 

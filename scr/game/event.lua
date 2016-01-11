@@ -1,11 +1,10 @@
 local event={}
 event.always={} --check everyframe
-event.onSelect={} --
 event.onHit={}
 event.onGotHit={}
-event.onClick={}
 event.onKill={}
 event.onDestroy={}
+event.onEvent={}
 
 
 
@@ -19,15 +18,18 @@ function event:new(obj,type,cond,cond_arg,act,act_arg,isOver) --参数引发物�
 		isOver=isOver
 	}
 	table.insert(self[type],new)
+	return new
 end
 
 
-function event:check(eventType)
-	for id=#self[eventType],1 do
+function event:check(eventType,arg)
+	for id=#self[eventType],1,-1 do
 		local ev=self[eventType][id]
-		if ev and ev:cond(ev.cond_arg) then
+		if eventType=="onEvent" then ev.cond_arg=arg end
+		if ev and ev.cond(ev.cond_arg) then
 			ev:act(ev.act_arg)
 			if ev.isOver then
+				event:check("onEvent",ev)
 				table.remove(self[eventType], id)
 			end
 		end

@@ -110,6 +110,35 @@ res.font_25 = love.graphics.newFont("res/lcd.ttf", 25)
 res.font_20 = love.graphics.newFont("res/lcd.ttf", 20)
 res.font_15 = love.graphics.newFont("res/lcd.ttf", 15)
 res.font_5 = love.graphics.newFont("res/lcd.ttf", 5)
+
+res.shipClass={}
+local dir="obj/ships"
+local files = love.filesystem.getDirectoryItems( dir )
+for k, file in ipairs(files) do
+    local dot=string.find(file, "%.")
+    local name=string.sub(file,1,dot-1)
+    res.shipClass[name]= require (dir.."/"..name)
+end
+
+
+res.weaponClass={}
+local dir="obj/weapons"
+local files = love.filesystem.getDirectoryItems( dir )
+for k, file in ipairs(files) do
+    local dot=string.find(file, "%.")
+    local name=string.sub(file,1,dot-1)
+    res.weaponClass[name]= require (dir.."/"..name)
+end
+
+res.otherClass={}
+local dir="obj/others"
+local files = love.filesystem.getDirectoryItems( dir )
+for k, file in ipairs(files) do
+    local dot=string.find(file, "%.")
+    local name=string.sub(file,1,dot-1)
+    res.otherClass[name]= require (dir.."/"..name)
+end
+--[[
 Ship_base = require "obj.ship"
 Bullet = require "obj.bullet"
 Frag = require "obj.frag"
@@ -129,7 +158,7 @@ Mum= require "obj.motherShip"
 Miner = require "obj.miner"
 Rnd = require "obj.rnd"
 
-Rock= require "obj.rock"
+Rock= require "obj.rock"]]
 local imageData = love.image.newImageData("res/icon.png")
 local function pixelFunction(x, y, r, g, b, a)
     return r, g, b,r

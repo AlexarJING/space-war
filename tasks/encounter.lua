@@ -6,23 +6,22 @@ local wave=0
 function task:new()
 	self.unitLimit=30
 	for i=1,200 do
-		Rock(love.math.random(1,5000),love.math.random(1,5000))
+		res.otherClass.rock(love.math.random(1,5000),love.math.random(1,5000))
 	end
-	game.mum[1]=Mum("blue",500,500)
+	game.mum[1]=res.shipClass.motherShip("blue",500,500)
 
 
 	for i=1,5 do 
-		local miner=Miner(game.mum[1],500,500)
+		local miner=res.shipClass.miner(game.mum[1],500,500)
 		game:toDeployment(game.mum[1],miner)
 		miner.state="mine"
 	end	
 	game.bg.cam:lookAt(500,500)
 
-	game.mum[2]=Mum("green",4500,4500)
+	game.mum[2]=res.shipClass.motherShip("green",4500,4500)
 
 	for i=1,5 do 
-		local miner=Miner(game.mum[2],4500,4500)
-		miner.parent=game.mum[2]
+		local miner=res.shipClass.miner(game.mum[2],4500,4500)
 		game:toDeployment(game.mum[2],miner)
 		miner.state="mine"
 	end	

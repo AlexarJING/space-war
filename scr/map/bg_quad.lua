@@ -37,7 +37,7 @@ function bg:update()
 end
 
 function bg:draw()
-	love.graphics.setColor(color.white)
+	love.graphics.setColor(255,255,255)
 	love.graphics.draw(self.texture, self.quad, resolution[1]/2, resolution[2]/2, 0, 
 		self.scale/self.rate, self.scale/self.rate,
 		self.w/2, self.h/2)

@@ -419,7 +419,7 @@ function table.save(tab,name)
 		end
 	end
 	ergodic(tab,0)
-	output=output.."}\n return "..name
+	output=output.."}"
 	return output 
 end
 

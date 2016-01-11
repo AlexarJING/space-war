@@ -3,7 +3,8 @@
 	-- Copyright (c) 2012-2014 Kenny Shields --
 --]]------------------------------------------------
 
-local path = ...
+local path=...
+if string.find(path, "init") then path=string.sub(path,1,-6) end
 require(path .. ".libraries.util")
 require(path .. ".libraries.skins")
 require(path .. ".libraries.templates")
@@ -41,9 +42,9 @@ loveframes.hover = false
 loveframes.input_cursor_set = false
 loveframes.prevcursor = nil
 if loveframes.fontPath then
-	loveframes.basicfont = love.graphics.newFont(loveframes.fontPath,12)
+	loveframes.basicfont = love.graphics.newFont(loveframes.fontPath,17)
 	loveframes.basicfontsmall = love.graphics.newFont(loveframes.fontPath,10)
-	loveframes.basicfontbig = love.graphics.newFont(loveframes.fontPath,15)
+	loveframes.basicfontbig = love.graphics.newFont(loveframes.fontPath,25)
 else
 	loveframes.basicfont = love.graphics.newFont(12)
 	loveframes.basicfontsmall = love.graphics.newFont(10)

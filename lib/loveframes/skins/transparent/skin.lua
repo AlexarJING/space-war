@@ -78,22 +78,22 @@ skin.controls.tab_text_hover_color                  = {255, 255, 255, 255}
 skin.controls.tab_text_font                         = smallfont
 
 -- multichoice
-skin.controls.multichoice_body_color                = {240, 240, 240, 255}
-skin.controls.multichoice_text_color                = {0, 0, 0, 255}
+skin.controls.multichoice_body_color                = {50, 50, 50, 50}
+skin.controls.multichoice_text_color                = {0, 255, 0, 255}
 skin.controls.multichoice_text_font                 = smallfont
 
 -- multichoicelist
-skin.controls.multichoicelist_body_color            = {240, 240, 240, 200}
+skin.controls.multichoicelist_body_color            = {50, 50, 50, 50}
 
 -- multichoicerow
-skin.controls.multichoicerow_body_nohover_color     = {240, 240, 240, 255}
-skin.controls.multichoicerow_body_hover_color       = {51, 204, 255, 255}
-skin.controls.multichoicerow_text_nohover_color     = {0, 0, 0, 150}
-skin.controls.multichoicerow_text_hover_color       = {255, 255, 255, 255}
+skin.controls.multichoicerow_body_nohover_color     = {240, 240, 240, 50}
+skin.controls.multichoicerow_body_hover_color       = {51, 50, 255, 55}
+skin.controls.multichoicerow_text_nohover_color     = {0, 255, 0, 150}
+skin.controls.multichoicerow_text_hover_color       = {0, 255, 0, 255}
 skin.controls.multichoicerow_text_font              = smallfont
 
 -- tooltip
-skin.controls.tooltip_body_color                    = {255, 255, 255, 255}
+skin.controls.tooltip_body_color                    = {50, 50, 50, 255}
 
 -- textinput
 skin.controls.textinput_body_color                  = {0, 0, 0, 255}
@@ -108,9 +108,9 @@ skin.controls.slider_bar_outline_color              = {50, 50, 50, 255}
 
 -- checkbox
 skin.controls.checkbox_body_color                   = {0, 0, 0, 50}
-skin.controls.checkbox_check_color                  = {128, 204, 255, 255}
+skin.controls.checkbox_check_color                  = {255,0,0,255}
 skin.controls.checkbox_text_font                    = smallfont
-
+skin.controls.checkbox_text_default_color			= {0,255,0,255}
 -- radiobutton
 skin.controls.radiobutton_body_color                = {255, 255, 255, 255}
 skin.controls.radiobutton_check_color               = {128, 204, 255, 255}
@@ -149,7 +149,7 @@ skin.controls.linenumberspanel_text_color           = {170, 170, 170, 255}
 skin.controls.linenumberspanel_body_color			= {235, 235, 235, 255}
 
 -- grid
-skin.controls.grid_body_color                       = {0,0,0,200}
+skin.controls.grid_body_color                       = {0,0,0,0}
 
 -- form
 skin.controls.form_text_color                       = {0, 0, 0, 255}

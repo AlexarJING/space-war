@@ -491,6 +491,10 @@ function newobject:GetText()
 	return self.text
 	
 end
+function newobject:GetFullText()
+	return self.original
+end
+
 
 --[[---------------------------------------------------------
 	- func: GetFormattedText()

@@ -22,45 +22,55 @@ function ship:initialize(parent,x,y,rot,mod)
 	self.quad = res.ships.green[80]
 	self.level=1
 	self.size=3
-	self.r=8*self.size
+
 	
-	self.speedRush=12
 	self.speedMax=8
 	self.speedAcc=0.1
 	self.groupIndex=1
 
+	self.isMum=false
 	self.isAiCtrl=false
 	self.isSelected=false
 	self.visualRange=3
 	self.disable=false
 	self.lockTarget=nil
 
-	self.fireSys={
-		{posX=5*self.size,posY=-3*self.size,rot=0,type="impulse",level=1,cd=100,heat=0},
-		{posX=5*self.size,posY= 4*self.size,rot=Pi,type="impulse",level=1,cd=100,heat=0}
-	}
-
-	self.engineSys={
-		{posX=-9*self.size,posY=-3*self.size,anim=res.engineFire[1]()},
-		{posX=-9*self.size,posY=-1*self.size,anim=res.engineFire[1]()},
-		{posX=-9*self.size,posY= 2*self.size,anim=res.engineFire[1]()},
-		{posX=-9*self.size,posY= 4*self.size,anim=res.engineFire[1]()}
-	}
-
+	self.queue={}
+	self.engineAni={}
 	self.abilities={}
-	self:getCanvas()
-
 	self.destroyCallback=function() end
 	self.hitCallBack=function() end
 end
 
+function ship:setParam(param)
+	local keys={"name","isMum","energyMax","armorMax","skin","size","speedMax","speedAcc","visualRange","fireRange","fireSys","engineSys"}
+	for i,v in ipairs(keys) do
+		self[v]=param[v]
+	end
+end
+
+function ship:getParam()
+	local param={}
+	local keys={"name","isMum","energyMax","armorMax","skin","size","speedMax","speedAcc","visualRange","fireRange","fireSys","engineSys"}
+	for i,v in ipairs(keys) do
+		param[v]=self[v]
+	end
+	return param
+end
+
+
+
 function ship:reset()
-	self.hp=self.hpMax
-	self.shield=self.shieldMax
+	self.energy=self.energyMax
 	self.armor=self.armorMax
 	self.quad = res.ships[self.side][self.skin] 
 	self.icon = self.quad
 	self.r=8*self.size
+	self.engineAni={}
+	for i,v in ipairs(self.engineSys) do
+		table.insert(self.engineAni, res.engineFire[v.anim]())
+	end
+	self:getCanvas()
 end
 
 function ship:moveTo(x,y)
@@ -99,6 +109,7 @@ function ship:fire()
 		return
 	end
 	for i,v in ipairs(self.fireSys) do
+		v.heat=v.heat or 0
 		v.heat=v.heat-1
 		if v.heat<0 then
 			v.heat=v.cd
@@ -135,29 +146,30 @@ end
 
 function ship:getDamage(from,damageType,damage)
 	if damageType=="physic" then --物理
-		if self.armor>=damage then
-			self.armor=self.armor-damage
+		if self.energy>=damage then
+			self.energy=self.energy-damage
 		else
-			self.hp=self.hp-damage+self.armor
-			self.armor=0
+			self.armor=self.armor-(damage-self.energy)*0.5
+			self.energy=0
 		end
 	elseif damageType=="energy" then --能量
-		if self.shield>=damage then
-			self.shield=self.shield-damage
+		if self.energy>=damage*0.5 then
+			self.energy=self.energy-damage*0.5
 		else
-			self.hp=self.hp-damage+self.shield
-			self.shield=0
+			self.armor=self.armor-(damage*0.5-self.energy)*2
+			self.energy=0
 		end
 	end
-	if self.hp<=0 then
+	if self.armor<=0 then
+		game.event:check("onKill",from,self)
 		self:destroy()
 	end
-
+	game.event:check("onGotHit",from,self)
 	from.hitCallBack(from,self)
 end
 
 function ship:destroy()
-	local frag=Frag:new(self.x,self.y,self.rot,self.canvas)
+	local frag=res.otherClass.frag:new(self.x,self.y,self.rot,self.canvas)
 	table.insert(game.frag, frag)
 	self.dead=true
 	self.target=nil
@@ -167,6 +179,7 @@ function ship:destroy()
 	if self.group then
 		table.removeItem(self.group, self)
 	end
+	event:check("onDestroy",self)
 	self.destroyCallback(self)
 end
 
@@ -186,10 +199,10 @@ function ship:collision()
 	for i,v in ipairs(game.ship) do
 		if v.side~=self.side and game:collision(self.x,self.y,v.x,v.y,(self.size+v.size)*8) then
 			local damage
-			if v.hp+v.armor<self.hp+self.armor then
-				damage=v.hp+v.armor
+			if v.energy+v.armor<self.energy+self.armor then
+				damage=v.energy+v.armor
 			else
-				damage=self.hp+self.armor
+				damage=self.energy+self.armor
 			end
 			self:getDamage(v,"physic",damage)
 			v:getDamage(self,"physic",damage)
@@ -250,15 +263,15 @@ function ship:update(dt)
 	end
 	
 	for i,v in ipairs(self.engineSys) do
-		v.anim:update(dt)
+		self.engineAni[i]:update(dt)
 		if self.dx then
-			v.anim.maxFrame=4
+			self.engineAni[i].maxFrame=4
 		else
-			v.anim.maxFrame=2
+			self.engineAni[i].maxFrame=2
 		end
 	end
 
-	if self.queue then
+	if self.queue and #self.queue~=0 then
 		self:queueUpdate(dt)
 	end
 end
@@ -283,7 +296,7 @@ function ship:draw()
 
 	for i,v in ipairs(self.engineSys) do
 		local offx,offy=math.axisRot(v.posX*self.size,v.posY*self.size,self.rot)
-		love.graphics.draw(sheet,v.anim.frame, self.x+offx, self.y+offy, self.rot+v.rot, self.size, self.size, 0, 4)
+		love.graphics.draw(sheet,self.engineAni[i].frame, self.x+offx, self.y+offy, self.rot+v.rot, self.size, self.size, 0, 4)
 	end
 	
 	if game.debug and self.group==game.ctrlGroup then

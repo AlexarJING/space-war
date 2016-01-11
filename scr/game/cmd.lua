@@ -1,8 +1,12 @@
 local cmd={}
 
-function cmd:call(what) --每个循环都会来到这里，并根据cmd内容进入相应程序
+function cmd:call(what,arg) --每个循环都会来到这里，并根据cmd内容进入相应程序
 	if type(cmd[what])=="function" then
-		cmd[what]()
+		if arg then
+			cmd[what](unpack(arg))
+		else
+			cmd[what]()
+		end
 	end
 end
 
@@ -126,6 +130,12 @@ end
 
 
 function cmd:build()
+
+
+end
+
+
+function cmd:showMessage(message)
 
 
 end

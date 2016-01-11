@@ -238,11 +238,11 @@ function newobject:SetText(text)
 		if not skin then
 			skin = loveframes.config["DEFAULTSKIN"]
 		end
-		local directives = skin.directives
-		if directives then
-			local default_color = directives.checkbox_text_default_color
-			local default_shadowcolor = directives.checkbox_text_default_shadowcolor
-			local default_font = directives.checkbox_text_default_font
+		local controls = skin.controls
+		if controls then
+			local default_color = controls.checkbox_text_default_color
+			local default_shadowcolor = controls.checkbox_text_default_shadowcolor
+			local default_font = controls.checkbox_text_default_font
 			if default_color then
 				textobject.defaultcolor = default_color
 			end

@@ -1,22 +1,16 @@
-local ship=Class("miner",Ship_base) --这个 要改“”中的名称 跟飞机名字对应就行了
+local ship=Class("miner",res.shipClass.base) --这个 要改“”中的名称 跟飞机名字对应就行了
 
 function ship:initialize(side,x,y,rot)
-	Ship_base.initialize(self,side,x,y,rot)  --x,y 不用管
-	self.hpMax=100
-	self.hp=100
-	self.shieldMax=100
-	self.shield=100 --护盾  能够吸收能量武器的攻击  激光 电磁
-	self.armorMax=100
-	self.armor=100 --护甲 吸收实体武器的攻击 脉冲 导弹  质子忽略一切攻击  对撞双方扣减所有防御措施少者的数值 并护盾护甲清零
+
+	self.class.super.initialize(self,side,x,y,rot)  --x,y 不用管
+	self.energyMax=100
+	self.armorMax=100--护甲 吸收实体武器的攻击 脉冲 导弹  质子忽略一切攻击  对撞双方扣减所有防御措施少者的数值 并护盾护甲清零
 
 
 	self.name="miner" --飞船的名字，
-	self.id=90
-	self.quad = res.ships[self.side][self.id] --side是 blue,green,red,yellow,purple中的一种 这里不用改 数字是类型1~19*5 从上到下从左到右顺序
+	self.skin=90 --side是 blue,green,red,yellow,purple中的一种 这里不用改 数字是类型1~19*5 从上到下从左到右顺序
 	self.size=2 --飞机大小 也不用改
-	self.r=8*self.size --不管它
-	
-	self.speedRush=12 -- 对于冲刺型的飞机有用
+
 	self.speedMax=3 --最大速度
 	self.speedAcc=0.3 --每帧加速度
 
@@ -34,8 +28,8 @@ function ship:initialize(side,x,y,rot)
 
 	self.fireSys={
 		{
-			posX=3*self.size,
-			posY=5*self.size,
+			posX=3,
+			posY=5,
 			rot=0,
 			type="tesla",
 			level=1,
@@ -49,16 +43,14 @@ function ship:initialize(side,x,y,rot)
 	--rot 相对飞机正方形的引擎方向 不过注意火焰图片是个正方形 旋转中心在0,4 所以转的时候要注意对齐
 	--anim 火焰动画类型 只改数字 1~4 数字越大火焰越大
 	self.engineSys={
-		{posX=-9*self.size,
+		{posX=-9,
 		posY=0,
 		rot=0,
-		anim=res.engineFire[2]()
+		anim=2
 		}
 	}
 
 	--火焰和引擎 有几个就添加几个{}格式同上，每个用逗号分隔
-	self:getCanvas() --这个不用管
-
 
 	--------------------技能-----------------位置 6,7,8,9是给飞机的
 	self.abilities={
@@ -83,6 +75,8 @@ function ship:initialize(side,x,y,rot)
 			type="active"
 
 		}}
+
+	self:reset()
 end
 function ship:findTarget ()
 	
@@ -159,11 +153,11 @@ function ship:moveToTarget() --如果当前状态是采矿 那么就去采矿
 			self.parent.mineral=self.parent.mineral+3
 			return
 		else
-			Ship_base.moveTo(self,self.parent.x,self.parent.y)
+			self.class.super.moveTo(self,self.parent.x,self.parent.y)
 		end
 	else --如果未得到 则飞向矿直到进入火力
 		if self.inVisualRange and not self.dx and not self.inFireRange  then
-			Ship_base.moveTo(self,self.target.x,self.target.y)
+			self.class.super.moveTo(self,self.target.x,self.target.y)
 			self.target.exploiter=self
 		end
 
@@ -174,7 +168,7 @@ function ship:moveToTarget() --如果当前状态是采矿 那么就去采矿
 end
 
 function ship:moveTo(x,y)
-	Ship_base.moveTo(self,x,y)
+	self.class.super.moveTo(self,x,y)
 	--self.state="battle"
 	if self.target then 
 		self.target.exploiter=nil
@@ -190,13 +184,13 @@ end
 
 
 function ship:update(dt)
-	Ship_base.update(self,dt)
+	self.class.super.update(self,dt)
 	self:moveToTarget()
 	self.rot=self.moveRot
 end
 
 function ship:draw()
-	Ship_base.draw(self)
+	self.class.super.draw(self)
 	if self.mine then
 		self.mine.x=self.x+math.sin(-self.rot+math.pi/2)*(self.r+self.mine.r)
 		self.mine.y=self.y+math.cos(-self.rot+math.pi/2)*(self.r+self.mine.r)

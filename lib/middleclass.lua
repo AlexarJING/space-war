@@ -120,7 +120,6 @@ function Object.static:subclass(name)
   _setDefaultInitializeMethod(subclass, self)
   self.subclasses[subclass] = true
   self:subclassed(subclass)
-
   return subclass
 end
 

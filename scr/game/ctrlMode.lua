@@ -28,31 +28,7 @@ function ctrl:setLocate()
 	end
 end
 
-function ctrl:update()
-	--one time click
-	self.click=false
-	if love.mouse.isDown("l") and not self.lisDown then
-		self.lisDown=true
-		self.click=true
-	elseif not love.mouse.isDown("l") then
-		self.lisDown=false
-	end
-
-	if love.keyboard.isDown(" ")  then
-		if not game.focus then
-			game:getFocus()
-		end
-	else		
-		game.focus=nil
-	end
-
-	--esc
-
-	if ctrl:setLocate() then return end
-	if  ctrl:inUi() then return end
-	
-
-	if self[self.mode] then self[self.mode]() end
+function ctrl:scale()
 	if game.wheelMove==1 then
 		game.bg.cam.scale=game.bg.cam.scale+0.05
 		game.bg.scale=(game.bg.cam.scale-1)/5+1
@@ -65,6 +41,30 @@ function ctrl:update()
 		if game.bg.scale<0.9 then game.bg.scale=0.9 end
 	end
 	game.wheelMove=0
+end
+
+function ctrl:clickCtrl()
+	self.click=false
+	if love.mouse.isDown("l") and not self.lisDown then
+		self.lisDown=true
+		self.click=true
+		game.cursorAura=20
+		game.cPosX,game.cPosY=game.mx,game.my
+	elseif not love.mouse.isDown("l") then
+		self.lisDown=false
+	end
+
+end
+
+function ctrl:update()
+
+	if game.mouseLock then return end
+	if ctrl:setLocate() then return end
+	if  ctrl:inUi() then return end
+	self:clickCtrl()	
+	self:scale()
+	if self[self.mode] then self[self.mode]() end
+	
 
 end
 
@@ -140,13 +140,16 @@ function ctrl:camCtrl()
 	self.camSpeed=self.camSpeed+0.5
 	if game.mx==0 and game.bg.cam.x>game.bg.limit.l-100 then
 		game.bg.cam:move(-self.camSpeed,0)
+		game.focus=nil
 	elseif game.mx==love.graphics.getWidth()-1 and game.bg.cam.x<game.bg.limit.r+100 then
 		game.bg.cam:move(self.camSpeed,0)
+		game.focus=nil
 	elseif game.my==0 and game.bg.cam.y>game.bg.limit.t-100 then
 		game.bg.cam:move(0,-self.camSpeed)
-
+		game.focus=nil
 	elseif game.my==love.graphics.getHeight()-1 and game.bg.cam.y<game.bg.limit.b+100 then
 		game.bg.cam:move(0,self.camSpeed)
+		game.focus=nil
 	else
 		self.camSpeed=0
 	end

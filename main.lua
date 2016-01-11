@@ -1,11 +1,11 @@
-if arg[2]=="-debug" then require('mobdebug').start() end
+--if arg[2]=="-debug" then require('mobdebug').start() end
 path=arg[1]
 require "lib/util"
 Tween=require "lib/tween"
 Class=require "lib/middleclass"
 Gamestate = require "lib/gamestate"
 delay= require "lib/delay"
-loveframes=require "lib.loveframes"
+loveframes=require ("lib.loveframes/init")
 Animation = require "lib.animation"
 
 resolution={ love.graphics.getDimensions() }
@@ -14,10 +14,11 @@ scaleX=resolution[1]/designResolution[1]
 scaleY=resolution[2]/designResolution[2]
 w=resolution[1]
 h=resolution[2]
-require "logic/loadRes"
+require "scr/loadRes"
 --loveframes.config["DEBUG"]=true
 love.mouse.setVisible(false)
-love.mouse.setGrabbed( true )
+--love.mouse.setRelativeMode( true )
+--love.mouse.setGrabbed( true )
 function love.load()
   state={}
   state.start=require("scene/start")
@@ -50,11 +51,11 @@ end
 
 function love.textinput(text)
     loveframes.textinput(text)
+    game.msg.textinput(text)
 end
 
 function love.mousereleased(x, y, button)
     loveframes.mousereleased(x, y, button)
-    game.cursorAura=20
     game.cPosX,game.cPosY=game.mx,game.my
 end
 

@@ -6,6 +6,7 @@ menu.single={
 	["1"]={
 		quad={12,11},
 		text="move",
+		text2="move: rightclick to the map to move, will ignore the enenies on the way.",
 		func=function(obj) 
 			game.cmd="move"
 		end,

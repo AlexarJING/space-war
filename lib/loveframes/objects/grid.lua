@@ -82,12 +82,22 @@ function newobject:update(dt)
 			onsizechanged(self)
 		end
 	end
-	
+
 	for k, v in ipairs(children) do
-		local x = 0 + ((cw * v.gridcolumn) - cw ) + (cw/2 - v.width/2)
-		local y = 0 + ((ch * v.gridrow) - ch) + (ch/2 - v.height/2)
-		v.staticx = x
-		v.staticy = y
+		
+		if not self.leftRange then
+			local x = 0 + ((cw * v.gridcolumn) - cw ) + (cw/2 - v.width/2)
+			local y = 0 + ((ch * v.gridrow) - ch) + (ch/2 - v.height/2)
+			v.staticx = x
+			v.staticy = y
+		
+		else
+			local x = 0 + ((cw * v.gridcolumn) - cw ) +self.leftRange
+			local y = 0 + ((ch * v.gridrow) - ch) + (ch/2 - v.height/2)
+			v.staticx = x
+			v.staticy = y
+		end
+
 		v:update(dt)
 	end
 	
@@ -217,7 +227,7 @@ function newobject:AddItem(object, row, column)
 	object.parent = self
 	object.gridrow = row
 	object.gridcolumn = column
-	
+	object:SetState(self.state)
 	if itemautosize then
 		local cw = self.cellwidth + (self.cellpadding * 2)
 		local ch = self.cellheight + (self.cellpadding * 2)

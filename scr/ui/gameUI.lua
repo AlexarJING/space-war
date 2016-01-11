@@ -1,4 +1,5 @@
 local uiCtrl={}
+uiCtrl.miniMap=require "scr/ui/miniMap"
 function uiCtrl.uiReset()
 	
 	uiCtrl.ui.topInfo:SetSize(w,0.05*h):SetPos(0,0)
@@ -95,17 +96,179 @@ for i=1,9 do
 		:SetColor(50,255,50)
 		:SetOptions(0,0,0, 0.08*h/32,0.08*h/32)
 	uiCtrl.ui.ctrlGrid:AddItem(btn, math.ceil(i/3), i%3+1)
-
+	btn.tip = loveframes.Create("tooltip")
+		:SetObject(btn)
+		:SetText("")
 end
+-----------------------mission object----------------------------
+	uiCtrl.ui.object=loveframes.Create("frame")
+				:SetPos(5,h/18)
+				:SetSize(350,150)
+				:SetName(" Mission Object")
+
+	uiCtrl.ui.objectList=loveframes.Create("list", uiCtrl.ui.object)
+		:SetPos(0,23)
+		:SetSize(350,127)
+		:SetPadding(2)
+
+	for i=1,5 do
+		local txt=loveframes.Create("text")
+			:SetDefaultColor(0,255,0)
+			:SetText("("..i.."),".."kill all the enemies" )
+		uiCtrl.ui.objectList:AddItem(txt)
+	end
+	uiCtrl.ui.object:SetVisible(false)
+-------------------options----------------------------
+	uiCtrl.ui.optionMenu=loveframes.Create("frame")
+				:SetPos(w/2,150,true)
+				:SetSize(350,500)
+				:SetName("Options Menu")
+				:SetState("opt")
+				:ShowCloseButton(false)
+	uiCtrl.ui.optionGrid=loveframes.Create("grid",uiCtrl.ui.optionMenu)
+		:SetPos(0,35)
+		:SetRows(8)
+		:SetColumns(2)
+		:SetCellWidth(350/2.2)
+		:SetCellHeight(50)
+		:SetCellPadding(2)
+		:SetItemAutoSize(false)
+		uiCtrl.ui.optionGrid.leftRange=15
+
+	local txt=loveframes.Create("text")
+		:SetText({ {color = {0,255,0},font =res.font_20}, "resolution"})	
+	uiCtrl.ui.optionGrid:AddItem(txt,1,1)
+	local multichoice = loveframes.Create("multichoice")
+	multichoice:SetSize(350/2.5,500/15)
+	multichoice:AddChoice("800x600")
+	multichoice:AddChoice("1280x760")
+	multichoice:SetChoice("800x600")
+	uiCtrl.ui.optionGrid:AddItem(multichoice,1,2)
+
+	local checkbox = loveframes.Create("checkbox")
+	checkbox:SetText("fullscreen")
+	uiCtrl.ui.optionGrid:AddItem(checkbox,2,1)
+
+	local checkbox = loveframes.Create("checkbox")
+	checkbox:SetText("Auto Save the game every minuts")
+	uiCtrl.ui.optionGrid:AddItem(checkbox,3,1)
 
 
-local text={"system","options","save","load"}
+	local checkbox = loveframes.Create("checkbox")
+	checkbox:SetText("Limit mouse to the window")
+	uiCtrl.ui.optionGrid:AddItem(checkbox,4,1)
+
+	local checkbox = loveframes.Create("checkbox")
+	checkbox:SetText("Mute")
+	uiCtrl.ui.optionGrid:AddItem(checkbox,2,2)
+
+
+	local txt=loveframes.Create("text")
+		:SetText({ {color = {0,255,0},font =res.font_20}, "system volume"})	
+	uiCtrl.ui.optionGrid:AddItem(txt,5,1)
+	local slider = loveframes.Create("slider")
+	slider:SetWidth(120)
+	slider:SetMinMax(0, 100)
+	slider:SetValue(100)
+	uiCtrl.ui.optionGrid:AddItem(slider,5,2)
+
+	local txt=loveframes.Create("text")
+		:SetText({ {color = {0,255,0},font =res.font_20}, "music volume"})	
+	uiCtrl.ui.optionGrid:AddItem(txt,6,1)
+	local slider = loveframes.Create("slider")
+	slider:SetWidth(120)
+	slider:SetMinMax(0, 100)
+	slider:SetValue(100)
+	uiCtrl.ui.optionGrid:AddItem(slider,6,2)
+
+
+	local txt=loveframes.Create("text")
+		:SetText({ {color = {0,255,0},font =res.font_20}, "effect volume"})	
+	uiCtrl.ui.optionGrid:AddItem(txt,7,1)
+	local slider = loveframes.Create("slider")
+	slider:SetWidth(120)
+	slider:SetMinMax(0, 100)
+	slider:SetValue(100)
+	uiCtrl.ui.optionGrid:AddItem(slider,7,2)
+
+	local btn=loveframes.Create("button")
+		:SetSize(150,30)
+		:SetText("default")	
+		btn.OnClick=function() loveframes.SetState("none");uiCtrl.ui.optionMenu:SetVisible(false);game.mouseLock=false end
+	uiCtrl.ui.optionGrid:AddItem(btn,8,1)
+
+	local btn=loveframes.Create("button")
+		:SetSize(150,30)
+		:SetText("save")
+		btn.OnClick=function() loveframes.SetState("none");uiCtrl.ui.optionMenu:SetVisible(false);game.mouseLock=false end	
+	uiCtrl.ui.optionGrid:AddItem(btn,8,2)
+	uiCtrl.ui.optionMenu:SetVisible(false)
+--------------------game menu---------------------------------
+	uiCtrl.ui.gameMenu=loveframes.Create("frame")
+				:SetPos(w/2,150,true)
+				:SetSize(350,450)
+				:SetName("Game Menu")
+				:SetState("menu")
+				:ShowCloseButton(false)
+	uiCtrl.ui.gameList=loveframes.Create("list",uiCtrl.ui.gameMenu)
+		:SetPos(0,25)
+		:SetSize(350,425)
+		:SetPadding(80)
+		:SetSpacing(20)
+		:SetDisplayType("vertical")
+		:EnableHorizontalStacking(true)
+		uiCtrl.ui.gameList.oneline=true
+	local txt=loveframes.Create("text")
+		:SetSize(180,30)
+		:SetText({ {color = {0,255,0},font =res.font_20}, "        game paused"})	
+	uiCtrl.ui.gameList:AddItem(txt)
+
+	local btn=loveframes.Create("button")
+		:SetSize(180,30)
+		:SetText("score")	
+	uiCtrl.ui.gameList:AddItem(btn)
+	local btn=loveframes.Create("button")
+		:SetSize(180,30)
+		:SetText("surrender")	
+	uiCtrl.ui.gameList:AddItem(btn)
+	local btn=loveframes.Create("button")
+		:SetSize(180,30)
+		:SetText("save")	
+	uiCtrl.ui.gameList:AddItem(btn)
+	local btn=loveframes.Create("button")
+		:SetSize(180,30)
+		:SetText("load")	
+	uiCtrl.ui.gameList:AddItem(btn)
+	local btn=loveframes.Create("button")
+		:SetSize(180,30)
+		:SetText("exit to desktop")	
+	uiCtrl.ui.gameList:AddItem(btn)
+	local txt=loveframes.Create("text")
+		:SetText({ {color = {0,255,0},font =res.font_20}, "        "})	
+	uiCtrl.ui.gameList:AddItem(txt)
+	local btn=loveframes.Create("button")
+		:SetSize(180,30)
+		:SetText("return to game")
+		btn.OnClick=function() loveframes.SetState("none");uiCtrl.ui.gameMenu:SetVisible(true) ;game.mouseLock=false end	
+	uiCtrl.ui.gameList:AddItem(btn)
+	uiCtrl.ui.gameMenu:SetVisible(false)
+--------------------------------------------
+local text={"object [F1]","options [F2]","game menu[F3]","Alliance [F4]"}
+local func={
+	function()uiCtrl.ui.object:SetVisible(not uiCtrl.ui.object.visible)end,
+	function()uiCtrl.ui.optionMenu:SetVisible(not uiCtrl.ui.optionMenu.visible);loveframes.SetState("opt");game.mouseLock=true end,
+	function()uiCtrl.ui.gameMenu:SetVisible(not uiCtrl.ui.gameMenu.visible);loveframes.SetState("menu");game.mouseLock=true  end,
+	function()uiCtrl.ui.object:SetVisible(not uiCtrl.ui.object.visible) end,
+}
 uiCtrl.ui.menu={}
+
+
 for i=1,4 do
 	uiCtrl.ui.menu[i]=loveframes.Create("button",uiCtrl.ui.topInfo)
 		:SetSize(0.1*w,0.04*h)
 		:SetPos(0.02*w+0.11*w*(i-1),0.005*h)
 		:SetText(text[i])
+	uiCtrl.ui.menu[i].OnClick=func[i]
 end
 
 uiCtrl.ui.resText=loveframes.Create("text",uiCtrl.ui.topInfo)
@@ -203,6 +366,7 @@ uiCtrl.ui.progress:SetVisible(false)
 uiCtrl.uiReset()
 
 function uiCtrl:update(dt)
+	self.miniMap:update()
 	for k,v in pairs(self.ui) do
 		if v.tween then
 			v.tween:update(dt)
@@ -219,7 +383,8 @@ function uiCtrl:update(dt)
 end
 
 function uiCtrl:draw()
-
+	loveframes.draw()
+	self.miniMap:draw()
 end
 
 function uiCtrl:groupSelect()
@@ -349,8 +514,7 @@ function uiCtrl:updateChar()
 	uiCtrl.lastUnit=target
 	local txt=""
 	txt=txt.."N: "..target.name.."\n"
-	txt=txt.."HP: "..target.hp.."/"..target.hpMax.."\n"
-	txt=txt.."Sd: "..target.shield.."/"..target.shieldMax.."\n"
+	txt=txt.."EN: "..target.energy.."/"..target.energyMax.."\n"
 	txt=txt.."Ar: "..target.armor.."/"..target.armorMax.."\n"
 	txt=txt.."Lvl: " .. target.level
 	uiCtrl.ui.targetBref:SetText({ {color = {0,255,0},font=res.font_15}, txt})
@@ -377,7 +541,7 @@ local function newMenu(tab)
 				btn:SetImage(sheet,setting.icon)
 			end
 			btn.OnClick=setting.func
-
+			btn.tip:SetText(setting.text,setting.text2)
 			if setting.arg then
 				btn.callbackArg=setting.arg
 				btn.callbackArg.caster=setting.caster 

@@ -31,7 +31,7 @@ function rock:destroy()
 	self.freeze=true
 	--table.removeItem(game.rock,self)
 	self:getCanvas()
-	local frag=Frag:new(self.x,self.y,self.angle,self.canvas)
+	local frag=res.otherClass.frag:new(self.x,self.y,self.angle,self.canvas)
 	table.insert(game.frag, frag)
 end
 
@@ -39,7 +39,7 @@ function rock:getDamage(from,damageType,damage)
 	if self.dead  then return end
 	self.hp=self.hp-damage
 	if self.hp>0 and self.hp%100==0 then  --每100点伤害则带回一个小石头
-		from.mine=Rock(self.x,self.y,1)
+		from.mine=self.class(self.x,self.y,1)
 		from.mine.freeze=true
 	end
 	if self.hp<=0 then

@@ -344,13 +344,15 @@ function newobject:CalculateSize()
 				end
 				curwidth = curwidth + v.width + spacing
 				if children[k + 1] then
-					if curwidth + children[k + 1].width > maxwidth then
+					if curwidth + children[k + 1].width > maxwidth or self.oneline then
 						curwidth = padding
 						itemheight = itemheight + prevheight + spacing
 						prevheight = 0
 					end
 				else
-					itemheight = itemheight + prevheight + padding
+					if not self.oneline then
+						itemheight = itemheight + prevheight + padding
+					end
 				end
 			end
 			self.itemheight = itemheight
@@ -435,7 +437,7 @@ function newobject:RedoLayout()
 		if display == "vertical" then
 			if horizontalstacking then
 				local curwidth = padding
-				local curheight = padding
+				local curheight = spacing
 				local maxwidth = self.width - padding * 2
 				local prevheight = 0
 				local scrollbar = self:GetScrollBar()
@@ -452,11 +454,13 @@ function newobject:RedoLayout()
 					end
 					if children[k + 1] then
 						curwidth = curwidth + v.width + spacing
-						if curwidth + (children[k + 1].width) > maxwidth then
+						if curwidth + (children[k + 1].width) > maxwidth or self.oneline then
 							curwidth = padding
 							curheight = curheight + prevheight + spacing
 							prevheight = 0
 						end
+					else
+						curheight = curheight - prevheight
 					end
 				end
 			else

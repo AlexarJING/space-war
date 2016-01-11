@@ -23,6 +23,7 @@ function missile:initialize(parent,level,x,y,rot)
 	self.speedAcc=0.2
 	self.side=self.parent.side
 	self.visualRange=500
+	self.explosionRange=self.size*10
 end
 
 
@@ -48,14 +49,24 @@ function missile:collision(target)
 	end
 end
 
+function missile:explosion()
+	for i,v in ipairs(game.ship) do
+		if v.side~=self.side and math.getDistance(self.x,self.y,v.x,v.y)<self.explosionRange then
+			v:getDamage(self.parent,"energy",self.level*3)
+		end
+	end
+end
+
+
 
 function missile:hitTest()
 	for i,v in ipairs(game.ship) do
 		if v.side~=self.side and self:collision(v) then
 			self.destroy=true
 			self.dead=true
-			table.insert(game.frag, Frag:new(self.x,self.y,self.rot,_,self.size*8))
+			table.insert(game.frag, Frag:new(self.x,self.y,self.rot,_,self.size*10))
 			v:getDamage(self.parent,"energy",self.level*10)
+			self:explosion()
 		end		
 	end
 

@@ -22,19 +22,20 @@ function newobject:initialize(object, text)
 	self.width = 0
 	self.height = 0
 	self.padding = 5
-	self.xoffset = 10
-	self.yoffset = -10
+	self.xoffset = 30
+	self.yoffset = 20
 	self.internal = true
 	self.show = false
 	self.followcursor = true
 	self.followobject = false
 	self.alwaysupdate = true
 	self.internals = {}
-	
+	self.antiCount= 60
 	-- create the object's text
 	local textobject = loveframes.Create("text")
 	textobject:Remove()
 	textobject.parent = self
+	textobject:SetDefaultColor(0,255,0)
 	textobject:SetText(text or "")
 	textobject:SetPos(0, 0)
 	table.insert(self.internals, textobject)
@@ -92,7 +93,17 @@ function newobject:update(dt)
 		end
 		self.show = ohover
 		self.visible = ovisible
+
 		if ohover and ovisible then
+			self.antiCount=self.antiCount-1
+			if self.antiCount>0 then 
+				self.show=false
+				textobject:SetText(self.txt)
+				return 
+			end
+			if self.antiCount==-60 then
+				textobject:SetText(self.txt2)
+			end
 			local top = self:IsTopInternal()
 			local followcursor = self.followcursor
 			local followobject = self.followobject
@@ -103,6 +114,13 @@ function newobject:update(dt)
 				local mx, my = love.mouse.getPosition()
 				self.x = mx + xoffset
 				self.y = my - height + yoffset
+				if mx+xoffset> love.graphics.getWidth()-self.width then 
+					self.x=mx-self.width		
+				end
+
+				if my+yoffset> love.graphics.getHeight()-self.height then 
+					self.y=love.graphics.getHeight()-self.height	
+				end
 			elseif followobject then
 				local ox = object.x
 				local oy = object.y
@@ -113,6 +131,8 @@ function newobject:update(dt)
 				self:MoveToTop()
 			end
 			textobject:SetPos(padding, padding)
+		else
+			self.antiCount = 60
 		end
 	end
 	
@@ -160,7 +180,7 @@ function newobject:draw()
 	-- set the object's draw order
 	self:SetDrawOrder()
 	
-	if show then
+	if show and textobject.text~="" then
 		if draw then
 			draw(self)
 		else
@@ -222,11 +242,12 @@ end
 	- func: SetText(text)
 	- desc: sets the tooltip's text
 --]]---------------------------------------------------------
-function newobject:SetText(text)
+function newobject:SetText(text,text2)
 
 	local internals = self.internals
 	local textobject = internals[1]
-	
+	self.txt=text
+	self.txt2=text2 or text
 	textobject:SetText(text)
 	return self
 	
