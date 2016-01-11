@@ -18,7 +18,7 @@ game.ctrl=require "scr/game/ctrlMode"
 game.groupCtrl= require "scr/game/groupCtrl"
 game.ctrl.mode="fleet"
 
-game.ui= require "scr/ui/gameUI"
+game.uiCtrl= require("scr/ui/gameUI"):init()
 game.mum={}--母舰
 
 game.isLocating=false
@@ -104,13 +104,13 @@ function game:bg2scr(x,y)
 end
 
 function game:bg2mini(x,y)
-	return x*game.ui.miniMap.w/(game.bg.limit.r-game.bg.limit.l)+game.ui.miniMap.x, 
-		y*game.ui.miniMap.h/(game.bg.limit.r-game.bg.limit.l)+game.ui.miniMap.y
+	return x*game.uiCtrl.miniMap.map.w/(game.bg.limit.r-game.bg.limit.l)+game.uiCtrl.miniMap.map.x, 
+		y*game.uiCtrl.miniMap.map.h/(game.bg.limit.r-game.bg.limit.l)+game.uiCtrl.miniMap.map.y
 end
 
 function game:mini2bg(x,y)
-	return (x-game.ui.miniMap.x)*(game.bg.limit.r-game.bg.limit.l)/game.ui.miniMap.w,
-	(y-game.ui.miniMap.y)*(game.bg.limit.b-game.bg.limit.t)/game.ui.miniMap.h
+	return (x-game.uiCtrl.miniMap.map.x)*(game.bg.limit.r-game.bg.limit.l)/game.uiCtrl.miniMap.map.w,
+	(y-game.uiCtrl.miniMap.map.y)*(game.bg.limit.b-game.bg.limit.t)/game.uiCtrl.miniMap.map.h
 end
 
 
@@ -134,6 +134,28 @@ function game:swithGroup(to)
 	end
 	game.ctrlGroup=to
 end
+
+function game:select(target)
+	for i,v in ipairs(game.ctrlGroup.units) do
+		v.isSelected=false
+	end
+	if target==nil or #target==0 then
+		game.selectedTarget=nil
+		game.ctrlGroup=nil
+		return
+	end
+
+	if target[1] then
+		for i,v in ipairs(target) do
+			v.isSelected=true
+		end
+		game.ctrlGroup=game.groupCtrl:new(target)
+	else
+		target.isSelected=true
+		game.ctrlGroup=game.groupCtrl:new({target})
+	end
+end
+
 
 
 function game:update(dt)
@@ -160,7 +182,7 @@ function game:update(dt)
 
 
 	self.bg:update()
-	self.ui:update(dt)
+	self.uiCtrl:update(dt)
 	self:updateFog()
 end
 
@@ -194,7 +216,7 @@ function game:draw()
 	self.ctrl:draw()
 	
 	self.msg:draw()
-	self.ui:draw()
+	self.uiCtrl:draw()
 	self:drawCursor()	
 	if self.indicator then
 		self.indicatorAura=self.indicatorAura or 50
@@ -392,8 +414,8 @@ function game:keypressed(key)
 		scaleY=resolution[2]/designResolution[2]
 		w=resolution[1]
 		h=resolution[2]
-		game.ui.miniMap:reSize()
-		game.ui.uiReset()
+		game.uiCtrl.miniMap.map:reSize()
+		game.uiCtrl.uiReset()
 	end
 
 	if key=="a" and  love.keyboard.isDown("lctrl") then
@@ -417,7 +439,7 @@ function game:keypressed(key)
 	local index=tonumber(key)
 	if index and index>0 and index<11 and love.keyboard.isDown("lctrl") then
 		if game.ctrlGroup then
-			game.ui.ui.groupIndex[index]:SetEnabled(true)
+			game.uiCtrl.ui.mainInfo.groupIndex[index]:SetEnabled(true)
 			game.groupStore[index]=game.ctrlGroup
 		end
 	end

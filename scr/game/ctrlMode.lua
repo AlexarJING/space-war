@@ -264,6 +264,8 @@ function ctrl:fleet()
 				game.selectedTarget=target
 				if target.side==game.userSide then
 					game.ctrlGroup=game.groupCtrl:new({target})
+				else
+					game.ctrlGroup=nil
 				end
 			end
 			
@@ -284,6 +286,7 @@ function ctrl:fleet()
 		end
 		if #group>0 then
 			game.ctrlGroup=game.groupCtrl:new(group)
+			game.selectedTarget=group[1]
 		end
 		game.selectRB=nil
 	end

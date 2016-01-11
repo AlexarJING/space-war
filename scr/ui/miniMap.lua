@@ -12,6 +12,7 @@ love.graphics.setColor(0,255,0,100)
 love.graphics.rectangle("fill", 0, 0, miniMap.w, miniMap.h)
 love.graphics.setCanvas()
 function miniMap:update()
+	self.visible=game.uiCtrl.ui.miniMap.visible
 	if game.mx>self.x and game.mx<self.x+self.w  --在miniMap内部
 		and game.my>self.y and game.my<self.y+self.h then
 		if love.mouse.isDown("l") or love.mouse.isDown("r") then
@@ -47,6 +48,7 @@ function miniMap:reSize()
 end
 
 function miniMap:draw()
+	if not self.visible then return end
 	if not game.showAll then
 		love.graphics.setColor(255, 255,255)
 		love.graphics.draw(self.explored, self.x, self.y)
