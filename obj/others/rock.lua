@@ -60,7 +60,7 @@ function rock:draw()
 	if self.dead then return end
 	self.alpha=game:getVisualAlpha(self)
 	love.graphics.setColor(255,255,255,self.alpha)
-	love.graphics.draw(sheet3,self.anim.frame, self.x, self.y, self.angle, self.size, self.size, 16, 16)
+	self.anim:draw(self.x, self.y, self.angle, self.size, self.size, 16, 16)
 end
 
 

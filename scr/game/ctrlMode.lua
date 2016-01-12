@@ -59,9 +59,9 @@ end
 function ctrl:update()
 
 	if game.mouseLock then return end
+	self:clickCtrl()
 	if ctrl:setLocate() then return end
-	if  ctrl:inUi() then return end
-	self:clickCtrl()	
+	if  ctrl:inUi() then return end	
 	self:scale()
 	if self[self.mode] then self[self.mode]() end
 	

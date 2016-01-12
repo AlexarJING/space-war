@@ -522,20 +522,33 @@ function skin.DrawImageButton(object)
 	local texthovercolor = skin.controls.imagebutton_text_hover_color
 	local textnohovercolor = skin.controls.imagebutton_text_nohover_color
 	local quad= object.quad
-	local options=object.options or {}
-	local offX,offY = object.offX or 0 ,object.offY or 0
+	local offX,offY =0,0
+	local rox,roy=0,0
+	local rot= object.rot or 0
+	local size=object.size or 0.9
 	if object.showFrame then
 		love.graphics.setColor(bordercolor)
 		skin.OutlinedRectangle(x, y, width, height)
 	end
 	love.graphics.setScissor( x, y, width, height )
+	local scaleX,scaleY=1,1
+	if quad then
+		local _,_,w,h=quad:getViewport()
+		scaleX=width/w*size
+		scaleY=height/h*size
+		offX=(width-scaleX*w)/2+w*scaleX/2
+		offY=(height-scaleY*h)/2+h*scaleY/2
+		rox=w/2
+		roy=h/2
+	end
+
 	if down then
 		if image then
 			love.graphics.setColor(imagecolor)
 			if quad then
-				love.graphics.draw(image,quad, x + 1+offX, y + 1+offY,unpack(options))
+				love.graphics.draw(image,quad, x + 1+offX, y + 1+offY,rot,scaleX,scaleY,rox,roy)
 			else
-				love.graphics.draw(image, x + 1+offX, y + 1+offY,unpack(options))
+				love.graphics.draw(image, x + 1+offX, y + 1+offY,rot,scaleX,scaleY,rox,roy)
 			end
 		end
 		love.graphics.setFont(font)
@@ -546,10 +559,10 @@ function skin.DrawImageButton(object)
 	elseif hover then
 		if image then
 			love.graphics.setColor(imagecolor)
-			if quad then
-				love.graphics.draw(image,quad, x+offX , y+offY ,unpack(options))
+						if quad then
+				love.graphics.draw(image,quad, x +offX, y +offY,rot,scaleX,scaleY,rox,roy)
 			else
-				love.graphics.draw(image, x+offX , y+offY ,unpack(options))
+				love.graphics.draw(image, x +offX, y +offY,rot,scaleX,scaleY,rox,roy)
 			end
 		end
 		love.graphics.setFont(font)
@@ -561,9 +574,9 @@ function skin.DrawImageButton(object)
 		if image then
 			love.graphics.setColor(imagecolor)
 			if quad then
-				love.graphics.draw(image,quad, x+offX , y+offY ,unpack(options))
+				love.graphics.draw(image,quad, x + 1+offX, y + 1+offY,rot,scaleX,scaleY,rox,roy)
 			else
-				love.graphics.draw(image, x +offX, y+offY ,unpack(options))
+				love.graphics.draw(image, x +offX, y +offY,rot,scaleX,scaleY,rox,roy)
 			end
 		end
 		

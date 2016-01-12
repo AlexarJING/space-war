@@ -8,7 +8,7 @@ function ship:initialize(sideOrParent,x,y,rot)
 
 	self.isMum=true	
 	self.name="motherShip" --飞船的名字，
-	self.skin=25
+	self.skin=85
 	self.size=10 --飞机大小 也不用改
 	
 	self.speedMax=0.5 --最大速度
@@ -38,7 +38,7 @@ function ship:initialize(sideOrParent,x,y,rot)
 	--rot 相对飞机正方形的引擎方向 不过注意火焰图片是个正方形 旋转中心在0,4 所以转的时候要注意对齐
 	--anim 火焰动画类型 只改数字 1~4 数字越大火焰越大
 	self.engineSys={
-		{posX=-9,
+		{posX=-11,
 		posY=0,
 		rot=0,
 		anim=4
@@ -54,7 +54,6 @@ local buildbtn={ --队列方法
 		func=function(mum) --自带母舰的参数  
 				local ship=res.shipClass.g1(mum,mum.x,mum.y)
 				game:toDeployment(mum,ship)
-			
 		end,
 		}
 
@@ -93,23 +92,22 @@ local miner={
 
 	--------------------技能-----------------位置 6,7,8,9是给飞机的
 	self.abilities={
-		{
+		["7"]={
 			caster=self, --自身
-			pos=7, --在右侧控制框的位置6~9
-			text="build G1;Cost 10$", --技能名称
-			icon=res.ships.blue[1], ---技能图标
+			--pos=7, --在右侧控制框的位置6~9
+			text="build", --技能名称
+			icon=148, ---技能图标
 			func=function(obj,x,y,arg) --技能函数
-				if #arg.caster.child<game.rule.unitLimit and game:pay(arg.caster,"mineral",10) then
-					arg.caster:addToQueue(arg)
-				end
+				local tab=game.uiCtrl.ui.ctrlGrid:fillEmptyMenu(arg.caster.build1)
+				game.uiCtrl.ui.ctrlGrid:newMenu(tab)
 			end,
-			arg=buildbtn, --函数参数
+			arg={}, --函数参数
 			type="active"
 
 		},
-		{
+		["8"]={
 			caster=self, --自身
-			pos=8, --在右侧控制框的位置6~9
+			--pos=8, --在右侧控制框的位置6~9
 			text="build Miner;Cost 10$", --技能名称
 			icon=res.ships.blue[90], ---技能图标
 			func=function(obj,x,y,arg) --技能函数
@@ -121,11 +119,11 @@ local miner={
 			type="active"
 
 		},
-		{
+		["6"]={
 			caster=self, --自身
-			pos=6, --在右侧控制框的位置6~9
+			--pos=6, --在右侧控制框的位置6~9
 			--icon=res.ships.blue[1], ---技能图标 如果是数组则放在sheet2 {x,y}里
-			quad={4,16},
+			icon=199,
 			text="set deployment point",
 			func=function() 
 				game.cmd="setPoint"  
@@ -134,11 +132,11 @@ local miner={
 			arg={},
 			type="active" --函数参数
 		},
-		{
+		["9"]={
 			caster=self, --自身
-			pos=9, --在右侧控制框的位置6~9
+			--pos=9, --在右侧控制框的位置6~9
 			text="upgrade;Cost 100$", --技能名称
-			quad={4,15}, ---技能图标
+			icon=148, ---技能图标
 			func=function(obj,x,y,arg) --技能函数
 				if #arg.caster.child<game.rule.unitLimit and game:pay(arg.caster,"mineral",100) then
 				 	arg.caster:addToQueue(arg)
@@ -185,7 +183,47 @@ function ship:queueUpdate(dt)
 	end	
 end
 
+ship.build1={
+	["1"]={
+			caster=ship, --自身
+			pos=1, --在右侧控制框的位置6~9
+			text="build G1;Cost 10$", --技能名称
+			icon=res.ships.blue[1], ---技能图标
+			func=function(obj,x,y,arg) --技能函数
+				if #arg.caster.child<game.rule.unitLimit and game:pay(arg.caster,"mineral",10) then
+					arg.caster:addToQueue(arg)
+				end
+			end,
+			arg=buildbtn, --函数参数
+			type="active"
 
+	},
+	["2"]={
+		caster=ship, --自身
+		text="build Miner;Cost 10$", --技能名称
+		icon=res.ships.blue[90], ---技能图标
+		func=function(obj,x,y,arg) --技能函数
+			if game:pay(arg.caster,"mineral",10) then
+				arg.caster:addToQueue(arg)
+			end
+		end,
+		arg=miner, --函数参数
+		type="active"
+
+	},	
+	["9"]={
+		caster=ship, --自身
+		text="cancel", --技能名称
+		icon=150, ---技能图标
+		func=function(obj,x,y,arg) --技能函数
+			local tab=game.uiCtrl.ui.ctrlGrid:makeSingleMenu(arg.caster)
+			game.uiCtrl.ui.ctrlGrid:newMenu(tab)
+		end,
+		arg=miner, --函数参数
+		type="active"
+
+	},
+}
 
 return ship
 

@@ -65,6 +65,6 @@ function love.resize()
     scaleY=resolution[2]/designResolution[2]
     w=resolution[1]
     h=resolution[2]
-    game.miniMap:reSize()
-    game.ui.uiReset()
+    game.uiCtrl.ui.miniMap.map:reSize()
+    game.uiCtrl:uiReset()
 end

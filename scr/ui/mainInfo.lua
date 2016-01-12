@@ -9,7 +9,7 @@ function ui:init()
 		:SetSize(0.15*h,0.15*h)
 		:SetPos(0.01*w,0.015*w)
 		:SetText("")
-		:SetOptions(h/14,h/13,-Pi/2, h/120,h/120,8,8)
+
 
 	ui.groupIndex={}
 	for i=1,10 do
@@ -55,7 +55,6 @@ function ui:init()
 		:SetPos(0.01*w, 0.02*h)
 		:SetSize(0.12*h,0.12*h)
 		:SetText("")
-		:SetOptions(h/16.5,h/16.5,-Pi/2, h/140,h/140,8,8)
 
 	ui.progressIcon.OnClick=function() 
 		if game.ctrlGroup.units[1].queue[1] then
@@ -80,7 +79,6 @@ function ui:init()
 		:SetPos(0.09*w+(i-1)*0.1*h, 0.08*h)
 		:SetSize(0.07*h,0.07*h)
 		:SetText("")
-		:SetOptions(h/28,h/28,-Pi/2, h/280,h/280,8,8)
 		ui.progressQueue[i].OnClick=function() 
 			if game.ctrlGroup.units[1].queue[i+1] then
 				table.remove(game.ctrlGroup.units[1].queue,i+1)
@@ -94,7 +92,7 @@ end
 
 function ui:reset()
 	ui.panel:SetSize(w-0.5*h,0.20*h):SetPos(0.25*h,0.8*h)
-	ui.avatar:SetSize(0.15*h,0.15*h):SetPos(0.01*h,0.025*h):SetOptions(h/14,h/13,-Pi/2, h/120,h/120,8,8)
+	ui.avatar:SetSize(0.15*h,0.15*h):SetPos(0.01*h,0.025*h)
 	for i=1,10 do
 		ui.groupIndex[i]:SetSize(0.06*h,0.04*h):SetPos(0.5*w+0.08*h*(i-1)-0.64*h,-0.05*h)
 	end

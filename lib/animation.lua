@@ -85,6 +85,10 @@ function animation:update(dt)
 	self.frame=frame
 end
 
+function animation:draw(x,y,rot,scaleX,scaleY,offx,offy)
+	love.graphics.draw(self.img,self.frame, x,y,rot,scaleX,scaleY,offx,offy)
+end
+
 love.graphics.newAnimation=animation
 
 return animation

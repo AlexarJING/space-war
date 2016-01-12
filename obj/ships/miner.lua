@@ -8,7 +8,7 @@ function ship:initialize(side,x,y,rot)
 
 
 	self.name="miner" --飞船的名字，
-	self.skin=90 --side是 blue,green,red,yellow,purple中的一种 这里不用改 数字是类型1~19*5 从上到下从左到右顺序
+	self.skin=70 --side是 blue,green,red,yellow,purple中的一种 这里不用改 数字是类型1~19*5 从上到下从左到右顺序
 	self.size=2 --飞机大小 也不用改
 
 	self.speedMax=3 --最大速度
@@ -58,15 +58,13 @@ function ship:initialize(side,x,y,rot)
 			caster=self, --自身
 			pos=7, --在右侧控制框的位置6~9
 			text="exploit", --技能名称
-			icon=res.ships.blue[1], ---技能图标
+			icon=147, ---技能图标
 			func=function(obj,x,y,arg) --技能函数
 				local ship=arg.caster
 				local state=ship.state=="mine"  and "battle" or "mine"
 				ship:switchState(state)
-				print(ship.state)
 			end,
 			arg={}, --函数参数
-			conf={h/25,h/25,-Pi/2, h/240,h/240,8,8}, --对图标的处理
 			type="active"
 
 		}}

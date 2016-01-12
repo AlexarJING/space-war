@@ -296,7 +296,7 @@ function ship:draw()
 
 	for i,v in ipairs(self.engineSys) do
 		local offx,offy=math.axisRot(v.posX*self.size,v.posY*self.size,self.rot)
-		love.graphics.draw(sheet,self.engineAni[i].frame, self.x+offx, self.y+offy, self.rot+v.rot, self.size, self.size, 0, 4)
+		self.engineAni[i]:draw(self.x+offx, self.y+offy, self.rot+v.rot, self.size, self.size, 0, 4)
 	end
 	
 	if game.debug and self.group==game.ctrlGroup then

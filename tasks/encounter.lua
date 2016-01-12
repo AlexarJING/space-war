@@ -133,7 +133,7 @@ end
 
 function task:update(dt)
 
-	self:enermyAi(2)
+	--self:enermyAi(2)
 	--self:enermyAi(1)
 	if game.mum[1].dead and not task.over then
 		task.over=true

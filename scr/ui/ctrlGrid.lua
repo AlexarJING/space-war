@@ -53,7 +53,7 @@ for i,v in ipairs(menuList) do
 end
 
 
-local function newMenu(tab,units)
+function ui:newMenu(tab,units)
 
 	for i=1,9 do
 		local index=tostring(i)
@@ -61,9 +61,9 @@ local function newMenu(tab,units)
 		local btn=ui.grid:GetItem(math.ceil(i/3), i%3==0 and 3 or i%3)
 		
 		if setting then
-			if setting.quad then
-				btn:SetImage(sheet2,res.icon[setting.quad[1]][setting.quad[2]])
-			else
+			if type(setting.icon)=="number" then
+				btn:SetImage(sheet2,res.icon[setting.icon])
+			elseif setting.icon then
 				btn:SetImage(sheet,setting.icon)
 			end
 			
@@ -71,7 +71,7 @@ local function newMenu(tab,units)
 			if units then
 				btn.OnClick=function(obj,x,y,arg)					
 					for i,ship in ipairs(units) do
-						arg.caster=ship
+						if arg then arg.caster=ship end
 						setting.func(obj,x,y,arg)
 					end
 				end
@@ -86,18 +86,6 @@ local function newMenu(tab,units)
 				btn.callbackArg.caster=setting.caster 
 			end
 
-			if setting.small then
-				btn:SetOptions(0,0,0, 0.08*h/28,0.08*h/28)
-			elseif setting.tiny then
-				btn:SetOptions(2,5,0, 0.08*h/27,0.08*h/27)
-			elseif setting.tiny2 then
-				btn:SetOptions(3,5,0, 0.08*h/30,0.08*h/30)
-			elseif setting.icon then
-				btn:SetOptions(h/25,h/25,-Pi/2, h/240,h/240,8,8)
-			else
-				btn:SetOptions(0,0,0, 0.08*h/32,0.08*h/32)
-			end
-
 		else
 			btn:SetImage(nil)
 			btn.OnClick=nil
@@ -105,15 +93,27 @@ local function newMenu(tab,units)
 	end
 end
 
-local function makeSingleMenu(ship)
-	local new=menu["single"]
-	for i=6,9 do
+function ui:fillEmptyMenu(tab)
+	local new={}
+	for i=1,9 do
 		new[tostring(i)]=nil
 	end
 
-	if not ship.abilities or #ship.abilities==0 then return new end
-	for i,v in ipairs(ship.abilities) do
-		local index=tostring(v.pos)
+	for index,v in pairs(tab) do
+		new[index]={}
+		for k,v2 in pairs(v) do
+			new[index][k]=v2
+		end
+	end
+
+	return new
+end
+
+
+function ui:makeSingleMenu(ship)
+	local new=table.copy(menu["single"])
+	if not ship.abilities  then return new end
+	for index,v in pairs(ship.abilities) do
 		new[index]={}
 		for k,v2 in pairs(v) do
 			new[index][k]=v2
@@ -125,7 +125,7 @@ end
 
 function ui:updateCtrlGrid()
 	if ui.newGridMenu then
-		newMenu(ui.newGridMenu)
+		self:newMenu(ui.newGridMenu)
 		ui.newGridMenu=nil
 		return
 	end
@@ -134,7 +134,7 @@ function ui:updateCtrlGrid()
 	if target==ui.lastTarget then return end
 	ui.lastTarget=target
 	if not target then 
-		newMenu({})
+		self:newMenu({})
 		return
 	end
 	
@@ -147,12 +147,11 @@ function ui:updateCtrlGrid()
 
 
 	if sameName then
-		local singleMenu=makeSingleMenu(target[1])
-		
-		newMenu(singleMenu,target)
+		local singleMenu=self:makeSingleMenu(target[1])
+		self:newMenu(singleMenu,target)
 
 	else
-		newMenu(menu.team)
+		self:newMenu(menu.team)
 	end
 end
 
