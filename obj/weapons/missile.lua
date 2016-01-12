@@ -64,7 +64,6 @@ function missile:hitTest()
 		if v.side~=self.side and self:collision(v) then
 			self.destroy=true
 			self.dead=true
-			table.insert(game.frag, Frag:new(self.x,self.y,self.rot,_,self.size*10))
 			v:getDamage(self.parent,"energy",self.level*10)
 			self:explosion()
 		end		

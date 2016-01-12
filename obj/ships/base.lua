@@ -179,7 +179,7 @@ function ship:destroy()
 	if self.group then
 		table.removeItem(self.group, self)
 	end
-	event:check("onDestroy",self)
+	game.event:check("onDestroy",self)
 	self.destroyCallback(self)
 end
 

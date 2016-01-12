@@ -53,7 +53,8 @@ for i,v in ipairs(menuList) do
 end
 
 
-local function newMenu(tab)
+local function newMenu(tab,units)
+
 	for i=1,9 do
 		local index=tostring(i)
 		local setting=tab[index]
@@ -65,7 +66,20 @@ local function newMenu(tab)
 			else
 				btn:SetImage(sheet,setting.icon)
 			end
-			btn.OnClick=setting.func
+			
+			---------------call back----------
+			if units then
+				btn.OnClick=function(obj,x,y,arg)					
+					for i,ship in ipairs(units) do
+						arg.caster=ship
+						setting.func(obj,x,y,arg)
+					end
+				end
+			else
+				btn.OnClick=setting.func
+			end
+
+			
 			btn.tip:SetText(setting.text,setting.text2)
 			if setting.arg then
 				btn.callbackArg=setting.arg
@@ -124,12 +138,20 @@ function ui:updateCtrlGrid()
 		return
 	end
 	
-	if #target==1 then
+	local name
+	local sameName=true
+	for i,v in ipairs(target) do
+		name=name or v.name
+		if name~=v.name then sameName=false;break end
+	end
+
+
+	if sameName then
 		local singleMenu=makeSingleMenu(target[1])
 		
-		newMenu(singleMenu)
+		newMenu(singleMenu,target)
 
-	elseif #target>1 then
+	else
 		newMenu(menu.team)
 	end
 end

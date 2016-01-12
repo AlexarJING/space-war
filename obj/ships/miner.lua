@@ -61,14 +61,9 @@ function ship:initialize(side,x,y,rot)
 			icon=res.ships.blue[1], ---技能图标
 			func=function(obj,x,y,arg) --技能函数
 				local ship=arg.caster
-				ship.state=ship.state=="mine"  and "battle" or "mine"
-				if ship.mine then 
-					ship.exploiter=nil
-					ship.mine.freeze=false 
-				end
-				ship.target=nil
-				ship.mine=nil
-				ship:hold()
+				local state=ship.state=="mine"  and "battle" or "mine"
+				ship:switchState(state)
+				print(ship.state)
 			end,
 			arg={}, --函数参数
 			conf={h/25,h/25,-Pi/2, h/240,h/240,8,8}, --对图标的处理
@@ -90,9 +85,10 @@ function ship:findTarget ()
 	local dist
 	local pos
 	local tar= self.state=="battle" and game.ship or game.rock
+	local len= self.state=="battle" and self.visualRange or self.testRange
 	for i,v in ipairs(tar) do
 		local range=math.getDistance(self.x,self.y,v.x,v.y)
-		local test=range<self.testRange and range or nil 
+		local test=range<len and range or nil 
 		if self.state=="battle" then --战斗中只找不同队伍的
 			if v.side==self.side then
 				test=nil
@@ -132,7 +128,7 @@ function ship:findTarget ()
 	
 	if self.target then
 		local range=math.getDistance(self.x,self.y,self.target.x,self.target.y)
-		if range>self.testRange then
+		if range>len then
 			self.target=nil
 			return false
 		else
@@ -142,6 +138,21 @@ function ship:findTarget ()
 		return false
 	end
 end
+
+function ship:switchState(state)
+	self.state=state
+	if self.mine then 
+		self.exploiter=nil
+		self.mine.freeze=false 
+	end
+	self.target=nil
+	if self.mine then self.mine:destroy() end
+	self.mine=nil
+	self.inFireRange=false
+	self.inVisualRange=false
+	self:hold()
+end
+
 
 function ship:moveToTarget() --如果当前状态是采矿 那么就去采矿
 	if self.state=="battle" or (not self.target) then return end

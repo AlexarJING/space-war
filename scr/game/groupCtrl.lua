@@ -4,12 +4,40 @@ groupCtrl.groups={
 	
 }
 
+function groupCtrl:checkGroup(units)
+	local name
+	local sameName=true
+	for i,v in ipairs(units) do
+		name=name or v.name
+		if name~=v.name then sameName=false;break end
+	end
+
+	if #units>1 and not sameName then
+		for i=#units,1,-1 do
+			local ship=units[i]
+			if ship.isSP and ship.state~="battle" then
+				ship.isSelected=false
+				table.remove(units,i)
+			end
+		end
+	elseif #units==1 or sameName then
+		for i,ship in ipairs(units) do
+			if ship.isSP and ship.switchState then
+				ship:switchState("battle")
+			end
+		end
+	end
+	return units
+end
+
 
 function groupCtrl:new(units,form,waypoint)
+	
+	units=self:checkGroup(units)
 	if #units==0 then return end
-	local index=#self.groups+1
-	self.groups[index]={}
-	local group=self.groups[index]
+
+
+	local group={}
 	group.units={unpack(units)}
 	group.form=form and {unpack(form)} or self:newForm(group)
 	group.waypoint=waypoint
@@ -27,6 +55,8 @@ function groupCtrl:new(units,form,waypoint)
 		ship.lockTarget=nil
 	end
 	group.strategy="pursuit"
+	local index=#self.groups+1
+	self.groups[index]=group
 	return group
 end
 
