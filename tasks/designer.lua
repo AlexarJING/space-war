@@ -70,11 +70,20 @@ end
 
 
 function designer:new()
-	game.ui:setVisible(false)
+	game.uiCtrl:setVisible(false)
 	game.showFog=false
 	game.showAll=true
-	self.target=res.shipClass.miner("blue",500,500)
-
+	self.target=res.shipClass.cruiser("blue",400,500)
+	local x=300
+	local y=300
+	for k,v in pairs(res.shipClass) do
+		x=x+100
+		if x>1000 then x=300;y=y+100 end
+		if v~=res.shipClass.base and v~=res.shipClass.rnd then
+			local ship=v("blue",x,y)
+			print(ship.name)
+		end
+	end
 	game.bg.cam:lookAt(500,500)
 	self:createUI()
 	self.tag="basic"

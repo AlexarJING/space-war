@@ -1,7 +1,6 @@
 local laser=Class("laser")
 
-function laser:initialize(parent,level,x,y,rot)
-	self.level=level
+function laser:initialize(parent,x,y,rot)
 	self.px=parent.x
 	self.py=parent.y
 	self.ox=x
@@ -18,7 +17,7 @@ function laser:hitTest()
     for i,v in ipairs(test) do
     	if v[1].side~=self.parent.side then
     		game:newSpark(v[2],v[3])
-    		v[1]:getDamage(self.parent,"energy",self.level)
+    		v[1]:getDamage(self.parent,"energy",self.damage)
     	end
     end
 

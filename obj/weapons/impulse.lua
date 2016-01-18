@@ -1,25 +1,14 @@
 local impulse=Class("impulse")
-local bullet={
-	"fire"=={
-		speed=5,
-		img=23,
-		animation=123,
-	}
-}
 
-function impulse:initialize(parent,level,x,y,rot,speed,type)
+function impulse:initialize(parent,x,y,rot)
 	self.x=x
 	self.y=y
-	self.speed=speed
 	self.rot=rot
 	self.parent=parent
-	self.level=level
-	self.type=1
 	self.life=100
-	self.type=type
-	self.img=1
-	self.offside=0
-	self.offRange=0
+	self.skin=nil
+	self.sw=0
+	self.sh=0
 end
 
 function impulse:collision(t)
@@ -36,7 +25,7 @@ function impulse:hitTest()
 			for i=1,5 do
 				game:newSpark(self.x,self.y)
 			end
-			v:getDamage(self.parent,"physic",self.level)
+			v:getDamage(self.parent,"physic",self.damage)
 		end		
 	end
 
@@ -50,9 +39,8 @@ function impulse:update()
 	self:hitTest()
 	self.ox=self.x
 	self.oy=self.y
-	self.offside=self.offside+0.3
-	self.x =self.x + math.cos(self.rot)*self.speed+2*self.offRange*math.cos(self.offside)
-	self.y =self.y + math.sin(self.rot)*self.speed+self.offRange*math.sin(self.offside)
+	self.x =self.x + math.cos(self.rot)*self.speed
+	self.y =self.y + math.sin(self.rot)*self.speed
 	self.life=self.life-1
 	if self.life<0 then
 		self.dead=true
@@ -71,8 +59,12 @@ function impulse:draw()
 	love.graphics.setLineWidth(self.parent.size)
 	love.graphics.setColor(255, 255,0,a)
 	love.graphics.line(self.x,self.y,self.ox,self.oy)
-	love.graphics.setColor(255, 0,0,a)
-	--love.graphics.circle("fill", self.x,self.y,5)
+	
+	if self.skin then
+		love.graphics.setColor(255, 255,255,a)
+		love.graphics.draw(self.skin, self.x, self.y, self.rot, self.parent.size, self.parent.size, self.sw/2, self.sh/2)
+	end
+
 end
 
 

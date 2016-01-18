@@ -5,13 +5,10 @@ Tween=require "lib/tween"
 Class=require "lib/middleclass"
 Gamestate = require "lib/gamestate"
 delay= require "lib/delay"
-loveframes=require ("lib.loveframes/init")
+loveframes=require "lib.loveframes/init"
 Animation = require "lib.animation"
 
 resolution={ love.graphics.getDimensions() }
-designResolution={1920,1080}
-scaleX=resolution[1]/designResolution[1]
-scaleY=resolution[2]/designResolution[2]
 w=resolution[1]
 h=resolution[2]
 require "scr/loadRes"
@@ -61,8 +58,6 @@ end
 
 function love.resize()
     resolution={ love.graphics.getDimensions() }
-    scaleX=resolution[1]/designResolution[1]
-    scaleY=resolution[2]/designResolution[2]
     w=resolution[1]
     h=resolution[2]
     game.uiCtrl.ui.miniMap.map:reSize()

@@ -1,47 +1,54 @@
-local ship=Class("miner",res.shipClass.base) --这个 要改“”中的名称 跟飞机名字对应就行了
+local ship=Class("collector",res.shipClass.base)
+
+local weapon=Class("co_w",res.weaponClass.laser)
+
+function weapon:initialize(parent,x,y,rot)
+	self.class.super.initialize(self,x,y,rot)
+	self.damage=3
+	self.range=500
+	self.width=self.parent.size*5
+	self.laserW=self.width
+	self.target=nil
+end
+
+
+
 
 function ship:initialize(side,x,y,rot)
 
-	self.class.super.initialize(self,side,x,y,rot)  --x,y 不用管
-	self.energyMax=100
-	self.armorMax=100--护甲 吸收实体武器的攻击 脉冲 导弹  质子忽略一切攻击  对撞双方扣减所有防御措施少者的数值 并护盾护甲清零
+	self.class.super.initialize(self,side,x,y,rot)  
+	self.energyMax=150
+	self.armorMax=150
+	self.price_m=100
+	self.price_e=50
 
+	self.name="collector" 
+	self.skin=73 
+	self.size=2 
 
-	self.name="miner" --飞船的名字，
-	self.skin=70 --side是 blue,green,red,yellow,purple中的一种 这里不用改 数字是类型1~19*5 从上到下从左到右顺序
-	self.size=2 --飞机大小 也不用改
-
-	self.speedMax=3 --最大速度
-	self.speedAcc=0.3 --每帧加速度
+	self.speedMax=3 
+	self.speedAcc=0.3 
 
 	self.state="mine"
-	self.isSP=true  --特殊单位
-	self.visualRange=500 --侦测范围  先不管
+	self.isSP=true 
+	self.visualRange=500 
 	self.fireRange=50
 	self.testRange=5000
-	--posX,Y 是 开火的位置 相对于每个小飞机图片中心的
-	--rot 相对飞机正方形的开火方向
-	--type 类型 有--impulse laser missile tesla proton no 脉冲 镭射 导弹 电磁 质子 无 几个种类 目前还没写 不过可以先设计
-	--level 火炮级别 控制攻击力等等 
-	--cd 火炮冷却时间 每秒50帧的话 cd=100就是2秒一炮
-	--heat 当前热度 不用管
+
 
 	self.fireSys={
 		{
 			posX=3,
 			posY=5,
 			rot=0,
-			type="tesla",
-			level=1,
+			wpn=weapon,
 			cd=20,
 			heat=0,
 			speed=12,
 		},
 	}
 
-	--posX,Y 是 引擎火焰的位置 相对于每个小飞机图片中心的
-	--rot 相对飞机正方形的引擎方向 不过注意火焰图片是个正方形 旋转中心在0,4 所以转的时候要注意对齐
-	--anim 火焰动画类型 只改数字 1~4 数字越大火焰越大
+
 	self.engineSys={
 		{posX=-9,
 		posY=0,
@@ -50,9 +57,7 @@ function ship:initialize(side,x,y,rot)
 		}
 	}
 
-	--火焰和引擎 有几个就添加几个{}格式同上，每个用逗号分隔
-
-	--------------------技能-----------------位置 6,7,8,9是给飞机的
+	
 	self.abilities={
 		["7"]={
 			caster=self, --自身
@@ -79,7 +84,14 @@ function ship:findTarget ()
 		return false
 	end
 	if self.mine then return end
+	if self.state=="battle" and self.target then
+		if math.getDistance(self.x,self.y,target.x,target.y)<self.visualRange then
+			return
+		else
+			self.target=nil
+		end
 
+	end
 	local dist
 	local pos
 	local tar= self.state=="battle" and game.ship or game.rock

@@ -680,3 +680,11 @@ function table.safeRemove(tab,index)
 	tab[index]=v
 	tab[#tab]=nil
 end
+
+function table.isEmpty(tab)
+
+	for k,v in pairs(tab) do
+		return false
+	end
+	return true
+end

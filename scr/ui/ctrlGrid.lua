@@ -79,11 +79,14 @@ function ui:newMenu(tab,units)
 				btn.OnClick=setting.func
 			end
 
-			
 			btn.tip:SetText(setting.text,setting.text2)
+			
+
 			if setting.arg then
+				
 				btn.callbackArg=setting.arg
-				btn.callbackArg.caster=setting.caster 
+				btn.callbackArg.caster=self.target[1] 
+
 			end
 
 		else
@@ -101,8 +104,8 @@ function ui:fillEmptyMenu(tab)
 
 	for index,v in pairs(tab) do
 		new[index]={}
-		for k,v2 in pairs(v) do
-			new[index][k]=v2
+		for key,value in pairs(v) do
+			new[index][key]=value
 		end
 	end
 
@@ -132,6 +135,7 @@ function ui:updateCtrlGrid()
 
 	local target=game.ctrlGroup and game.ctrlGroup.units or nil
 	if target==ui.lastTarget then return end
+	self.target=target
 	ui.lastTarget=target
 	if not target then 
 		self:newMenu({})
@@ -140,15 +144,22 @@ function ui:updateCtrlGrid()
 	
 	local name
 	local sameName=true
+	local hasAb=false
 	for i,v in ipairs(target) do
 		name=name or v.name
+		if not table.isEmpty(v.abilities)  then hasAb=true end
+
 		if name~=v.name then sameName=false;break end
+		
 	end
 
-
 	if sameName then
-		local singleMenu=self:makeSingleMenu(target[1])
-		self:newMenu(singleMenu,target)
+		if hasAb then
+			local singleMenu=self:makeSingleMenu(target[1])
+			self:newMenu(singleMenu,target)
+		else
+			self:newMenu(menu.team)
+		end
 
 	else
 		self:newMenu(menu.team)

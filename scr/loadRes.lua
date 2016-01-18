@@ -80,14 +80,6 @@ res.font_20 = love.graphics.newFont("res/lcd.ttf", 20)
 res.font_15 = love.graphics.newFont("res/lcd.ttf", 15)
 res.font_5 = love.graphics.newFont("res/lcd.ttf", 5)
 
-res.shipClass={}
-local dir="obj/ships"
-local files = love.filesystem.getDirectoryItems( dir )
-for k, file in ipairs(files) do
-    local dot=string.find(file, "%.")
-    local name=string.sub(file,1,dot-1)
-    res.shipClass[name]= require (dir.."/"..name)
-end
 
 
 res.weaponClass={}
@@ -98,6 +90,21 @@ for k, file in ipairs(files) do
     local name=string.sub(file,1,dot-1)
     res.weaponClass[name]= require (dir.."/"..name)
 end
+
+
+
+res.shipClass={}
+res.shipClass.base= require "obj/ships/base"
+local dir="obj/ships"
+local files = love.filesystem.getDirectoryItems( dir )
+for k, file in ipairs(files) do
+    local dot=string.find(file, "%.")
+    local name=string.sub(file,1,dot-1)
+    res.shipClass[name]= require (dir.."/"..name)
+end
+
+
+
 
 res.otherClass={}
 local dir="obj/others"

@@ -8,7 +8,7 @@ function ship:initialize(sideOrParent,x,y,rot)
 
 	self.isMum=true	
 	self.name="motherShip" --飞船的名字，
-	self.skin=85
+	self.skin=95
 	self.size=10 --飞机大小 也不用改
 	
 	self.speedMax=0.5 --最大速度
@@ -46,49 +46,7 @@ function ship:initialize(sideOrParent,x,y,rot)
 	}
 
 
-local buildbtn={ --队列方法
-		during=3, --队列时长
-		time=0, --当前时间
-		text="building G1 ship", 
-		icon=res.ships.blue[1],
-		func=function(mum) --自带母舰的参数  
-				local ship=res.shipClass.g1(mum,mum.x,mum.y)
-				game:toDeployment(mum,ship)
-		end,
-		}
 
-local upgrade={
-		during=5,
-		time=0,
-		text="ungrade all existed units x1.1 and repair",
-		icon=self.quad,
-		func=function(ship) 
-			
-			for i,v in ipairs(game.ship) do
-				if v.parent==ship.parent then
-					ship.hpMax=ship.hpMax*1.1
-					ship.armorMax=ship.armorMax*1.1
-					ship.shieldMax=ship.shieldMax*1.1
-					ship.hp=ship.hpMax
-					ship.armor=ship.armorMax
-				end
-			end
-				
-		end,
-		}
-
-
-local miner={
-		during=3,
-		time=0,
-		text="building Miner ship",
-		icon=res.ships.blue[90],
-		func=function(mum) 
-			local ship=res.shipClass.miner(mum,mum.x,mum.y)
-			game:toDeployment(mum,ship)
-			ship.state="mine"	
-		end,	
-}
 
 	--------------------技能-----------------位置 6,7,8,9是给飞机的
 	self.abilities={
@@ -105,20 +63,7 @@ local miner={
 			type="active"
 
 		},
-		["8"]={
-			caster=self, --自身
-			--pos=8, --在右侧控制框的位置6~9
-			text="build Miner;Cost 10$", --技能名称
-			icon=res.ships.blue[90], ---技能图标
-			func=function(obj,x,y,arg) --技能函数
-				if game:pay(arg.caster,"mineral",10) then
-					arg.caster:addToQueue(arg)
-				end
-			end,
-			arg=miner, --函数参数
-			type="active"
-
-		},
+		
 		["6"]={
 			caster=self, --自身
 			--pos=6, --在右侧控制框的位置6~9
@@ -149,10 +94,7 @@ local miner={
 		},
 	}
 	-------------------------队列---------------------------
-	self.queue={
-		
-
-	}
+	self.queue={}
 	self.mineral=0
 	self:reset()
 end
@@ -183,10 +125,55 @@ function ship:queueUpdate(dt)
 	end	
 end
 
+
+
+local buildbtn={ --队列方法
+		during=3, --队列时长
+		time=0, --当前时间
+		text="building G1 ship", 
+		icon=res.ships.blue[1],
+		func=function(mum) --自带母舰的参数  
+				local ship=res.shipClass.g1(mum,mum.x,mum.y)
+				game:toDeployment(mum,ship)
+		end,
+		}
+
+local upgrade={
+		during=5,
+		time=0,
+		text="ungrade all existed units x1.1 and repair",
+		icon=ship.quad,
+		func=function(ship) 
+			
+			for i,v in ipairs(game.ship) do
+				if v.parent==ship.parent then
+					ship.hpMax=ship.hpMax*1.1
+					ship.armorMax=ship.armorMax*1.1
+					ship.shieldMax=ship.shieldMax*1.1
+					ship.hp=ship.hpMax
+					ship.armor=ship.armorMax
+				end
+			end
+				
+		end,
+		}
+
+
+local miner={
+		during=3,
+		time=0,
+		text="building Miner ship",
+		icon=res.ships.blue[90],
+		func=function(mum) 
+			local ship=res.shipClass.miner(mum,mum.x,mum.y)
+			game:toDeployment(mum,ship)
+			ship.state="mine"	
+		end,	
+}
+
+
 ship.build1={
 	["1"]={
-			caster=ship, --自身
-			pos=1, --在右侧控制框的位置6~9
 			text="build G1;Cost 10$", --技能名称
 			icon=res.ships.blue[1], ---技能图标
 			func=function(obj,x,y,arg) --技能函数
@@ -199,7 +186,6 @@ ship.build1={
 
 	},
 	["2"]={
-		caster=ship, --自身
 		text="build Miner;Cost 10$", --技能名称
 		icon=res.ships.blue[90], ---技能图标
 		func=function(obj,x,y,arg) --技能函数
@@ -212,7 +198,6 @@ ship.build1={
 
 	},	
 	["9"]={
-		caster=ship, --自身
 		text="cancel", --技能名称
 		icon=150, ---技能图标
 		func=function(obj,x,y,arg) --技能函数
@@ -227,3 +212,13 @@ ship.build1={
 
 return ship
 
+--[[--------------------------------------
+技能类型
+激活立即型，需要传入一个参数，包括激活者，目标等
+激活延迟型，同上，但是程序持续，激活时执行一个程序，并每帧返回一个剩余时间，当时间结束时再执行另一个程序，并停止。
+激活条件型，同上，达到条件时截止。
+状态型，不需要激活，达到时间截止。
+
+
+
+---------------------------------------]]

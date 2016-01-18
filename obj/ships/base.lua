@@ -40,10 +40,11 @@ function ship:initialize(parent,x,y,rot,mod)
 	self.abilities={}
 	self.destroyCallback=function() end
 	self.hitCallBack=function() end
+	self.chargingAbilities={}
+	self.sustainingAbilities={}
 end
-
+local keys={"name","isMum","energyMax","armorMax","skin","size","speedMax","speedAcc","visualRange","fireRange","fireSys","engineSys"}
 function ship:setParam(param)
-	local keys={"name","isMum","energyMax","armorMax","skin","size","speedMax","speedAcc","visualRange","fireRange","fireSys","engineSys"}
 	for i,v in ipairs(keys) do
 		self[v]=param[v]
 	end
@@ -51,7 +52,6 @@ end
 
 function ship:getParam()
 	local param={}
-	local keys={"name","isMum","energyMax","armorMax","skin","size","speedMax","speedAcc","visualRange","fireRange","fireSys","engineSys"}
 	for i,v in ipairs(keys) do
 		param[v]=self[v]
 	end
@@ -111,14 +111,15 @@ function ship:fire()
 	for i,v in ipairs(self.fireSys) do
 		v.heat=v.heat or 0
 		v.heat=v.heat-1
-		if v.heat<0 then
+		if v.heat<0 and not v.dx then
 			v.heat=v.cd
 			local offx,offy=math.axisRot(v.posX,v.posY,self.rot)
-			game:newBullet(self,v.type,self.x+offx,self.y+offy,self.rot+v.rot,v.level,v.speed,v.type)
+			--game:newBullet(self,v.type,self.x+offx,self.y+offy,self.rot+v.rot,v.level,v.speed,v.type)
+			table.insert(game.bullet, v.wpn(self,self.x+offx,self.y+offy,self.rot+v.rot))
 		end
 	end
 end
-
+ 
 function ship:castAbility(index)
 	
 	if index then
@@ -126,22 +127,21 @@ function ship:castAbility(index)
 		if not ab then return end
 		if ab.arg then ab.arg.caster=ab.caster end
 		self.abilities[index].func(_,_,_,ab.arg)
-	else
-		if not self.passive then
-			self.passive={}
-			for i,v in ipairs(self.abilities) do
-				if v.isPassive==true then
-					table.insert(self.passive, v)
-				end
-			end
-			return
-		else
-			for i,v in ipairs(self.passive) do
-				v.func(v.parent)
-			end
-		end
 	end	
 end
+
+function ship:sustain()
+
+
+end
+
+
+function ship:delay()
+
+
+
+end
+
 
 
 function ship:getDamage(from,damageType,damage)
@@ -188,8 +188,10 @@ end
 
 function ship:getCanvas()
 	local size=self.r
+	
 	self.canvas = love.graphics.newCanvas(size*2,size*2)
 	love.graphics.setCanvas(self.canvas)
+	love.graphics.setColor(255,255,255)
 	love.graphics.draw(sheet, self.quad , 0, 0, 0, size/8,size/8)
 	love.graphics.setCanvas()
 	return self.canvas
@@ -289,7 +291,7 @@ function ship:draw()
 	local c={unpack(color[self.side])};c[4]=self.alpha
 	love.graphics.setBlendMode("additive")
 	love.graphics.setColor(c)
-	love.graphics.draw(sheet, self.quad , self.x, self.y, self.rot, self.size*1.1,self.size*1.1,8,8)
+	love.graphics.draw(sheet, self.quad , self.x, self.y, self.rot, self.size*1.2,self.size*1.2,8,8)
 	love.graphics.setBlendMode("alpha")
 	love.graphics.setColor(255,255,255,c[4])
 	love.graphics.draw(sheet, self.quad , self.x, self.y, self.rot, self.size,self.size,8,8)

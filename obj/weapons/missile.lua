@@ -2,12 +2,11 @@ local missile=Class("missile")
 
 
 
-function missile:initialize(parent,level,x,y,rot)
+function missile:initialize(parent,x,y,rot)
 	self.x=x
 	self.y=y
 	self.rot=rot
 	self.parent=parent
-	self.level=level
 	self.life=150
 	self.target=nil
 	self.quad = res.missile
@@ -23,7 +22,7 @@ function missile:initialize(parent,level,x,y,rot)
 	self.speedAcc=0.2
 	self.side=self.parent.side
 	self.visualRange=500
-	self.explosionRange=self.size*10
+	self.AOERange=self.size*10
 end
 
 
@@ -51,8 +50,8 @@ end
 
 function missile:explosion()
 	for i,v in ipairs(game.ship) do
-		if v.side~=self.side and math.getDistance(self.x,self.y,v.x,v.y)<self.explosionRange then
-			v:getDamage(self.parent,"energy",self.level*3)
+		if v.side~=self.side and math.getDistance(self.x,self.y,v.x,v.y)<self.AOERange then
+			v:getDamage(self.parent,"energy",self.AOEdamage)
 		end
 	end
 end
@@ -64,7 +63,7 @@ function missile:hitTest()
 		if v.side~=self.side and self:collision(v) then
 			self.destroy=true
 			self.dead=true
-			v:getDamage(self.parent,"energy",self.level*10)
+			v:getDamage(self.parent,"energy",self.damage)
 			self:explosion()
 		end		
 	end

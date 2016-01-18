@@ -1,13 +1,21 @@
 local ship=Class("g1",res.shipClass.base) --这个 要改“”中的名称 跟飞机名字对应就行了
+local weapon=Class("g1_w",res.weaponClass.impulse)
+
+function weapon:initialize(parent,x,y,rot)
+	self.class.super.initialize(self,parent,x,y,rot)
+	self.speed=10
+	self.level=1
+	self.life=100
+	self.skin=nil
+	self.sw=0
+	self.sh=0
+end
+
 
 function ship:initialize(side,x,y,rot)
 	self.class.super.initialize(self,side,x,y,rot)  --x,y 不用管
-
-
 	self.energyMax=300 --能量，有能量时，自动产生护盾抵御攻击，同时使用技能也会消耗能量。
 	self.armorMax=100 --护甲，无法自动恢复，在没有能量护盾的时候会扣减，如果为0则摧毁
-
-
 	self.name="g1" --飞船的名字，
 	self.skin=1
 	self.quad = res.ships[self.side][self.skin] --side是 blue,green,red,yellow,purple中的一种 这里不用改 数字是类型1~19*5 从上到下从左到右顺序
@@ -26,20 +34,10 @@ function ship:initialize(side,x,y,rot)
 			posX=3,
 			posY=5,
 			rot=0,
-			type="impulse",
+			wpn=weapon,
 			level=5,
 			cd=20,
-			speed=12,
 		},
-		{
-			posX=3,
-			posY=-5,
-			rot=0,
-			type="impulse",
-			level=5,
-			cd=20,
-			speed=12,
-		}
 	}
 
 	--posX,Y 是 引擎火焰的位置 相对于每个小飞机图片中心的

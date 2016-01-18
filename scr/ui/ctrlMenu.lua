@@ -83,6 +83,7 @@ menu.team={
 			game.cmd="attack" 
 		end,
 	},
+	["6"]=nil,
 
 	["7"]={
 		icon=222,
@@ -98,6 +99,7 @@ menu.team={
 			game.cmd="form" 
 		end,
 	},
+	["9"]=nil
 }
 
 

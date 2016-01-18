@@ -1,14 +1,14 @@
-local ship=Class("g1123",res.shipClass.base)
+local ship=Class("mother_2",res.shipClass.base)
 local param=
 {
-	["isMum"]=false,
+	["isMum"]=true,
 	["speedAcc"]=0.3,
-	["size"]=2,
+	["size"]=4,
 	["engineSys"]={
 		[1]={
-			["posX"]=-9,
+			["posX"]=-11,
 			["rot"]=0,
-			["anim"]=1,
+			["anim"]=3,
 			["posY"]=0,
 		},
 	},
@@ -33,12 +33,12 @@ local param=
 		},
 	},
 	["fireRange"]=200,
-	["energyMax"]=300,
+	["energyMax"]=500,
 	["visualRange"]=500,
-	["speedMax"]=5,
-	["armorMax"]=100,
-	["name"]="g1123",
-	["skin"]=1,
+	["speedMax"]=1,
+	["armorMax"]=500,
+	["name"]="mother_2",
+	["skin"]=90,
 }
 function ship:initialize(side,x,y,rot)
 	res.shipClass.base.initialize(self,side,x,y,rot)

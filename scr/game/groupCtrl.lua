@@ -85,8 +85,9 @@ function groupCtrl:checkInBattle(group)
 	local count=0
 	for i,unit in ipairs(group.units) do
 		if unit.inFireRange then
+			count=count+1
 			if count>tar then
-				return true
+				return unit
 			end
 		end
 	end

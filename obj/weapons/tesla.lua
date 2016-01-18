@@ -1,18 +1,16 @@
 local tesla=Class("tesla")
 
-function tesla:initialize(parent,level,x,y,target)
+function tesla:initialize(parent,x,y,rot)
+
 	self.px=parent.x
 	self.py=parent.y
 	self.ox=x
 	self.oy=y
 	self.x=x
 	self.y=y
-	self.level=level
-	self.range=100+level*50
 	self.lines=2
 	self.life=30
 	self.parent=parent
-
 end
 
 
@@ -41,7 +39,7 @@ function tesla:update()
 
 	if self.target then
 		game:newSpark(self.tx,self.ty)
-		self.target:getDamage(self.parent,"energy",self.level)
+		self.target:getDamage(self.parent,"energy",self.damage)
 	end
 end
 

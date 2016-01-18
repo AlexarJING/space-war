@@ -28,8 +28,8 @@ game.cmdCtrl=require "scr/game/cmd"
 game.locatedTarget=nil
 
 --game.rule=require "tasks/protectTheMotherShip"
---game.rule=require "tasks/designer"
-game.rule=require "tasks/encounter"
+game.rule=require "tasks/designer"
+--game.rule=require "tasks/encounter"
 ---game.debug=true
 game.money=0
 game.rock={}
@@ -59,6 +59,7 @@ end
 
 
 function game:newBullet(parent,type,x,y,rot,level,speed,type)
+	error("removed")
 	if type=="impulse" then
 		table.insert(self.bullet, res.weaponClass.impulse(parent,level,x,y,rot,speed))
 	elseif type=="laser" then
@@ -394,7 +395,7 @@ function game:keypressed(key)
 		game.ctrlGroup=nil
 	end
 
-	if key=="q" then
+	if key=="f" then
 		game.cmd="form"
 	end
 
@@ -402,7 +403,11 @@ function game:keypressed(key)
 		game:getFocus()
 	end
 
-	if key=="f" then
+	if key=="c" then
+		game.cmd="concentrate"
+	end
+
+	if key=="f9" then
 		game.fullscreen=not game.fullscreen
 		if game.fullscreen then 
 			love.window.setMode( 1600, 900,{fullscreen=true,fullscreentype="normal"}) 
@@ -414,8 +419,8 @@ function game:keypressed(key)
 		scaleY=resolution[2]/designResolution[2]
 		w=resolution[1]
 		h=resolution[2]
-		game.uiCtrl.miniMap.map:reSize()
-		game.uiCtrl.uiReset()
+		game.uiCtrl.ui.miniMap.map:reSize()
+		game.uiCtrl:uiReset()
 	end
 
 	if key=="a" and  love.keyboard.isDown("lctrl") then
