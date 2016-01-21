@@ -71,7 +71,7 @@ function ui:newMenu(tab,units)
 			if units then
 				btn.OnClick=function(obj,x,y,arg)					
 					for i,ship in ipairs(units) do
-						if arg then arg.caster=ship end
+						if arg then arg.caster=ship else arg=ship end
 						setting.func(obj,x,y,arg)
 					end
 				end
@@ -86,7 +86,8 @@ function ui:newMenu(tab,units)
 				
 				btn.callbackArg=setting.arg
 				btn.callbackArg.caster=self.target[1] 
-
+			else
+				btn.callbackArg=self.target[1]
 			end
 
 		else

@@ -1,76 +1,80 @@
 local ship=Class("miner",res.shipClass.base)
 
 local weapon=Class("sc_w",res.weaponClass.tesla)
+weapon.static.damage=2
+weapon.static.lines=2
+weapon.static.life=30
 
 function weapon:initialize(parent,x,y,rot)
 	self.class.super.initialize(self,parent,x,y,rot)
-	self.damage=2
-	self.lines=2
-	self.life=30
+	self.damage=weapon.damage
+	self.lines=weapon.lines
+	self.life=weapon.life
 end
 
+
+ship.static.energyMax=50
+ship.static.armorMax=50
+ship.static.price_m=100
+ship.static.price_e=50
+ship.static.name="miner" 
+ship.static.skin=70 
+ship.static.size=2 
+ship.static.speedMax=3 
+ship.static.speedAcc=0.3 
+ship.static.state="mine"
+ship.static.isSP=true 
+ship.static.visualRange=500 
+ship.static.fireRange=50
+ship.static.testRange=5000
+ship.static.fireSys={
+	{
+		posX=3,
+		posY=5,
+		rot=0,
+		wpn=weapon,
+		cd=20,
+		heat=0,
+	},
+}
+ship.static.engineSys={
+	{posX=-9,
+	posY=0,
+	rot=0,
+	anim=2
+	}
+}
+ship.static.abilities={
+	["7"]={
+		text="exploit", --技能名称
+		icon=147, ---技能图标
+		func=function(obj,x,y,ship) --技能函数
+			local state=ship.state=="mine"  and "battle" or "mine"
+			ship:switchState(state)
+		end,
+	}}
 
 
 
 function ship:initialize(side,x,y,rot)
-
 	self.class.super.initialize(self,side,x,y,rot)  
-	self.energyMax=50
-	self.armorMax=50
-	self.price_m=100
-	self.price_e=50
-
-	self.name="miner" 
-	self.skin=70 
-	self.size=2 
-
-	self.speedMax=3 
-	self.speedAcc=0.3 
-
-	self.state="mine"
-	self.isSP=true 
-	self.visualRange=500 
-	self.fireRange=50
-	self.testRange=5000
-
-
-	self.fireSys={
-		{
-			posX=3,
-			posY=5,
-			rot=0,
-			wpn=weapon,
-			cd=20,
-			heat=0,
-		},
-	}
-
-
-	self.engineSys={
-		{posX=-9,
-		posY=0,
-		rot=0,
-		anim=2
-		}
-	}
-
-	
-	self.abilities={
-		["7"]={
-			caster=self, --自身
-			pos=7, --在右侧控制框的位置6~9
-			text="exploit", --技能名称
-			icon=147, ---技能图标
-			func=function(obj,x,y,arg) --技能函数
-				local ship=arg.caster
-				local state=ship.state=="mine"  and "battle" or "mine"
-				ship:switchState(state)
-			end,
-			arg={}, --函数参数
-			type="active"
-
-		}}
-
+	self.energyMax=ship.energyMax
+	self.armorMax=ship.armorMax
+	self.price_m=ship.price_m
+	self.price_e=ship.price_e
+	self.name=ship.name
+	self.skin=ship.skin 
+	self.size=ship.size 
+	self.speedMax=ship.speedMax 
+	self.speedAcc=ship.speedAcc 
+	self.state=ship.state
+	self.isSP=ship.isSP
+	self.visualRange=ship.visualRange 
+	self.fireRange=ship.fireRange
+	self.testRange=ship.testRange
+	self.fireSys=ship.fireSys
+	self.engineSys=ship.engineSys
+	self.abilities=ship.abilities
 	self:reset()
 end
 function ship:findTarget ()

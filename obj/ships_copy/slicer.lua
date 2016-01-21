@@ -7,7 +7,6 @@ function weapon:initialize(parent,x,y,rot)
 	self.range=100
 	self.width=5
 	self.laserW=self.width
-	self.target=nil
 end
 
 

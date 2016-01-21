@@ -28,8 +28,8 @@ game.cmdCtrl=require "scr/game/cmd"
 game.locatedTarget=nil
 
 --game.rule=require "tasks/protectTheMotherShip"
-game.rule=require "tasks/designer"
---game.rule=require "tasks/encounter"
+--game.rule=require "tasks/designer"
+game.rule=require "tasks/encounter"
 ---game.debug=true
 game.money=0
 game.rock={}
@@ -77,9 +77,10 @@ function game:newSpark(x,y)
 	table.insert(self.spark, res.otherClass.spark(x,y))
 end
 
-function game:pay(who,what,amount)
-	if who[what]>=amount then
-		who[what]=who[what]-amount
+function game:pay(who,energy,mineral)
+	if who.energy>=energy and who.mineral>=mineral then
+		who.energy=who.energy-energy
+		who.mineral=who.mineral-mineral
 		return true
 	end
 	return false

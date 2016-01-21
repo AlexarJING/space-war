@@ -1,81 +1,5 @@
-local ship=Class("collector",res.shipClass.base)
+local ship=res.shipClass.miner
 
-local weapon=Class("co_w",res.weaponClass.laser)
-
-function weapon:initialize(parent,x,y,rot)
-	self.class.super.initialize(self,x,y,rot)
-	self.damage=3
-	self.range=500
-	self.width=self.parent.size*5
-	self.laserW=self.width
-	self.target=nil
-end
-
-
-
-
-function ship:initialize(side,x,y,rot)
-
-	self.class.super.initialize(self,side,x,y,rot)  
-	self.energyMax=150
-	self.armorMax=150
-	self.price_m=100
-	self.price_e=50
-
-	self.name="collector" 
-	self.skin=73 
-	self.size=2 
-
-	self.speedMax=3 
-	self.speedAcc=0.3 
-
-	self.state="mine"
-	self.isSP=true 
-	self.visualRange=500 
-	self.fireRange=50
-	self.testRange=5000
-
-
-	self.fireSys={
-		{
-			posX=3,
-			posY=5,
-			rot=0,
-			wpn=weapon,
-			cd=20,
-			heat=0,
-			speed=12,
-		},
-	}
-
-
-	self.engineSys={
-		{posX=-9,
-		posY=0,
-		rot=0,
-		anim=2
-		}
-	}
-
-	
-	self.abilities={
-		["7"]={
-			caster=self, --自身
-			pos=7, --在右侧控制框的位置6~9
-			text="exploit", --技能名称
-			icon=147, ---技能图标
-			func=function(obj,x,y,arg) --技能函数
-				local ship=arg.caster
-				local state=ship.state=="mine"  and "battle" or "mine"
-				ship:switchState(state)
-			end,
-			arg={}, --函数参数
-			type="active"
-
-		}}
-
-	self:reset()
-end
 function ship:findTarget ()
 	
 	if self.target and self.target.dead  then 
@@ -84,14 +8,7 @@ function ship:findTarget ()
 		return false
 	end
 	if self.mine then return end
-	if self.state=="battle" and self.target then
-		if math.getDistance(self.x,self.y,target.x,target.y)<self.visualRange then
-			return
-		else
-			self.target=nil
-		end
 
-	end
 	local dist
 	local pos
 	local tar= self.state=="battle" and game.ship or game.rock

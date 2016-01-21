@@ -49,6 +49,7 @@ function missile:collision(target)
 end
 
 function missile:explosion()
+	res.otherClass.frag(self.x,self.y,0,_,self.AOERange/8)
 	for i,v in ipairs(game.ship) do
 		if v.side~=self.side and math.getDistance(self.x,self.y,v.x,v.y)<self.AOERange then
 			v:getDamage(self.parent,"energy",self.AOEdamage)

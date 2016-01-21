@@ -70,7 +70,7 @@ end
 
 
 function designer:new()
-	game.uiCtrl:setVisible(false)
+	--game.uiCtrl:setVisible(false)
 	game.showFog=false
 	game.showAll=true
 	self.target=res.shipClass.cruiser("blue",400,500)
@@ -81,7 +81,6 @@ function designer:new()
 		if x>1000 then x=300;y=y+100 end
 		if v~=res.shipClass.base and v~=res.shipClass.rnd then
 			local ship=v("blue",x,y)
-			print(ship.name)
 		end
 	end
 	game.bg.cam:lookAt(500,500)

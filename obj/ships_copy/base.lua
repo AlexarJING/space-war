@@ -131,12 +131,12 @@ function ship:castAbility(index)
 	if index then
 		local ab=self.abilities[index]
 		if not ab then return end
-		if ab.arg then ab.arg.caster=ab.caster end
+		if ab.arg then ab.arg.caster=self else arg=self end
 		self.abilities[index].func(_,_,_,ab.arg)
 	end	
 end
 
-function ship:sustain()
+function ship:passiveAb()
 
 
 end

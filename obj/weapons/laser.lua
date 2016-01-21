@@ -9,6 +9,7 @@ function laser:initialize(parent,x,y,rot)
 	self.width=parent.size*5
 	self.rot=rot
 	self.parent=parent
+	self.target=nil
 	self.laserW=self.width
 end
 

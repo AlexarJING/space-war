@@ -8,7 +8,17 @@ function task:new()
 	for i=1,200 do
 		res.otherClass.rock(love.math.random(1,5000),love.math.random(1,5000))
 	end
-	game.mum[1]=res.shipClass.motherShip("blue",500,500)
+	game.mum[1]=res.shipClass.leader("blue",500,500)
+
+	local x=300
+	local y=300
+	for k,v in pairs(res.shipClass) do
+		x=x+100
+		if x>1000 then x=300;y=y+100 end
+		if v~=res.shipClass.base and v~=res.shipClass.leader then
+			local ship=v(game.mum[1],x,y)
+		end
+	end
 
 
 	for i=1,5 do 
@@ -18,7 +28,7 @@ function task:new()
 	end	
 	game.bg.cam:lookAt(500,500)
 
-	game.mum[2]=res.shipClass.motherShip("green",4500,4500)
+	game.mum[2]=res.shipClass.leader("green",4500,4500)
 
 	for i=1,5 do 
 		local miner=res.shipClass.miner(game.mum[2],4500,4500)
@@ -29,7 +39,7 @@ function task:new()
 	game.mum[2].state="normal"
 	game.mum[1].enermy=game.mum[2]
 	game.mum[2].enermy=game.mum[1]
-	--game.mum[1].mineral=500
+	game.mum[1].mineral=500
 
 	--game.showFog=false
 	--game.showAll=true

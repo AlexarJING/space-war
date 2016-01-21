@@ -244,7 +244,9 @@ function ctrl:fleet()
 			end
 			local target=targets[1]
 			 --单击
-			if game.ctrlGroup and #game.ctrlGroup.units==1 and game.ctrlGroup.units[1]==target and not target.isMum then
+			if game.ctrlGroup and #game.ctrlGroup.units==1 and game.ctrlGroup.units[1]==target 
+					and not target.isMum and target.parent then
+				--这里处理的是双击
 				local tab={}
 				for _,ship in ipairs(target.parent.child) do
 					

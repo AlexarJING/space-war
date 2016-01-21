@@ -1,29 +1,31 @@
-local ship=Class("annihilator",res.shipClass.base) --这个 要改“”中的名称 跟飞机名字对应就行了
-local weapon=Class("an_w",res.weaponClass.tesla)
+local ship=Class("fighter",res.shipClass.base) --这个 要改“”中的名称 跟飞机名字对应就行了
+local weapon=Class("fi_w",res.weaponClass.laser)
 
 function weapon:initialize(parent,x,y,rot)
 	self.class.super.initialize(self,parent,x,y,rot)
-	self.damage=8
-	self.lines=4
-	self.life=30
+	self.damage=5
+	self.range=500
+	self.width=self.parent.size*5
+	self.laserW=self.width
 end
 
 
 function ship:initialize(side,x,y,rot)
 	self.class.super.initialize(self,side,x,y,rot)  
-	self.energyMax=300
-	self.armorMax=200 
+	
+	self.energyMax=200
+	self.armorMax=50 
 
-	self.name="annihilator"
-	self.price_m=400
-	self.price_e=600
+	self.name="fighter"
+	self.price_m=250
+	self.price_e=300
 
-	self.skin=34
+	self.skin=20
 
-	self.size=3 
+	self.size=2.5 
 
 
-	self.speedMax=5 
+	self.speedMax=7 
 	self.speedAcc=0.3 
 
 

@@ -91,17 +91,96 @@ for k, file in ipairs(files) do
     res.weaponClass[name]= require (dir.."/"..name)
 end
 
-
-
-res.shipClass={}
-res.shipClass.base= require "obj/ships/base"
-local dir="obj/ships"
+res.shipParam={}
+local dir="obj/ships/param"
 local files = love.filesystem.getDirectoryItems( dir )
 for k, file in ipairs(files) do
     local dot=string.find(file, "%.")
     local name=string.sub(file,1,dot-1)
-    res.shipClass[name]= require (dir.."/"..name)
+    res.shipParam[name]= require (dir.."/"..name)
 end
+
+res.shipAbilities={}
+local dir="obj/ships/abilities"
+local files = love.filesystem.getDirectoryItems( dir )
+for k, file in ipairs(files) do
+    local dot=string.find(file, "%.")
+    local name=string.sub(file,1,dot-1)
+    res.shipAbilities[name]= require (dir.."/"..name)
+end
+
+
+function res.loadParam(cls,name)
+	
+
+	--------------------------init weapon---------------------------
+	cls.static.fireSys={}
+	for i,param in ipairs(res.shipParam[name].weapon) do
+		cls.static.fireSys[i]={}
+		for k,v in pairs(param) do
+			if type(v)=="number" then
+				cls.static.fireSys[i][k]=v
+			end
+		end
+
+		local weapon=Class(name.."_w"..tostring(i),res.weaponClass[param.type])
+		local prop={"damage","life","speed","speedMax","visualRange","AOERange","AOEDamage",
+			"skin","sw","sh","range","width","laserW","lines"}
+		for _,v in ipairs(prop) do
+			weapon.static[v]=param.v
+		end
+		function weapon:initialize(parent,x,y,rot)
+			self.class.super.initialize(self,parent,x,y,rot)
+			for _,v in ipairs(prop) do
+				self[v]=param.wpn_param[v]
+			end
+		end
+		cls.static.fireSys[i].wpn=weapon
+	end
+	--------------------------init ship----------------------------------------
+	for k,v in pairs(res.shipParam[name].ship) do
+		cls.static[k]=v
+	end
+	--------------------------init engine--------------------------------
+	cls.static.engineSys={}
+	for i,param in ipairs(res.shipParam[name].engine) do
+		cls.static.engineSys[i]=param
+	end	
+end
+
+function res.loadAbilities(cls,name)
+	cls.static.abilities=res.shipAbilities[name]
+end
+
+function res.loadBehavior(name)
+	local file="obj/ships/behavior/"..name
+	if love.filesystem.exists( file..".lua" ) then
+		require(file)
+	end
+end
+
+----------------------------load all ship class-------------------------
+res.shipClass={}
+res.shipClass.base= require "obj/ships/base"
+
+
+for name,_ in pairs(res.shipParam) do
+	local ship=Class(name,res.shipClass.base)
+	res.loadParam(ship,name)
+	res.loadAbilities(ship,name)
+	function ship:initialize(sideOrParent,x,y,rot)
+		self.class.super.initialize(self,sideOrParent,x,y,rot) 
+		for k,v in pairs(ship.static) do
+			self[k]=v
+		end
+		self:reset()
+	end
+	res.shipClass[name]=ship
+	res.loadBehavior(name)
+end
+
+
+
 
 
 

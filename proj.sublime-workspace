@@ -4,8 +4,16 @@
 		"selected_items":
 		[
 			[
+				"shipB",
+				"shipBehavior"
+			],
+			[
 				"for",
 				"forp	for k,v in pairs()"
+			],
+			[
+				"bild",
+				"build1"
 			],
 			[
 				"tab",
@@ -452,34 +460,10 @@
 	"buffers":
 	[
 		{
-			"file": "tasks/designer.lua",
+			"file": "obj/ships/abilities/leader.lua",
 			"settings":
 			{
-				"buffer_size": 5137,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "main.lua",
-			"settings":
-			{
-				"buffer_size": 1501,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.676/LuaLove.sublime-build",
-			"settings":
-			{
-				"buffer_size": 789,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "obj/ships/leader.lua",
-			"settings":
-			{
-				"buffer_size": 4309,
+				"buffer_size": 2064,
 				"line_ending": "Windows"
 			}
 		}
@@ -591,10 +575,14 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
-		"last_filter": "ins",
+		"height": 127.0,
+		"last_filter": "remove",
 		"selected_items":
 		[
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
 			[
 				"ins",
 				"Package Control: Install Package"
@@ -652,61 +640,121 @@
 	},
 	"expanded_folders":
 	[
-		"/F/Love2D Project/space war"
+		"/F/Love2D Project/space war",
+		"/F/Love2D Project/space war/obj",
+		"/F/Love2D Project/space war/obj/ships",
+		"/F/Love2D Project/space war/obj/ships/abilities",
+		"/F/Love2D Project/space war/obj/ships/param",
+		"/F/Love2D Project/space war/scr",
+		"/F/Love2D Project/space war/tasks"
 	],
 	"file_history":
 	[
+		"/F/Love2D Project/space war/scr/game/game.lua",
+		"/F/Love2D Project/space war/scr/ui/ctrlGrid.lua",
+		"/F/Love2D Project/space war/obj/ships/param/leader.lua",
+		"/F/Love2D Project/space war/obj/ships/param/miner.lua",
+		"/F/Love2D Project/space war/obj/ships/param/observer.lua",
+		"/F/Love2D Project/space war/obj/ships/param/probe.lua",
+		"/F/Love2D Project/space war/obj/ships/param/raider.lua",
+		"/F/Love2D Project/space war/obj/ships/param/repairer.lua",
+		"/F/Love2D Project/space war/obj/ships/param/slicer.lua",
+		"/F/Love2D Project/space war/obj/ships/param/substation.lua",
+		"/F/Love2D Project/space war/obj/ships/param/surveillant.lua",
+		"/F/Love2D Project/space war/obj/ships/param/wasp.lua",
+		"/F/Love2D Project/space war/obj/ships/param/annihilator.lua",
+		"/F/Love2D Project/space war/obj/ships/param/bee.lua",
+		"/F/Love2D Project/space war/obj/ships/param/collector.lua",
+		"/F/Love2D Project/space war/obj/ships/param/cruiser.lua",
+		"/F/Love2D Project/space war/obj/ships/param/defender.lua",
+		"/F/Love2D Project/space war/obj/ships/param/destroyer.lua",
+		"/F/Love2D Project/space war/obj/ships/param/fearless.lua",
+		"/F/Love2D Project/space war/obj/ships/param/fighter.lua",
+		"/F/Love2D Project/space war/obj/ships/param/generator.lua",
+		"/F/Love2D Project/space war/scr/game/ctrlMode.lua",
+		"/F/Love2D Project/space war/scr/game/groupCtrl.lua",
+		"/F/Love2D Project/space war/lib/loveframes/skins/transparent/skin.lua",
+		"/F/Love2D Project/space war/tasks/encounter.lua",
+		"/F/Love2D Project/space war/tasks/designer.lua",
+		"/F/Love2D Project/space war/scr/loadRes.lua",
+		"/F/Love2D Project/space war/obj/ships/behavior/miner.lua",
+		"/F/Love2D Project/space war/obj/ships/param/base.lua",
+		"/F/Love2D Project/space war/.gitignore",
+		"/F/Love2D Project/space war/obj/ships_param/surveillant.lua",
+		"/F/Love2D Project/space war/obj/ships_param/fighter.lua",
+		"/F/Love2D Project/space war/obj/ships_param/wasp.lua",
+		"/F/Love2D Project/space war/obj/ships/wasp.lua",
+		"/F/Love2D Project/space war/obj/ships_abilities/wasp.lua",
+		"/F/Love2D Project/space war/obj/ships/surveillant.lua",
+		"/F/Love2D Project/space war/obj/ships_param/raider.lua",
+		"/F/Love2D Project/space war/obj/ships_param/slicer.lua",
+		"/F/Love2D Project/space war/obj/ships_param/substation.lua",
+		"/F/Love2D Project/space war/obj/ships/substation.lua",
+		"/F/Love2D Project/space war/obj/ships/slicer.lua",
+		"/F/Love2D Project/space war/obj/ships/repairer.lua",
+		"/F/Love2D Project/space war/obj/ships_param/repairer.lua",
+		"/F/Love2D Project/space war/obj/ships/probe.lua",
+		"/F/Love2D Project/space war/obj/ships/raider.lua",
+		"/F/Love2D Project/space war/obj/ships_param/probe.lua",
+		"/F/Love2D Project/space war/obj/ships_param/generator.lua",
+		"/F/Love2D Project/space war/obj/ships_param/observer.lua",
+		"/F/Love2D Project/space war/obj/ships/observer.lua",
+		"/F/Love2D Project/space war/obj/ships_param/miner.lua",
+		"/F/Love2D Project/space war/obj/ships/miner.lua",
+		"/F/Love2D Project/space war/obj/ships/generator.lua",
+		"/F/Love2D Project/space war/obj/ships_param/destroyer.lua",
+		"/F/Love2D Project/space war/obj/ships/fighter.lua",
+		"/F/Love2D Project/space war/obj/ships_param/fearless.lua",
+		"/F/Love2D Project/space war/obj/ships/fearless.lua",
+		"/F/Love2D Project/space war/obj/ships_param/collector.lua",
+		"/F/Love2D Project/space war/obj/ships_param/bee.lua",
+		"/F/Love2D Project/space war/obj/ships_param/annihilator.lua",
+		"/F/Love2D Project/space war/obj/ships/destroyer.lua",
+		"/F/Love2D Project/space war/obj/weapons/missile.lua",
+		"/F/Love2D Project/space war/obj/ships_param/cruiser.lua",
+		"/F/Love2D Project/space war/obj/ships_param/defender.lua",
+		"/F/Love2D Project/space war/obj/ships/defender.lua",
+		"/F/Love2D Project/space war/obj/ships/cruiser.lua",
+		"/F/Love2D Project/space war/obj/ships/collector.lua",
+		"/F/Love2D Project/space war/obj/ships/bee.lua",
+		"/F/Love2D Project/space war/obj/ships/annihilator.lua",
+		"/F/Love2D Project/space war/obj/ships/leader.lua",
+		"/F/Love2D Project/space war/obj/ships/base.lua",
+		"/F/Love2D Project/space war/obj/ships_abilities/annihilator.lua",
+		"/F/Love2D Project/space war/main.lua",
+		"/F/Love2D Project/space war/obj/ships_abilities/leader.lua",
+		"/F/Love2D Project/space war/obj/ships_param/leader.lua",
+		"/F/Love2D Project/space war/obj/weapons/laser.lua",
+		"/F/Love2D Project/space war/obj/ships_param/leader_pm.lua",
+		"/F/Love2D Project/space war/obj/ships_init/leader.lua",
+		"/F/Love2D Project/space war/scr/shipParam.lua",
+		"/F/Love2D Project/space war/scr/abilities/build_miner.lua",
+		"/F/Love2D Project/space war/scr/abilities.lua",
+		"/F/Love2D Project/space war/lib/util.lua",
+		"/C/Program Files (x86)/Sublime Text 3/Data/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Program Files (x86)/Sublime Text 3/Data/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/Alexar/AppData/Local/Temp/Rar$DRa0.058/LuaLove.sublime-build",
 		"/C/Program Files (x86)/Sublime Text 3/Data/Packages/Lua Love/LuaLove.sublime-settings",
+		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.676/LuaLove.sublime-build",
 		"/C/Users/Administrator/main.lua",
 		"/F/Love2D Project/pixelRace/scenes/credits.lua",
 		"/F/Love2D Project/pixelRace/scenes/help.lua",
-		"/F/Love2D Project/space war/obj/ships/annihilator.lua",
-		"/F/Love2D Project/space war/obj/ships/collector.lua",
-		"/F/Love2D Project/space war/obj/ships/surveillant.lua",
-		"/F/Love2D Project/space war/obj/ships/slicer.lua",
-		"/F/Love2D Project/space war/obj/ships/probe.lua",
-		"/F/Love2D Project/space war/obj/ships/destroyer.lua",
-		"/F/Love2D Project/space war/obj/ships/cruiser.lua",
-		"/F/Love2D Project/space war/obj/ships/base.lua",
-		"/F/Love2D Project/space war/obj/ships/fighter.lua",
-		"/F/Love2D Project/space war/obj/ships/fearless.lua",
-		"/F/Love2D Project/space war/obj/ships/defender.lua",
-		"/F/Love2D Project/space war/obj/ships/repairer.lua",
-		"/F/Love2D Project/space war/obj/ships/generator.lua",
-		"/F/Love2D Project/space war/obj/ships/observer.lua",
-		"/F/Love2D Project/space war/obj/weapons/missile.lua",
-		"/F/Love2D Project/space war/obj/ships/wasp.lua",
-		"/F/Love2D Project/space war/obj/weapons/laser.lua",
 		"/F/Love2D Project/space war/obj/weapons/impulse.lua",
 		"/F/Love2D Project/space war/obj/weapons/tesla.lua",
-		"/F/Love2D Project/space war/obj/ships/raider.lua",
 		"/F/Love2D Project/space war/obj/ships/scrounger.lua",
-		"/F/Love2D Project/space war/obj/ships/bee.lua",
-		"/F/Love2D Project/space war/tasks/designer.lua",
-		"/F/Love2D Project/space war/scr/loadRes.lua",
-		"/F/Love2D Project/space war/main.lua",
 		"/F/Love2D Project/space war/obj/others/frag.lua",
 		"/F/Love2D Project/space war/obj/ships/g1.lua",
-		"/F/Love2D Project/space war/scr/game/game.lua",
-		"/F/Love2D Project/space war/scr/game/groupCtrl.lua",
-		"/F/Love2D Project/space war/lib/util.lua",
-		"/F/Love2D Project/space war/scr/ui/ctrlGrid.lua",
 		"/F/Love2D Project/space war/obj/ships/motherShip.lua",
-		"/F/Love2D Project/space war/obj/ships/miner.lua",
 		"/C/Users/Administrator/Desktop/Trailmesh/trailmesh.lua",
 		"/F/Love2D Project/space war/scr/ui/ctrlMenu.lua",
 		"/F/Love2D Project/space war/scr/game/abilities.lua",
 		"/F/Love2D Project/space war/scr/ui/mainInfo.lua",
-		"/F/Love2D Project/space war/tasks/encounter.lua",
 		"/F/Love2D Project/space war/lib/animation.lua",
-		"/F/Love2D Project/space war/scr/game/ctrlMode.lua",
-		"/F/Love2D Project/space war/lib/loveframes/skins/transparent/skin.lua",
 		"/F/Love2D Project/space war/scr/game/cmd.lua",
 		"/F/Love2D Project/space war/obj/others/rock.lua",
 		"/F/Love2D Project/space war/scr/ui/gameMenu.lua",
 		"/F/Love2D Project/space war/scr/ui/miniMap_panel.lua",
 		"/F/Love2D Project/space war/scr/ui/miniMap.lua",
-		"/F/Love2D Project/space war/.gitignore",
 		"/F/Love2D Project/space war/test.moon",
 		"/F/Love2D Project/space war/scr/ui/gameUI.lua",
 		"/F/Love2D Project/space war/scr/ui/topZone.lua",
@@ -729,65 +777,11 @@
 		"/C/Users/Administrator/AppData/Local/Temp/Rar$DIa0.683/shieldmonitor.lua",
 		"/F/Love2D Project/space war/lib/loveframes/objects/internal/tooltip.lua",
 		"/F/Love2D Project/space war/lib/loveframes/init.lua",
-		"/F/Love2D Project/space war/logic/loadRes.lua",
-		"/C/Users/Administrator/AppData/Local/Temp/Rar$DIa0.219/main.lua",
-		"/F/Love2D Project/MagicTCG/loadTexture.lua",
-		"/F/Love2D Project/space war/obj/ship.lua",
-		"/F/Love2D Project/space war/obj/g1.lua",
-		"/F/Love2D Project/space war/obj/missile.lua",
-		"/F/Love2D Project/space war/obj/explosion.lua",
-		"/F/Love2D Project/space war/logic/lib/gamestate.lua",
-		"/F/Love2D Project/space war/logic/logic/game.lua",
-		"/F/Love2D Project/space war/logic/scene/start.lua",
-		"/F/Love2D Project/space war/logic/[string \"boot.lua\"]",
-		"/F/Love2D Project/space war/logic/lib/camera.lua",
-		"/F/Love2D Project/space war/logic/event.lua",
-		"/F/Love2D Project/space war/lib/loveframes/objects/text.lua",
-		"/F/Love2D Project/chinese input/caractorLib.lua",
-		"/F/Love2D Project/space war/logic/cmd.lua",
-		"/C/Users/Administrator/AppData/Roaming/Sublime Text 3/Packages/Moonscripty/Moonscript.sublime-settings",
-		"/C/Users/ADMINI~1/AppData/Local/Temp/Rar$DRa0.415/Moonscript.sublime-build",
-		"/C/Users/Administrator/AppData/Local/Temp/Rar$DIa0.827/glass.lua",
-		"/F/Love2D Project/space war/lib/middleclass.lua",
-		"/C/Users/Administrator/AppData/Roaming/npm/node_modules/lua-distiller/bin/lua-distiller.coffee",
-		"/F/Love2D Project/space war/lib/camera.lua",
-		"/C/Users/Administrator/AppData/Roaming/npm/node_modules/lua-distiller/luasrcdiet/LuaSrcDiet.lua",
-		"/C/Users/Administrator/AppData/Roaming/npm/node_modules/lua-distiller/luasrcdiet/llex.lua",
-		"/F/Love2D Project/space war/lib/loveframes/objects/internal/columnlist/columnlistheader.lua",
-		"/F/Love2D Project/space war/lib/loveframes/objects/columnlist.lua",
-		"/F/Love2D Project/space war/lib/loveframes/objects/internal/columnlist/columnlistrow.lua",
-		"/F/love wiki 0.10/wiki/index.html",
-		"/C/Users/Administrator/Desktop/程序/docs/wiki/index.html",
-		"/F/Love2D Project/space war/logic/miniMap.lua",
-		"/F/Love2D Project/space war/conf.lua",
-		"/F/Love2D Project/space war/logic/groupCtrl.lua",
-		"/F/Love2D Project/space war/obj/spark.lua",
-		"/F/Love2D Project/space war/obj/rock.lua",
-		"/F/Love2D Project/space war/obj/motherShip.lua",
-		"/F/Love2D Project/space war/lib/loveframes/objects/textinput.lua",
-		"/F/Love2D Project/space war/obj/tesla.lua",
-		"/F/Love2D Project/space war/obj/laser.lua",
-		"/F/Love2D Project/space war/obj/impulse.lua",
-		"/F/Love2D Project/space war/obj/miner.lua",
-		"/C/Users/Administrator/Desktop/tmp.lua",
-		"/F/Love2D Project/space war/tasks/protectTheMotherShip.lua",
-		"/F/Love2D Project/space war/obj/rnd.lua",
-		"/F/Love2D Project/space war/obj/frag.lua",
-		"/C/Users/Administrator/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
-		"/C/Users/Administrator/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
-		"/C/Users/Administrator/AppData/Roaming/Sublime Text 3/Packages/Move By Symbols/Default (Windows).sublime-keymap",
-		"/C/Users/Administrator/AppData/Roaming/Sublime Text 3/Packages/Move By Symbols/Move By Symbols.sublime-settings",
-		"/F/Love2D Project/space war/obj/obj/miner.lua",
-		"/F/Love2D Project/space war/obj/base.lua",
-		"/F/Love2D Project/space war/lib/loveframes/objects/button.lua",
-		"/F/Love2D Project/space war/lib/loveframes/objects/imagebutton.lua",
-		"/F/Love2D Project/space war/debug_main.lua",
-		"/F/Love2D Project/space war/debugger.lua",
-		"/F/Love2D Project/space war/obj/g2.lua"
+		"/F/Love2D Project/space war/logic/loadRes.lua"
 	],
 	"find":
 	{
-		"height": 26.0
+		"height": 36.0
 	},
 	"find_in_files":
 	{
@@ -802,6 +796,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"imagebutton",
+			"groupmove",
+			"move",
+			"print",
+			"annihilator",
+			"level",
+			"buildbtn",
+			"queue",
+			"buildbtn",
+			"ship.static.",
+			"self",
+			"math.get",
+			"ctrl+r",
+			"f6",
 			"target",
 			"width",
 			"laserw",
@@ -915,21 +923,7 @@
 			"setpos",
 			"newfo",
 			"return",
-			"self.ctrlGroup",
-			"self.state",
-			"state",
-			"groupmove",
-			"findtar",
-			"game:updateFog()",
-			"5000",
-			"isenou",
-			"print",
-			"restext",
-			"queue",
-			"destroy",
-			"parent",
-			"ship",
-			"update"
+			"self.ctrlGroup"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -937,6 +931,12 @@
 		"regex": false,
 		"replace_history":
 		[
+			"bee",
+			"",
+			"ship.static",
+			"weapon.static",
+			"ship",
+			"ship.static",
 			"damage",
 			"slicer",
 			"probe",
@@ -1060,92 +1060,30 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "tasks/designer.lua",
+					"file": "obj/ships/abilities/leader.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5137,
+						"buffer_size": 2064,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1848,
-								1848
+								1510,
+								1510
 							]
 						],
 						"settings":
 						{
-							"function_name_status_row": 82,
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1413.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "main.lua",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 1501,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								421,
-								421
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 216.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.676/LuaLove.sublime-build",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 789,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								414,
-								414
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
@@ -1154,44 +1092,13 @@
 					},
 					"stack_index": 0,
 					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "obj/ships/leader.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4309,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								492,
-								492
-							]
-						],
-						"settings":
-						{
-							"function_name_status_row": 20,
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -1232,7 +1139,7 @@
 	"project": "proj.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 66.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1270,7 +1177,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 230.0,
+	"side_bar_width": 229.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
