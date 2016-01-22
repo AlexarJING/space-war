@@ -41,8 +41,10 @@ function ship:initialize(parent,x,y,rot,mod)
 	self.queue={}
 	self.engineAni={}
 	self.abilities={}
+	self.buff={}
 
 	self.mineral=0
+	self.generateRate=0.1
 
 	self.destroyCallback=function() end
 	self.hitCallBack=function() end
@@ -131,14 +133,25 @@ function ship:castAbility(index)
 	if index then
 		local ab=self.abilities[index]
 		if not ab then return end
-		if ab.arg then ab.arg.caster=ab.caster end
+		if ab.arg then ab.arg.caster=ab.caster else ab.arg=self end
 		self.abilities[index].func(_,_,_,ab.arg)
 	end	
 end
 
-function ship:sustain()
+function ship:addBuff(arg)
+	table.insert(self.buff, arg)
+	arg:enter(self)
+end
 
 
+
+function ship:updateBuff(dt)
+	for i=#self.buff,1,-1 do
+		if self.buff[i]:update(self,dt) then  
+			self.buff[i]:leave(self,dt)
+			table.remove(self.buff,i)
+		end
+	end
 end
 
 
@@ -190,6 +203,13 @@ function ship:getDamage(from,damageType,damage)
 			self.armor=self.armor-(damage*0.5-self.energy)*2
 			self.energy=0
 		end
+	elseif damageType=="real" then
+		if self.energy>=damage then
+			self.energy=self.energy-damage
+		else
+			self.armor=self.armor-(damage-self.energy)
+			self.energy=0
+		end
 	end
 	if self.armor<=0 then
 		game.event:check("onKill",from,self)
@@ -231,14 +251,16 @@ end
 function ship:collision()
 	for i,v in ipairs(game.ship) do
 		if v.side~=self.side and game:collision(self.x,self.y,v.x,v.y,(self.size+v.size)*8) then
-			local damage
+			--[[local damage
 			if v.energy+v.armor<self.energy+self.armor then
 				damage=v.energy+v.armor
 			else
 				damage=self.energy+self.armor
 			end
-			self:getDamage(v,"physic",damage)
-			v:getDamage(self,"physic",damage)
+			self:getDamage(v,"real",damage)
+			v:getDamage(self,"real",damage)]]
+			v:hold()
+			self:hold()
 		end
 	end
 
@@ -249,6 +271,9 @@ end
 
 function ship:update(dt)
 	if self.dead then return end
+	self:updateBuff(dt)
+	self.energy=self.energy+self.generateRate
+	if self.energy>self.energyMax then self.energy=self.energyMax end
 
 	self:collision()
 	

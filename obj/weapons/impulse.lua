@@ -1,5 +1,4 @@
 local impulse=Class("impulse")
-
 function impulse:initialize(parent,x,y,rot)
 	self.x=x
 	self.y=y
@@ -9,6 +8,7 @@ function impulse:initialize(parent,x,y,rot)
 	self.skin=nil
 	self.sw=0
 	self.sh=0
+	self.multiply=5
 end
 
 function impulse:collision(t)
@@ -25,7 +25,7 @@ function impulse:hitTest()
 			for i=1,5 do
 				game:newSpark(self.x,self.y)
 			end
-			v:getDamage(self.parent,"physic",self.damage)
+			v:getDamage(self.parent,"physic",self.damage*self.multiply)
 		end		
 	end
 

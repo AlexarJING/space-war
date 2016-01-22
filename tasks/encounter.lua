@@ -10,15 +10,6 @@ function task:new()
 	end
 	game.mum[1]=res.shipClass.leader("blue",500,500)
 
-	local x=300
-	local y=300
-	for k,v in pairs(res.shipClass) do
-		x=x+100
-		if x>1000 then x=300;y=y+100 end
-		if v~=res.shipClass.base and v~=res.shipClass.leader then
-			local ship=v(game.mum[1],x,y)
-		end
-	end
 
 
 	for i=1,5 do 

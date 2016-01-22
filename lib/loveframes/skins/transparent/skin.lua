@@ -526,6 +526,8 @@ function skin.DrawImageButton(object)
 	local rox,roy=0,0
 	local rot= object.rot or 0
 	local size=object.size or 0.8
+
+
 	if object.showFrame then
 		love.graphics.setColor(bordercolor)
 		skin.OutlinedRectangle(x, y, width, height)

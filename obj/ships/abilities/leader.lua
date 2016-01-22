@@ -1,7 +1,7 @@
 local function makeBuildButton(name)
 	local tar=res.shipParam[name].ship
 	local btn={}
-	btn.text="build "..tar.name.."; Cost: "..tar.price_e.." Energy, "..tar.price_m.." Mineral"
+	btn.text=tar.name.."; Cost: "..tar.price_e.." Energy, "..tar.price_m.." Mineral"
 	btn.text2=tar.description 
 	btn.icon=res.ships.blue[tar.skin]
 	btn.cd=tar.cd
@@ -55,6 +55,24 @@ build2["7"]=makeBuildButton("repairer")
 build2["8"]=makeBuildButton("surveillant")
 build2["9"]=cancelButton
 
+local power={
+	["enter"]=function(self,ship) 
+		self.dtspeed=ship.speedMax; 
+		ship.speedMax=10*ship.speedMax;
+		self.dtspeed=ship.speedMax-self.dtspeed 
+		self.time=3
+	end,
+	["update"]=function(self,ship,dt)
+		self.time=self.time-dt
+		if self.time<0 then
+			return true
+		end
+	end,
+	["leave"]=function(self,ship) 
+		ship.speedMax=ship.speedMax-self.dtspeed
+	end
+}
+
 local abilities={
 	["7"]={
 		text="build basic units", 
@@ -72,6 +90,16 @@ local abilities={
 			game.uiCtrl.ui.ctrlGrid:newMenu(tab)
 		end,
 	},	
+
+	["9"]={
+		text="speed up !!", 
+		icon=151, 
+		cd=3,
+		func=function(obj,x,y,ship) 
+			ship:addBuff(power)
+		end,
+	},
+
 
 	["6"]={
 		icon=199,

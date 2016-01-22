@@ -60,6 +60,7 @@ end
 
 function uiCtrl:draw()
 	loveframes.draw()
+	self.ui.ctrlGrid:draw()
 	self.ui.miniMap.map:draw()
 end
 

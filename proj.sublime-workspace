@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"explosion",
+				"explosionAnim"
+			],
+			[
 				"shipB",
 				"shipBehavior"
 			],
@@ -463,7 +467,55 @@
 			"file": "obj/ships/abilities/leader.lua",
 			"settings":
 			{
-				"buffer_size": 2064,
+				"buffer_size": 2054,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "obj/weapons/missile.lua",
+			"settings":
+			{
+				"buffer_size": 3140,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "obj/ships/base.lua",
+			"settings":
+			{
+				"buffer_size": 8936,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scr/ui/mainInfo.lua",
+			"settings":
+			{
+				"buffer_size": 7614,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scr/loadRes.lua",
+			"settings":
+			{
+				"buffer_size": 5434,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "obj/others/frag.lua",
+			"settings":
+			{
+				"buffer_size": 2527,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "tasks/encounter.lua",
+			"settings":
+			{
+				"buffer_size": 3809,
 				"line_ending": "Windows"
 			}
 		}
@@ -640,16 +692,11 @@
 	},
 	"expanded_folders":
 	[
-		"/F/Love2D Project/space war",
-		"/F/Love2D Project/space war/obj",
-		"/F/Love2D Project/space war/obj/ships",
-		"/F/Love2D Project/space war/obj/ships/abilities",
-		"/F/Love2D Project/space war/obj/ships/param",
-		"/F/Love2D Project/space war/scr",
-		"/F/Love2D Project/space war/tasks"
+		"/F/Love2D Project/space war"
 	],
 	"file_history":
 	[
+		"/F/Love2D Project/space war/lib/animation.lua",
 		"/F/Love2D Project/space war/scr/game/game.lua",
 		"/F/Love2D Project/space war/scr/ui/ctrlGrid.lua",
 		"/F/Love2D Project/space war/obj/ships/param/leader.lua",
@@ -749,7 +796,6 @@
 		"/F/Love2D Project/space war/scr/ui/ctrlMenu.lua",
 		"/F/Love2D Project/space war/scr/game/abilities.lua",
 		"/F/Love2D Project/space war/scr/ui/mainInfo.lua",
-		"/F/Love2D Project/space war/lib/animation.lua",
 		"/F/Love2D Project/space war/scr/game/cmd.lua",
 		"/F/Love2D Project/space war/obj/others/rock.lua",
 		"/F/Love2D Project/space war/scr/ui/gameMenu.lua",
@@ -796,6 +842,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"damage",
+			"destroy",
+			"explosion",
 			"imagebutton",
 			"groupmove",
 			"move",
@@ -920,10 +969,7 @@
 			"groupinfo",
 			"bref",
 			"issele",
-			"setpos",
-			"newfo",
-			"return",
-			"self.ctrlGroup"
+			"setpos"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1060,7 +1106,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1069,15 +1115,195 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2064,
+						"buffer_size": 2054,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1510,
-								1510
+								1519,
+								1519
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 780.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "obj/weapons/missile.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3140,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1499,
+								1499
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1080.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "obj/ships/base.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8936,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5271,
+								5271
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5017.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "scr/ui/mainInfo.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7614,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6249,
+								6249
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3870.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "scr/loadRes.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5434,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3486,
+								3486
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2177.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "obj/others/frag.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2527,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								553,
+								553
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "tasks/encounter.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3809,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								539,
+								539
 							]
 						],
 						"settings":
@@ -1090,7 +1316,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 5,
 					"type": "text"
 				}
 			]

@@ -175,8 +175,8 @@ function ui:updateAvatar(target)
 	if #target~=0 then target=target[1] end
 	local txt=""
 	txt=txt.."N: "..target.name.."\n"
-	txt=txt.."EN: "..target.energy.."/"..target.energyMax.."\n"
-	txt=txt.."Ar: "..target.armor.."/"..target.armorMax.."\n"
+	txt=txt.."EN: "..math.ceil(target.energy).."/"..target.energyMax.."\n"
+	txt=txt.."Ar: "..math.ceil(target.armor).."/"..target.armorMax.."\n"
 	txt=txt.."Lvl: " .. target.level
 	ui.targetBref:SetText({ {color = {0,255,0},font=res.font_15}, txt})
 	ui.avatar:SetImage(sheet,target.quad)
@@ -216,13 +216,13 @@ function ui:updateTargetInfo(target)
 		p:SetText({ {color = {0,255,0},font=res.font_15},i.." Wpn. Type"})
 		ui.targetInfo:AddItem(p, i, 3)
 		local p= loveframes.Create("text")
-		p:SetText({ {color = {0,255,0},font=res.font_15},v.type})
+		p:SetText({ {color = {0,255,0},font=res.font_15},target.fireSys[i].wpn.super.name})
 		ui.targetInfo:AddItem(p, i, 4)
 		local p= loveframes.Create("text")
-		p:SetText({ {color = {0,255,0},font=res.font_15},i.." Wpn. Lvl"})
+		p:SetText({ {color = {0,255,0},font=res.font_15},i.." Wpn. damage"})
 		ui.targetInfo:AddItem(p, i, 5)
 		local p= loveframes.Create("text")
-		p:SetText({ {color = {0,255,0},font=res.font_15},v.level})
+		p:SetText({ {color = {0,255,0},font=res.font_15},target.fireSys[i].wpn.static.damage})
 		ui.targetInfo:AddItem(p, i, 6)
 	end
 

@@ -11,6 +11,7 @@ function laser:initialize(parent,x,y,rot)
 	self.parent=parent
 	self.target=nil
 	self.laserW=self.width
+	self.multiply=5
 end
 
 function laser:hitTest()
@@ -18,7 +19,7 @@ function laser:hitTest()
     for i,v in ipairs(test) do
     	if v[1].side~=self.parent.side then
     		game:newSpark(v[2],v[3])
-    		v[1]:getDamage(self.parent,"energy",self.damage)
+    		v[1]:getDamage(self.parent,"energy",self.damage*self.multiply)
     	end
     end
 

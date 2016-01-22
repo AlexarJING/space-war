@@ -17,9 +17,7 @@ local p={
 		fireRange=0,
 		},
 	["weapon"]={
-			{
-			
-			},
+
 		},
 	["engine"]={
 			

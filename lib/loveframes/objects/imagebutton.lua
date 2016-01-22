@@ -59,7 +59,8 @@ function newobject:update(dt)
 	local parent = self.parent
 	local base = loveframes.base
 	local update = self.Update
-	
+	local cd= self.cd
+
 	if not hover then
 		self.down = false
 	else
@@ -80,6 +81,16 @@ function newobject:update(dt)
 	
 	if update then
 		update(self, dt)
+	end
+
+	if cd then
+		if self.timer>0 then
+			self.timer=self.timer-dt
+			self.enabled=false
+		else
+			self.timer=0
+			self.enabled=true
+		end
 	end
 
 end
@@ -181,10 +192,13 @@ function newobject:mousereleased(x, y, button)
 	local onclick = self.OnClick
 	local arg= self.callbackArg
 
+
+
 	if hover and down and clickable and button == "l" then
 		if enabled then
 			if onclick then
 				onclick(self, x, y,arg)
+				if self.cd then self.timer=self.cd end
 			end
 		end
 	end

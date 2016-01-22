@@ -21,8 +21,9 @@ function missile:initialize(parent,x,y,rot)
 	self.speedMax=8
 	self.speedAcc=0.2
 	self.side=self.parent.side
-	self.visualRange=500
+	self.visualRange=800
 	self.AOERange=self.size*10
+	self.multiply=10
 end
 
 
@@ -49,10 +50,12 @@ function missile:collision(target)
 end
 
 function missile:explosion()
-	res.otherClass.frag(self.x,self.y,0,_,self.AOERange/8)
+	
+	local frag=res.otherClass.frag(self.x,self.y,0,_,self.AOERange)
+	table.insert(game.frag, frag)
 	for i,v in ipairs(game.ship) do
 		if v.side~=self.side and math.getDistance(self.x,self.y,v.x,v.y)<self.AOERange then
-			v:getDamage(self.parent,"energy",self.AOEdamage)
+			v:getDamage(self.parent,"energy",self.AOEDamage*self.multiply)
 		end
 	end
 end
@@ -64,7 +67,9 @@ function missile:hitTest()
 		if v.side~=self.side and self:collision(v) then
 			self.destroy=true
 			self.dead=true
-			v:getDamage(self.parent,"energy",self.damage)
+			v:getDamage(self.parent,"energy",self.damage*self.multiply)
+			local frag=res.otherClass.frag(self.x,self.y,0,_,self.size*8)
+			table.insert(game.frag, frag)
 			self:explosion()
 		end		
 	end
@@ -110,7 +115,7 @@ function missile:update(dt)
 			end
 		end
 		if not self.target then
-			self.rot=self.rot +Pi/50
+			self.rot=self.rot +Pi/20
 		else
 			self:moveTo(self.target.x,self.target.y)
 		end

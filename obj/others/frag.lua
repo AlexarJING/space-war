@@ -98,7 +98,7 @@ function frag:draw()
 	end
 	if self.explosionAnim.isPlay then
 		love.graphics.setColor(255,255,255)
-		love.graphics.draw(sheet,self.explosionAnim.frame,self.x,self.y,0,self.sw/16,self.sh/16,8,8)
+		self.explosionAnim:draw(self.x,self.y,0,self.sw/16,self.sh/16,8,8)
 	end
 end
 

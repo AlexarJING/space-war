@@ -37,7 +37,7 @@ end
 
 function rock:getDamage(from,damageType,damage)
 	if self.dead  then return end
-	self.hp=self.hp-damage
+	self.hp=self.hp-1
 	if self.hp>0 and self.hp%100==0 then  --每100点伤害则带回一个小石头
 		from.mine=self.class(self.x,self.y,1)
 		from.mine.freeze=true

@@ -125,14 +125,14 @@ function res.loadParam(cls,name)
 
 		local weapon=Class(name.."_w"..tostring(i),res.weaponClass[param.type])
 		local prop={"damage","life","speed","speedMax","visualRange","AOERange","AOEDamage",
-			"skin","sw","sh","range","width","laserW","lines"}
+			"skin","sw","sh","range","width","laserW","lines","type"}
 		for _,v in ipairs(prop) do
-			weapon.static[v]=param.v
+			weapon.static[v]=param.wpn_param[v]
 		end
 		function weapon:initialize(parent,x,y,rot)
 			self.class.super.initialize(self,parent,x,y,rot)
 			for _,v in ipairs(prop) do
-				self[v]=param.wpn_param[v]
+				self[v]=weapon[v]
 			end
 		end
 		cls.static.fireSys[i].wpn=weapon

@@ -11,6 +11,7 @@ function tesla:initialize(parent,x,y,rot)
 	self.lines=2
 	self.life=30
 	self.parent=parent
+	self.multiply=5
 end
 
 
@@ -39,7 +40,7 @@ function tesla:update()
 
 	if self.target then
 		game:newSpark(self.tx,self.ty)
-		self.target:getDamage(self.parent,"energy",self.damage)
+		self.target:getDamage(self.parent,"energy",self.damage*self.multiply)
 	end
 end
 

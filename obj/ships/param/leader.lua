@@ -14,7 +14,7 @@ local p={
 		speedAcc=0.3,
 		isSP=true,
 		visualRange=1000,
-		fireRange=300,
+		fireRange=800,
 		},
 	["weapon"]={
 			{
@@ -26,7 +26,7 @@ local p={
 			speed=8,
 			type="missile",
 			wpn_param={
-				damage=5,
+				damage=10,
 				life=150,
 				speed=0.1,
 				speedMax=10,

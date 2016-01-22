@@ -88,7 +88,7 @@ function ship:moveToTarget() --如果当前状态是采矿 那么就去采矿
 		if dist<self.r+self.parent.r then
 			self.mine.dead=true
 			self.mine=nil
-			self.parent.mineral=self.parent.mineral+3
+			self.parent.mineral=self.parent.mineral+5
 			return
 		else
 			self.class.super.moveTo(self,self.parent.x,self.parent.y)

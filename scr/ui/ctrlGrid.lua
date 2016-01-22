@@ -90,9 +90,15 @@ function ui:newMenu(tab,units)
 				btn.callbackArg=self.target[1]
 			end
 
+			if setting.cd then
+				btn.cd=setting.cd
+				btn.timer=0
+			end
 		else
 			btn:SetImage(nil)
 			btn.OnClick=nil
+			btn.cd=nil
+			btn.tip:SetText("")
 		end
 	end
 end
@@ -166,5 +172,16 @@ function ui:updateCtrlGrid()
 		self:newMenu(menu.team)
 	end
 end
+
+function ui:draw()
+	for i=1,9 do
+		local btn=ui.grid:GetItem(math.ceil(i/3), i%3==0 and 3 or i%3)
+		if btn.cd then
+			love.graphics.setColor(0, 255,0,100)
+			love.graphics.arc("fill", btn.x+btn.width/2, btn.y+btn.height/2, btn.width/2.5, -Pi/2, 2*Pi*(btn.timer/btn.cd)-Pi/2)
+		end
+	end
+end
+
 
 return ui
