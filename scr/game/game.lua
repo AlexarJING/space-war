@@ -78,6 +78,7 @@ function game:newSpark(x,y)
 end
 
 function game:pay(who,energy,mineral)
+	mineral =mineral or 0
 	if who.energy>=energy and who.mineral>=mineral then
 		who.energy=who.energy-energy
 		who.mineral=who.mineral-mineral

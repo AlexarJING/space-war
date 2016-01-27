@@ -9,15 +9,22 @@ function laser:initialize(parent,x,y,rot)
 	self.width=parent.size*5
 	self.rot=rot
 	self.parent=parent
-	self.target=nil
+	self.target=parent.target
 	self.laserW=self.width
-	self.multiply=5
+	self.multiply=1
+	self.limit=false
 end
 
 function laser:hitTest()
-    local test=math.raycast(self,game.ship)
+    local tab
+    if self.parent.state=="mine" then 
+    	tab=game.rock
+    else
+    	tab=game.ship
+    end
+    local test=math.raycast(self,tab)
     for i,v in ipairs(test) do
-    	if v[1].side~=self.parent.side then
+    	if v[1].side~=self.parent.side and math.getDistance(self.x,self.y,v[1].x,v[1].y)<=self.range then
     		game:newSpark(v[2],v[3])
     		v[1]:getDamage(self.parent,"energy",self.damage*self.multiply)
     	end
@@ -27,9 +34,14 @@ end
 
 
 function laser:update()
-	if self.destroy then return end
 	self.x=self.ox+self.parent.x-self.px
 	self.y=self.oy+self.parent.y-self.py
+
+	if self.limit and self.parent.target then
+		self.range=math.getDistance(self.x,self.y,self.parent.target.x,self.parent.target.y)
+	end
+	if self.destroy then return end
+	
 	self.laserW=self.laserW-self.width/10
 	if self.laserW<1 then 
 		self.destroy=true 

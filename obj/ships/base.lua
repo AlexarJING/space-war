@@ -44,12 +44,13 @@ function ship:initialize(parent,x,y,rot,mod)
 	self.buff={}
 
 	self.mineral=0
-	self.generateRate=0.1
+	self.generateRate=0.01
+
+	self.strategy="nearest" --or "focus"
 
 	self.destroyCallback=function() end
 	self.hitCallBack=function() end
-	self.chargingAbilities={}
-	self.sustainingAbilities={}
+	self.killCallBack=function() end
 end
 local keys={"name","isMum","energyMax","armorMax","skin","size","speedMax","speedAcc","visualRange","fireRange","fireSys","engineSys"}
 function ship:setParam(param)
@@ -113,12 +114,11 @@ end
 
 
 function ship:fire()
+	if self.stopFire then return end
 	if not self.fireSys then
 		return
 	end
 	for i,v in ipairs(self.fireSys) do
-		v.heat=v.heat or 0
-		v.heat=v.heat-1
 		if v.heat<0 and not v.dx then
 			v.heat=v.cd
 			local offx,offy=math.axisRot(v.posX,v.posY,self.rot)
@@ -213,6 +213,7 @@ function ship:getDamage(from,damageType,damage)
 	end
 	if self.armor<=0 then
 		game.event:check("onKill",from,self)
+		from.killCallBack(from,self)
 		self:destroy()
 	end
 	game.event:check("onGotHit",from,self)
@@ -251,14 +252,14 @@ end
 function ship:collision()
 	for i,v in ipairs(game.ship) do
 		if v.side~=self.side and game:collision(self.x,self.y,v.x,v.y,(self.size+v.size)*8) then
-			--[[local damage
+			local damage
 			if v.energy+v.armor<self.energy+self.armor then
 				damage=v.energy+v.armor
 			else
 				damage=self.energy+self.armor
 			end
 			self:getDamage(v,"real",damage)
-			v:getDamage(self,"real",damage)]]
+			v:getDamage(self,"real",damage)
 			v:hold()
 			self:hold()
 		end
@@ -266,6 +267,16 @@ function ship:collision()
 
 end
 
+function ship:weaponCD()
+	if not self.fireSys then
+		return
+	end
+	for i,v in ipairs(self.fireSys) do
+		v.heat=v.heat or 0
+		v.heat=v.heat-1
+	end
+
+end
 
 
 
@@ -284,6 +295,7 @@ function ship:update(dt)
 		self.inVisualRange=self:findTarget() 
 	end --如果有强制目标则不找目标
 
+	self:weaponCD()
 	if self.inVisualRange and not self.disable then --如果设置无效则 不再开火
 		self.rot=math.getRot(self.target.x,self.target.y,self.x,self.y)+math.pi/2
 		self.inFireRange=math.getDistance(self.x,self.y,self.target.x,self.target.y)<self.fireRange
@@ -383,14 +395,7 @@ function ship:mouseTest()
 end
 
 
-function ship:findTarget()
-	if self.target and self.target.dead then 
-		self.target=nil 
-		self.rot=self.moveRot
-		self.inFireRange=nil
-		self.inVisualRange=nil
-	end
-	
+function ship:find()
 	local dist
 	local pos
 	self.targetsInRange={}
@@ -412,8 +417,14 @@ function ship:findTarget()
 	end
 	if dist then
 		self.target=game.ship[pos]
+		return true
+	else
+		return false
 	end
-	
+
+end
+
+function ship:check()
 	if self.target then
 		local range=math.getDistance(self.x,self.y,self.target.x,self.target.y)
 		if range>self.visualRange then
@@ -424,6 +435,23 @@ function ship:findTarget()
 		end
 	else
 		return false
+	end
+end
+
+
+function ship:findTarget()
+	if self.target and self.target.dead then 
+		self.target=nil 
+		self.rot=self.moveRot
+		self.inFireRange=nil
+		self.inVisualRange=nil
+	end
+	
+	if self.strategy=="nearest" then
+		self:find()
+		return self:check()
+	elseif self.strategy=="focus" then
+		if not self:check() then return self:find() else return true end
 	end
 
 end

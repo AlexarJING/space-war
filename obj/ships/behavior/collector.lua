@@ -1,4 +1,4 @@
-local ship=res.shipClass.miner
+local ship=res.shipClass.collector
 
 function ship:findTarget ()
 	
@@ -7,7 +7,7 @@ function ship:findTarget ()
 		self.rot=self.moveRot
 		return false
 	end
-	if self.mine then return end
+
 
 	local dist
 	local pos
@@ -68,13 +68,7 @@ end
 
 function ship:switchState(state)
 	self.state=state
-	if self.mine then 
-		self.exploiter=nil
-		self.mine.freeze=false 
-	end
 	self.target=nil
-	if self.mine then self.mine:destroy() end
-	self.mine=nil
 	self.inFireRange=false
 	self.inVisualRange=false
 	self:hold()
@@ -83,36 +77,17 @@ end
 
 function ship:moveToTarget() --如果当前状态是采矿 那么就去采矿
 	if self.state=="battle" or (not self.target) then return end
-	if self.mine then --如果得到了矿 则回基地
-		local mum = self.parent
-		local dist=math.getDistance(self.x,self.y,self.parent.x,self.parent.y)
-		for i,v in ipairs(self.parent.sub) do
-			local dist_n=math.getDistance(self.x,self.y,v.x,v.y)
-			if dist_n<dist then
-				mum=v
-				dist=dist_n
-			end
-		end
+	
 
-		local dist=math.getDistance(self.x,self.y,mum.x,mum.y)
-		if dist<self.r+mum.r then
-			self.mine.dead=true
-			self.mine=nil
-			self.parent.mineral=self.parent.mineral+5
-			return
-		else
-			self.class.super.moveTo(self,mum.x,mum.y)
-		end
-	else --如果未得到 则飞向矿直到进入火力
-		if self.inVisualRange and not self.dx and not self.inFireRange  then
-			self.class.super.moveTo(self,self.target.x,self.target.y)
-			self.target.exploiter=self
-		end
-
-		if self.inFireRange and self.dx then
-			self:hold()
-		end
+	if self.inVisualRange and not self.dx and not self.inFireRange  then
+		self.class.super.moveTo(self,self.target.x,self.target.y)
+		self.target.exploiter=self
 	end
+
+	if self.inFireRange then
+		self:hold()
+	end
+
 end
 
 function ship:moveTo(x,y)
@@ -121,11 +96,6 @@ function ship:moveTo(x,y)
 	if self.target then 
 		self.target.exploiter=nil
 		self.target=nil
-	end
-	if self.mine then 
-		self.mine.exploiter=nil
-		self.mine.freeze=false
-		self.mine=nil
 	end
 end
 

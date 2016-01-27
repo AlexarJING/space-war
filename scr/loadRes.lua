@@ -125,7 +125,7 @@ function res.loadParam(cls,name)
 
 		local weapon=Class(name.."_w"..tostring(i),res.weaponClass[param.type])
 		local prop={"damage","life","speed","speedMax","visualRange","AOERange","AOEDamage",
-			"skin","sw","sh","range","width","laserW","lines","type"}
+			"skin","sw","sh","range","width","laserW","lines","type","limit"}
 		for _,v in ipairs(prop) do
 			weapon.static[v]=param.wpn_param[v]
 		end

@@ -1,6 +1,6 @@
 local p={
 	["ship"]={
-		energyMax=0,
+		energyMax=200,
 		armorMax=200 ,
 		price_m=350,
 		price_e=200,
@@ -15,6 +15,7 @@ local p={
 		isSP=true,
 		visualRange=500,
 		fireRange=200,
+		testRange=2000
 		},
 	["weapon"]={
 			{

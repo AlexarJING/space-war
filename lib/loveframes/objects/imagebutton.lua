@@ -197,8 +197,8 @@ function newobject:mousereleased(x, y, button)
 	if hover and down and clickable and button == "l" then
 		if enabled then
 			if onclick then
-				onclick(self, x, y,arg)
 				if self.cd then self.timer=self.cd end
+				onclick(self, x, y,arg)
 			end
 		end
 	end

@@ -544,37 +544,10 @@ function skin.DrawImageButton(object)
 		roy=h/2
 	end
 
-	if down then
+	if not object.enabled then
 		if image then
-			love.graphics.setColor(imagecolor)
-			if quad then
-				love.graphics.draw(image,quad, x + 1+offX, y + 1+offY,rot,scaleX,scaleY,rox,roy)
-			else
-				love.graphics.draw(image, x + 1+offX, y + 1+offY,rot,scaleX,scaleY,rox,roy)
-			end
-		end
-		love.graphics.setFont(font)
-		love.graphics.setColor(0, 0, 0, 255)
-		love.graphics.print(text, x + width/2 - twidth/2 + 1, y + height - theight - 5 + 1)
-		love.graphics.setColor(textdowncolor)
-		love.graphics.print(text, x + width/2 - twidth/2 + 1, y + height - theight - 6 + 1)
-	elseif hover then
-		if image then
-			love.graphics.setColor(imagecolor)
-						if quad then
-				love.graphics.draw(image,quad, x +offX, y +offY,rot,scaleX,scaleY,rox,roy)
-			else
-				love.graphics.draw(image, x +offX, y +offY,rot,scaleX,scaleY,rox,roy)
-			end
-		end
-		love.graphics.setFont(font)
-		love.graphics.setColor(0, 0, 0, 255)
-		love.graphics.print(text, x + width/2 - twidth/2, y + height - theight - 5)
-		love.graphics.setColor(texthovercolor)
-		love.graphics.print(text, x + width/2 - twidth/2, y + height - theight - 6)
-	else
-		if image then
-			love.graphics.setColor(imagecolor)
+			local color={imagecolor[1]/2,imagecolor[2]/2,imagecolor[3]/2,imagecolor[4]}
+			love.graphics.setColor(color)
 			if quad then
 				love.graphics.draw(image,quad, x + 1+offX, y + 1+offY,rot,scaleX,scaleY,rox,roy)
 			else
@@ -587,6 +560,52 @@ function skin.DrawImageButton(object)
 		love.graphics.print(text, x + width/2 - twidth/2, y + height - theight - 5)
 		love.graphics.setColor(textnohovercolor)
 		love.graphics.print(text, x + width/2 - twidth/2, y + height - theight - 6)
+	else
+
+		if down then
+			if image then
+				love.graphics.setColor(imagecolor)
+				if quad then
+					love.graphics.draw(image,quad, x + 1+offX, y + 1+offY,rot,scaleX,scaleY,rox,roy)
+				else
+					love.graphics.draw(image, x + 1+offX, y + 1+offY,rot,scaleX,scaleY,rox,roy)
+				end
+			end
+			love.graphics.setFont(font)
+			love.graphics.setColor(0, 0, 0, 255)
+			love.graphics.print(text, x + width/2 - twidth/2 + 1, y + height - theight - 5 + 1)
+			love.graphics.setColor(textdowncolor)
+			love.graphics.print(text, x + width/2 - twidth/2 + 1, y + height - theight - 6 + 1)
+		elseif hover then
+			if image then
+				love.graphics.setColor(imagecolor)
+							if quad then
+					love.graphics.draw(image,quad, x +offX, y +offY,rot,scaleX,scaleY,rox,roy)
+				else
+					love.graphics.draw(image, x +offX, y +offY,rot,scaleX,scaleY,rox,roy)
+				end
+			end
+			love.graphics.setFont(font)
+			love.graphics.setColor(0, 0, 0, 255)
+			love.graphics.print(text, x + width/2 - twidth/2, y + height - theight - 5)
+			love.graphics.setColor(texthovercolor)
+			love.graphics.print(text, x + width/2 - twidth/2, y + height - theight - 6)
+		else
+			if image then
+				love.graphics.setColor(imagecolor)
+				if quad then
+					love.graphics.draw(image,quad, x + 1+offX, y + 1+offY,rot,scaleX,scaleY,rox,roy)
+				else
+					love.graphics.draw(image, x +offX, y +offY,rot,scaleX,scaleY,rox,roy)
+				end
+			end
+			
+			love.graphics.setFont(font)
+			love.graphics.setColor(0, 0, 0, 255)
+			love.graphics.print(text, x + width/2 - twidth/2, y + height - theight - 5)
+			love.graphics.setColor(textnohovercolor)
+			love.graphics.print(text, x + width/2 - twidth/2, y + height - theight - 6)
+		end
 	end
 	love.graphics.setScissor()
 end

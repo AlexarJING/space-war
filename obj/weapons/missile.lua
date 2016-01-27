@@ -21,7 +21,7 @@ function missile:initialize(parent,x,y,rot)
 	self.speedMax=8
 	self.speedAcc=0.2
 	self.side=self.parent.side
-	self.visualRange=800
+	self.visualRange=500
 	self.AOERange=self.size*10
 	self.multiply=10
 end

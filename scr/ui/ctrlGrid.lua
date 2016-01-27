@@ -94,10 +94,17 @@ function ui:newMenu(tab,units)
 				btn.cd=setting.cd
 				btn.timer=0
 			end
+
+			if setting.isActive then
+				btn.toggle="off"
+			end
+
 		else
 			btn:SetImage(nil)
 			btn.OnClick=nil
 			btn.cd=nil
+			btn.timer=0
+			btn.toggle=nil
 			btn.tip:SetText("")
 		end
 	end
@@ -149,6 +156,8 @@ function ui:updateCtrlGrid()
 		return
 	end
 	
+
+
 	local name
 	local sameName=true
 	local hasAb=false
@@ -160,25 +169,44 @@ function ui:updateCtrlGrid()
 		
 	end
 
+
 	if sameName then
 		if hasAb then
 			local singleMenu=self:makeSingleMenu(target[1])
 			self:newMenu(singleMenu,target)
 		else
-			self:newMenu(menu.team)
+
+			self:newMenu(menu.single)
+
 		end
 
 	else
+		
 		self:newMenu(menu.team)
 	end
 end
 
+local frameOff=0
+
 function ui:draw()
+	love.graphics.setColor(0, 255,0,100)
+	love.graphics.setLineWidth(4)
 	for i=1,9 do
 		local btn=ui.grid:GetItem(math.ceil(i/3), i%3==0 and 3 or i%3)
 		if btn.cd then
-			love.graphics.setColor(0, 255,0,100)
 			love.graphics.arc("fill", btn.x+btn.width/2, btn.y+btn.height/2, btn.width/2.5, -Pi/2, 2*Pi*(btn.timer/btn.cd)-Pi/2)
+		end
+
+		if btn.toggle=="on" then
+			frameOff=frameOff+1
+			if frameOff>10 then
+				frameOff=0
+			end
+			
+			love.graphics.rectangle("line", btn.x+frameOff, btn.y+frameOff, btn.width-2*frameOff, btn.height-2*frameOff)
+
+		elseif btn.toggle=="off" then
+			love.graphics.line(btn.x+btn.width/10,btn.y+btn.height/10,btn.x+btn.width-btn.width/10,btn.y+btn.height-btn.height/10)
 		end
 	end
 end

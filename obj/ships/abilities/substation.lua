@@ -11,12 +11,12 @@ local function makeBuildButton(name)
 	build.text="building "..tar.name
 	build.icon=btn.icon
 	build.func=function(mum) --自带母舰的参数  
-		local ship=res.shipClass[tar.name](mum,mum.x,mum.y)
+		local ship=res.shipClass[tar.name](mum.parent,mum.x,mum.y)
 		game:toDeployment(mum,ship)
 	end
 	
 	btn.func=function(obj,x,y,ship)
-		if #ship.child<game.rule.unitLimit and game:pay(ship,tar.price_e,tar.price_m) then
+		if #ship.child<game.rule.unitLimit and game:pay(ship.parent,tar.price_e,tar.price_m) then
 			ship:addToQueue(build)
 		end
 	end
@@ -55,65 +55,6 @@ build2["7"]=makeBuildButton("repairer")
 build2["8"]=makeBuildButton("surveillant")
 build2["9"]=cancelButton
 
-local power={
-	["enter"]=function(self,ship) 
-		self.dtspeed=ship.speedMax; 
-		ship.speedMax=10*ship.speedMax;
-		self.dtspeed=ship.speedMax-self.dtspeed 
-		self.time=3
-	end,
-	["update"]=function(self,ship,dt)
-		self.time=self.time-dt
-		if self.time<0 then
-			return true
-		end
-	end,
-	["leave"]=function(self,ship) 
-		ship.speedMax=ship.speedMax-self.dtspeed
-	end
-}
-
-local weapon=Class("mum's big bang",res.weaponClass.missile)
-local prop={
-			damage=5,
-			life=150,
-			speed=0.1,
-			speedMax=10,
-			visualRange=300,
-			AOERange=50,
-			AOEDamage=3,
-			size=3}
-
-weapon.static=prop
-
-
-function weapon:initialize(parent,x,y,rot)
-	self.class.super.initialize(self,parent,x,y,rot)
-	for k,v in pairs(prop) do
-		self[k]=v
-	end
-end
-
-
-local charge={
-	["enter"]=function(self,ship) 
-		self.charge=3;
-		ship.isCharging=true
-	end,
-	["update"]=function(self,ship,dt)
-		self.charge=self.charge-dt
-		if self.charge<0 then
-			ship.isCharging=false
-			return true
-		end
-	end,
-	["leave"]=function(self,ship) 
-		for i=1,6 do
-			table.insert(game.bullet, weapon(ship,ship.x,ship.y,ship.rot+i*2*Pi/6))
-		end
-	end
-}
-
 
 
 local abilities={
@@ -134,14 +75,6 @@ local abilities={
 		end,
 	},	
 
-	["9"]={
-		text="speed up !!", 
-		icon=151, 
-		cd=3,
-		func=function(obj,x,y,ship) 
-			ship:addBuff(charge)
-		end,
-	},
 
 
 	["6"]={

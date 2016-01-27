@@ -13,8 +13,8 @@ local p={
 		speedMax=0.5 ,
 		speedAcc=0.3,
 		isSP=true,
-		visualRange=1000,
-		fireRange=800,
+		visualRange=800,
+		fireRange=500,
 		},
 	["weapon"]={
 			{

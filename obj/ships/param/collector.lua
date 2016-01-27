@@ -14,8 +14,9 @@ local p={
 		speedAcc=0.3,
 		isSP=true,
 		visualRange=500,
-		fireRange=200,
-		testRange=5000
+		fireRange=300,
+		testRange=5000,
+		state="mine"
 		},
 	["weapon"]={
 			{
@@ -25,10 +26,11 @@ local p={
 			cd=20,
 			type="laser",
 			wpn_param={
-				damage=3,
+				damage=1,
 				range=500,
 				width=15,
-				laserW=15},
+				laserW=15,
+				limit=true},
 			}
 		},
 	["engine"]={

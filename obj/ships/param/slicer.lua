@@ -21,11 +21,11 @@ local p={
 			posX=5,
 			posY=0,
 			rot=0,
-			cd=20,
+			cd=5,
 			type="laser",
 			wpn_param={
 					damage=4,
-					range=100,
+					range=200,
 					width=5,
 					laserW=5},
 			},

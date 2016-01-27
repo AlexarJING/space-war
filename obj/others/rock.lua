@@ -35,12 +35,20 @@ function rock:destroy()
 	table.insert(game.frag, frag)
 end
 
-function rock:getDamage(from,damageType,damage)
+function rock:getDamage(from,_,dmg)
 	if self.dead  then return end
-	self.hp=self.hp-1
-	if self.hp>0 and self.hp%100==0 then  --每100点伤害则带回一个小石头
-		from.mine=self.class(self.x,self.y,1)
-		from.mine.freeze=true
+	
+	self.hp=self.hp-dmg
+	if from.name=="miner" then
+		if self.hp>0 and self.hp%100==0 then 
+			from.mine=self.class(self.x,self.y,1)
+			from.mine.freeze=true
+			from.mine.exploiter=from
+		end
+	elseif from.name=="collector" then
+		if self.hp>0 and self.hp%20==0 then 
+			from.parent.mineral=from.parent.mineral+1
+		end
 	end
 	if self.hp<=0 then
 		self:destroy()

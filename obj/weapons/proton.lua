@@ -7,7 +7,7 @@ function proton:initialize(parent,x,y,rot)
 	self.rot=rot
 	self.parent=parent
 	self.r=20
-	self.life_max=100
+	self.life_max=300
 	self.life=self.life_max
 	self.cr=0
 
@@ -20,7 +20,7 @@ function proton:initialize(parent,x,y,rot)
 	self.roll_speed=Pi/20
 	self.frag_rate=1
 
-	self.sept=1
+	self.sept=0
 end
 
 
@@ -61,11 +61,15 @@ end
 function proton:update()
 
 	if self.destroy and not self.dead then 
-		self.target.size=self.target.size-0.1
-		self.target.rot=self.target.rot+0.3
-		if self.target.size<0.3 then
-			self.target:destroy()
-			self.dead=true
+		if self.target then 
+			self.target.size=self.target.size-0.1
+			self.target.rot=self.target.rot+0.3
+			if self.target.size<0.3 then
+				self.target:destroy()
+				self.dead=true
+			end
+		else
+			if self.cr<0 then self.dead=true end
 		end
 	elseif self.destroy then	
 		return 
@@ -91,7 +95,7 @@ function proton:update()
 	self.life=self.life-1
 	if self.life<0 then 
 		self.destroy=true 
-		self.dead=true
+		--self.dead=true
 		if self.sept>0 then
 			local p=Proton(self.parent,self.x,self.y,self.rot+math.pi/4)
 			p.sept=self.sept-1
@@ -115,10 +119,11 @@ end
 
 function proton:draw()
 	if self.destroy and not self.dead  then 
-		self.cr=self.cr-1
-		if self.cr<0.1 then self.cr=0.1 end
-		love.graphics.setColor(color.black)
+		self.cr=self.cr-0.2
+		--if self.cr<0.1 then self.cr=0.1 end
+		love.graphics.setColor(0,0,0)
 		love.graphics.circle("fill", self.x, self.y, self.cr)
+		return
 	elseif self.destroy then
 		return
 	end
@@ -130,9 +135,13 @@ function proton:draw()
 		love.graphics.line(v[1]+self.x, v[2]+self.y,v[5]+self.x, v[6]+self.y)
 
 	end
+
 	self.cr=self.cr+0.1
-	if self.cr>self.r then self.cr=self.r end
-	love.graphics.setColor(color.black)
+	if self.cr>self.r*0.5 then
+		self.cr=self.r*0.5
+	end
+
+	love.graphics.setColor(0,0,0)
 	love.graphics.circle("fill", self.x, self.y, self.cr)
 	love.graphics.setLineWidth(1)
 	love.graphics.setColor(155, 0, 0)
