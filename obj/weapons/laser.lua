@@ -11,7 +11,7 @@ function laser:initialize(parent,x,y,rot)
 	self.parent=parent
 	self.target=parent.target
 	self.laserW=self.width
-	self.multiply=1
+	self.multiply=0.1
 	self.limit=false
 end
 

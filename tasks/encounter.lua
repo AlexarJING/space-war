@@ -12,16 +12,16 @@ function task:new()
 
 
 
-	for i=1,0 do 
+	for i=1,5 do 
 		local miner=res.shipClass.miner(game.mum[1],500,500)
 		game:toDeployment(game.mum[1],miner)
 	end	
 	game.bg.cam:lookAt(500,500)
-	res.shipClass.substation(game.mum[1],600,600)
+	res.shipClass.surveillant(game.mum[1],600,600)
 
 	game.mum[2]=res.shipClass.leader("green",4500,4500)
 
-	for i=1,0 do 
+	for i=1,5 do 
 		local miner=res.shipClass.miner(game.mum[2],4500,4500)
 		game:toDeployment(game.mum[2],miner)
 		miner.state="mine"
