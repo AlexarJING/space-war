@@ -1,6 +1,7 @@
 local frag=Class("frag")
 
 function frag:initialize(x,y,rot,canvas,size)	
+	table.insert(game.frag, self)
 	self.during=2
 	self.life=self.during
 	self.speed=0.2

@@ -31,8 +31,7 @@ function rock:destroy()
 	self.freeze=true
 	--table.removeItem(game.rock,self)
 	self:getCanvas()
-	local frag=res.otherClass.frag:new(self.x,self.y,self.angle,self.canvas)
-	table.insert(game.frag, frag)
+	res.otherClass.frag:new(self.x,self.y,self.angle,self.canvas)
 end
 
 function rock:getDamage(from,_,dmg)

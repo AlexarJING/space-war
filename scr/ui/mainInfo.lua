@@ -231,7 +231,12 @@ end
 function ui:updateQueue(target)
 	local m=target.queue[1]
 	if m then
-		ui.progressIcon:SetImage(sheet,m.icon)
+		if type(m.icon)=="number" then
+			ui.progressIcon:SetImage(sheet2,res.icon[m.icon])
+		else
+			ui.progressIcon:SetImage(sheet,m.icon)
+		end
+		ui.progressIcon.imagecolor={0,255,0}		
 		ui.progressBar:SetMax(math.floor(m.during*10)/10)
 		ui.progressBar:SetValue(math.floor(m.time*10)/10)
 		ui.progressText:SetText({ {color = {0,255,0},font=res.font_15}, m.text})

@@ -51,8 +51,7 @@ end
 
 function missile:explosion()
 	
-	local frag=res.otherClass.frag(self.x,self.y,0,_,self.AOERange)
-	table.insert(game.frag, frag)
+	res.otherClass.frag(self.x,self.y,0,_,self.AOERange)
 	for i,v in ipairs(game.ship) do
 		if v.side~=self.side and math.getDistance(self.x,self.y,v.x,v.y)<self.AOERange then
 			v:getDamage(self.parent,"energy",self.AOEDamage*self.multiply)
@@ -68,8 +67,7 @@ function missile:hitTest()
 			self.destroy=true
 			self.dead=true
 			v:getDamage(self.parent,"energy",self.damage*self.multiply)
-			local frag=res.otherClass.frag(self.x,self.y,0,_,self.size*8)
-			table.insert(game.frag, frag)
+			res.otherClass.frag(self.x,self.y,0,_,self.size*8)
 			self:explosion()
 		end		
 	end

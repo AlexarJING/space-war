@@ -93,6 +93,9 @@ function ui:newMenu(tab,units)
 			if setting.cd then
 				btn.cd=setting.cd
 				btn.timer=0
+			else
+				btn.cd=nil
+				btn.enabled=true
 			end
 
 			if setting.isActive then

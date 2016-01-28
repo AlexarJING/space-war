@@ -23,6 +23,122 @@ local function makeBuildButton(name)
 	return btn
 end
 
+local core=	{
+		name="energy core",
+		description="increase the energy maximum volume by 10%",
+		price_e=300,
+		price_m=300,
+		price_t=5,
+		cd=80,
+		icon=260,
+		func=function(ship)
+			ship.class.static.energyMax=ship.class.static.energyMax*1.1
+			for i,v in ipairs(game.ship) do
+				if v.side==ship.side then
+					v.energyMax=v.energyMax*1.1
+				end
+			end
+		end
+	}
+
+local arm=	{
+		name="armor material",
+		description="increase the armor maximum volume by 10%",
+		price_e=300,
+		price_m=300,
+		price_t=5,
+		cd=80,
+		icon=204,
+		func=function(ship)
+			ship.class.static.armorMax=ship.class.static.armorMax*1.1
+			for i,v in ipairs(game.ship) do
+				if v.side==ship.side then
+					v.armorMax=v.armorMax*1.1
+				end
+			end
+		end
+	}
+
+
+local function makeUpgradeButton(tar)
+	
+
+	local btn={}
+	btn.text=tar.name.."; Cost: "..tar.price_e.." Energy, "..tar.price_m.." Mineral"
+	btn.text2=tar.description 
+	btn.icon=tar.icon
+	btn.cd=tar.cd
+	
+	local up={}
+	up.during=tar.price_t
+	up.text="upgrading "..tar.name
+	up.icon=btn.icon
+	up.func=tar.func
+	
+	btn.func=function(obj,x,y,ship)
+		if game:pay(ship,tar.price_e,tar.price_m) then
+			ship:addToQueue(up)
+		end
+	end
+	return btn
+
+end
+
+local e2m={
+	text="convert e-m",
+	text2="convert energy to matirial by 3:1",
+	icon=166,
+	cd=1, 
+	func=function(obj,x,y,ship) 
+		if game:pay(ship,300) then
+			ship.mineral=ship.mineral+100
+		end
+	end,
+}
+
+local m2e={
+	text="convert m-e",
+	text2="convert material to energy by 3:1",
+	icon=167,
+	cd=1, 
+	func=function(obj,x,y,ship) 
+		if game:pay(ship,0,300) then
+			ship.energy=ship.energy+100
+			if ship.energy>ship.energyMax then ship.energy=ship.energyMax end
+		end
+	end,
+}
+
+local see=	{
+		name="detect",
+		description="detect an area for 5 seconds",
+		cd=120,
+		icon=164,
+		func=function(obj,x,y,ship)
+			if game:pay(ship,0,300) then
+				game.cmd="see"
+			else
+				obj.timer=0
+			end
+		end
+	}
+
+
+
+local nuclear=	{
+		name="nuclear attack",
+		description="select one place and drop a nuclear bomb in 5 seconds",
+		cd=120,
+		icon=19,
+		func=function(obj,x,y,ship)
+			if game:pay(ship,300,300) then
+				game.cmd="atom"
+				game.cmd_arg=ship
+			end
+		end
+	}
+
+
 local cancelButton={
 		text="cancel", 
 		icon=150, 
@@ -31,6 +147,8 @@ local cancelButton={
 			game.uiCtrl.ui.ctrlGrid:newMenu(tab)
 		end,
 	}
+
+
 
 
 
@@ -54,6 +172,18 @@ build2["6"]=makeBuildButton("generator")
 build2["7"]=makeBuildButton("repairer")
 build2["8"]=makeBuildButton("surveillant")
 build2["9"]=cancelButton
+
+local upgrade={}
+upgrade["1"]=makeUpgradeButton(core)
+upgrade["2"]=makeUpgradeButton(arm)
+upgrade["3"]=m2e
+upgrade["4"]=e2m
+upgrade["5"]=see
+upgrade["6"]=nuclear
+upgrade["9"]=cancelButton
+
+
+
 
 local power={
 	["enter"]=function(self,ship) 
@@ -135,11 +265,11 @@ local abilities={
 	},	
 
 	["9"]={
-		text="speed up !!", 
-		icon=151, 
-		cd=3,
+		text="upgrade & spec", 
+		icon=195, 
 		func=function(obj,x,y,ship) 
-			ship:addBuff(charge)
+			local tab=game.uiCtrl.ui.ctrlGrid:fillEmptyMenu(upgrade)
+			game.uiCtrl.ui.ctrlGrid:newMenu(tab)
 		end,
 	},
 
@@ -160,7 +290,6 @@ return abilities
 母舰技能：	能源核心升级 提升所有单位的能量回复速度1~4级
 			能源晶格升级 提升所有单位的能量上限1~4级
 			护甲材质升级 提升所有单位的护甲上限1~4级
+			侦测	立即开启某区域的视野3秒
 			核弹	指定一个点，10秒后在已侦测区域内造成巨量伤害。指定点敌我双方可见。			
-
-
 ]]

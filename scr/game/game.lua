@@ -4,6 +4,7 @@ game.trace={}
 game.bullet={}
 game.frag={}
 game.spark={}
+game.indicator={}
 game.msg=require "scr/game/message"
 game.bg=require "scr/map/bg_quad"
 
@@ -29,7 +30,8 @@ game.locatedTarget=nil
 
 --game.rule=require "tasks/protectTheMotherShip"
 --game.rule=require "tasks/designer"
-game.rule=require "tasks/encounter"
+--game.rule=require "tasks/encounter"
+game.rule=require "tasks/tutorial"
 ---game.debug=true
 game.money=0
 game.rock={}
@@ -169,7 +171,7 @@ function game:update(dt)
 	game.mx,game.my=love.mouse.getPosition() --鼠标屏幕坐标
 	game.bx,game.by= game:scr2bg(game.mx,game.my)
 	if game.pause then return end
-	game.cmdCtrl:call(game.cmd)
+	game.cmdCtrl:call(game.cmd,game.cmd_arg)
 	
 	self.ctrl:update()
 
@@ -182,7 +184,7 @@ function game:update(dt)
 	updateTab(self.frag,dt)
 	updateTab(self.spark,dt)
 	updateTab(self.rock,dt)
-
+	updateTab(self.indicator,dt)
 
 	self.bg:update()
 	self.uiCtrl:update(dt)
@@ -210,6 +212,9 @@ function game:draw()
 			v:draw()
 		end
 
+		for i,v in ipairs(self.indicator) do
+			v:draw()
+		end
 		game:frameDraw()
 		if game.showFog then game:fogDraw() end
 		love.graphics.setColor(255, 0,0)
@@ -221,19 +226,7 @@ function game:draw()
 	self.msg:draw()
 	self.uiCtrl:draw()
 	self:drawCursor()	
-	if self.indicator then
-		self.indicatorAura=self.indicatorAura or 50
-		local x,y=game:bg2scr(unpack(self.indicator))
-		if self.indicatorAura>0 then
-			love.graphics.setColor(0,255,0)
-			love.graphics.getLineWidth(1)
-			love.graphics.circle("line", x,y,self.indicatorAura)
-			self.indicatorAura=self.indicatorAura-3
-		else
-			self.indicatorAura=50
-		end
-	end
-	
+
 end
 
 
@@ -486,6 +479,18 @@ function game:updateFog()
 					if self.fog[xx] and self.fog[xx][yy] then
 						self.fog[xx][yy]=self.fog[xx][yy]-self.fogChroma*(r-math.abs(x-xx))*(r-math.abs(y-yy))
 					end
+				end
+			end
+		end
+	end
+	if game.seePos then
+		local x=math.ceil(game.seePos[1]/w)
+		local y=math.ceil(game.seePos[2]/h)
+		local r=math.ceil(500/w)
+		for xx=x-r,x+r do
+			for yy=y-r,y+r do
+				if self.fog[xx] and self.fog[xx][yy] then
+					self.fog[xx][yy]=self.fog[xx][yy]-self.fogChroma*(r-math.abs(x-xx))*(r-math.abs(y-yy))
 				end
 			end
 		end

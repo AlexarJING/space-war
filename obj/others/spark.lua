@@ -6,6 +6,7 @@ function spark:initialize(x,y)
 	self.speedX=-5+love.math.random()*10
 	self.speedY=-5+love.math.random()*10
 	self.life=0.2
+	table.insert(game.spark, self)
 end
 
 function spark:update(dt)

@@ -88,7 +88,7 @@ function designer:new()
 	self.tag="basic"
 	self:updateList()
 
-
+	local ind
 	local lastEvent=game.event:new(self.target,
 			"always",
 			function()
@@ -97,7 +97,7 @@ function designer:new()
 			_,
 			function()
 				game.msg:sys("move to the postion 100,100 now!")
-				game.indicator={100,100}
+				ind=res.otherClass.indicator(100,100,300)
 			end,
 			_,
 			true
@@ -109,7 +109,7 @@ function designer:new()
 			end,
 			_,
 			function()
-				game.indicator=nil
+				ind:destroy()
 				game.msg:sys("congratulations! the event works!")
 			end,
 			_,

@@ -116,8 +116,27 @@ function msg:draw()
 		else
 			love.graphics.print(line.who..": "..what, self.pos[1]+5, self.pos[2]+self.wordHeight*(i-1)+5)
 		end
-		
+		if i==#self.content then 
+			if what==self.lastWhat then
+				self.bigAlpha=self.bigAlpha-3
+				if self.bigAlpha<0 then self.bigAlpha=0 end
+			else
+				self.bigAlpha=line.color[4]
+			end
+			love.graphics.setColor(line.color[1],line.color[2],line.color[3],self.bigAlpha)
+
+			if what=="" and self.content[i-1] then
+			 	what=self.content[i-1].who..": "..string.sub(self.content[i-1].what,1,math.floor(self.content[i-1].loc)) 
+			end
+			if line.who=="" then
+				love.graphics.print(what, 0.3*w, 0.6*h,0,2,2)
+			else
+				love.graphics.print(line.who..": "..what, 0.3*w, 0.6*h,0,2,2)
+			end
+			self.lastWhat=what
+		end
 	end
+
 
 	if self.isEdit then
 		self.caretAlpha=self.caretAlpha+5

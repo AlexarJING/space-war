@@ -248,6 +248,9 @@ function ctrl:fleet()
 					and not target.isMum and target.parent then
 				--这里处理的是双击
 				local tab={}
+				if not target.isMum then
+					table.insert(tab,target)
+				end
 				for _,ship in ipairs(target.parent.child) do
 					
 					if ship.name==target.name then

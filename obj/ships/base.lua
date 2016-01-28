@@ -221,8 +221,7 @@ function ship:getDamage(from,damageType,damage)
 end
 
 function ship:destroy()
-	local frag=res.otherClass.frag:new(self.x,self.y,self.rot,self.canvas)
-	table.insert(game.frag, frag)
+	res.otherClass.frag:new(self.x,self.y,self.rot,self.canvas)
 	self.dead=true
 	self.target=nil
 	if self.parent then

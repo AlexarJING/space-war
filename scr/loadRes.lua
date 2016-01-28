@@ -11,6 +11,17 @@ function res.asteroid:initialize()
 	Animation.initialize(self,sheet3,0,0,32,32,0,0,2047,31,0.4)
 end
 
+sheet2 =love.graphics.newImage("res/icon.png")
+
+local k=0
+res.icon={}
+for y=1,22 do 
+	for x=1,13 do
+		k=k+1
+		res.icon[k]=love.graphics.newQuad((32+4)*(x-1), (32+2)*(y-1), 32, 32, 468, 748)
+	end
+end
+
 
 res.engineFire={}
 	for i=1,4 do
@@ -195,16 +206,7 @@ for k, file in ipairs(files) do
 end
 
 
-sheet2 =love.graphics.newImage("res/icon.png")
 
-local k=0
-res.icon={}
-for y=1,22 do 
-	for x=1,13 do
-		k=k+1
-		res.icon[k]=love.graphics.newQuad((32+4)*(x-1), (32+2)*(y-1), 32, 32, 468, 748)
-	end
-end
 
 res.cursor= love.graphics.newImage("res/cursor.png")
 res.cursorSelect= love.graphics.newImage("res/cursorLocating.png")

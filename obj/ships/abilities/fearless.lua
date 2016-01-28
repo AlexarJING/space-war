@@ -12,8 +12,7 @@ local charge={
 	end,
 	["leave"]=function(self,ship) 
 		ship:destroy()
-		local frag=res.otherClass.frag(ship.x,ship.y,0,_,200)
-		table.insert(game.frag, frag)
+		res.otherClass.frag(ship.x,ship.y,0,_,200)
 		for i,v in ipairs(game.ship) do
 			if  math.getDistance(ship.x,ship.y,v.x,v.y)<200 then
 				v:getDamage(ship,"energy",ship.energy/5)

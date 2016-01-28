@@ -17,7 +17,7 @@ function task:new()
 		game:toDeployment(game.mum[1],miner)
 	end	
 	game.bg.cam:lookAt(500,500)
-	res.shipClass.surveillant(game.mum[1],600,600)
+	self.target=res.shipClass.surveillant(game.mum[1],600,600)
 
 	game.mum[2]=res.shipClass.leader("green",4500,4500)
 
@@ -34,6 +34,49 @@ function task:new()
 
 	--game.showFog=false
 	--game.showAll=true
+
+	local ind
+	local lastEvent=game.event:new(self.target,
+			"always",
+			function()
+				return game.time>=2
+			end,
+			_,
+			function()
+				game.msg:sys("move to the postion 100,100 now!")
+				ind=res.otherClass.indicator(100,100,50)
+			end,
+			_,
+			true
+	) 
+	game.event:new(self.target,
+			"always",
+			function()
+				return math.getDistance(self.target.x,self.target.y,100,100)<30
+			end,
+			_,
+			function()
+				ind:destroy()
+				game.msg:sys("congratulations! the event works!")
+			end,
+			_,
+			true
+	)
+	game.event:new(self.target,
+			"onEvent",
+			function(event)
+				return event==lastEvent
+			end,
+			_,
+			function()
+				delay:new(2,nil,function()  
+					game.msg:sys("this is triggled by the end of event")	
+				end)
+				
+			end,
+			_,
+			true
+	)
 end
 
 
