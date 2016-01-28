@@ -125,14 +125,16 @@ function msg:draw()
 			end
 			love.graphics.setColor(line.color[1],line.color[2],line.color[3],self.bigAlpha)
 
-			if what=="" and self.content[i-1] then
-			 	what=self.content[i-1].who..": "..string.sub(self.content[i-1].what,1,math.floor(self.content[i-1].loc)) 
-			end
+			local what_up
+
 			if line.who=="" then
+				what_up=self.content[i-1].who..": "..string.sub(self.content[i-1].what,1,math.floor(self.content[i-1].loc)) 
+				love.graphics.print(what_up, 0.3*w, 0.55*h,0,2,2)
 				love.graphics.print(what, 0.3*w, 0.6*h,0,2,2)
 			else
 				love.graphics.print(line.who..": "..what, 0.3*w, 0.6*h,0,2,2)
 			end
+			if what=="" then what=what_up end
 			self.lastWhat=what
 		end
 	end

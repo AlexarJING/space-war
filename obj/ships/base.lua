@@ -2,18 +2,20 @@ local ship=Class("base")
 
 
 function ship:initialize(parent,x,y,rot,mod)
-	
+	self.child={}
 	if not mod then 
 		table.insert(game.ship, self) 
 	end
 	if type(parent)=="string" then
 		self.side=parent
+		self.parent=self
 	else
 		self.parent=parent
-		self.side=self.parent.side
-		table.insert(self.parent.child,self)
+		self.side=self.parent.side	
 	end
-	
+
+	table.insert(self.parent.child,self)
+
 	self.x=x
 	self.y=y
 	self.rot=rot or -Pi/2
@@ -37,7 +39,6 @@ function ship:initialize(parent,x,y,rot,mod)
 
 	self.deployment=self
 	self.ctrlCount=0
-	self.child={}
 	self.queue={}
 	self.engineAni={}
 	self.abilities={}
