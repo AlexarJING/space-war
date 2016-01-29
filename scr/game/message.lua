@@ -1,18 +1,18 @@
 local msg={}
 msg.content={}
 msg.pos={5,0.3*h,350,200}--{l,t,w,h}
-msg.font=res.font_20
-msg.font2=res.font_15
+msg.font = love.graphics.newFont("res/chinese.ttf", 12)
+msg.font2=love.graphics.newFont("res/chinese.ttf", 12)
 msg.caretPos={5,520,5,540}
 msg.caretAlpha=0
 msg.input=""
-msg.countOneLine=math.floor(msg.pos[3]/msg.font2:getWidth("A"))
-msg.wordHeight=msg.font2:getHeight("A")
-
+msg.countOneLine=math.floor(msg.pos[3]/msg.font2:getWidth("一"))
+msg.wordHeight=msg.font2:getHeight("一")
+msg.language="chinese"
 local function lookForShort(word)
-	for i=string.len(word),1,-1 do
-		local sub=string.sub(word,1,i)
-		if msg.font2:getWidth(sub)<msg.pos[3]-10 then
+	for i=utf8.len(word),1,-1 do
+		local sub=utf8.sub(word,1,i)
+		if msg.font2:getWidth(sub)<msg.pos[3]-10 and utf8.sub(sub,i,i)==" " then
 			return i
 		end
 	end
@@ -20,18 +20,18 @@ end
 
 function msg:send(diag)
 	local word=diag.who..": "..diag.what
-	local len=diag.who=="" and 0 or string.len(diag.who..": ")
+	local len=diag.who=="" and 0 or utf8.len(diag.who..": ")
 	if msg.font2:getWidth(word)>self.pos[3]-10 then
 		local pos=lookForShort(word)
 		local newTab={
 			who="",
-			what=string.sub(diag.what,pos+1-len),
+			what=utf8.sub(diag.what,pos+1-len),
 			time=0,
 			color={unpack(diag.color)},
 			step=diag.step
 		}
-		diag.what=string.sub(diag.what,1,pos-len)
-		newTab.loc=-string.len(diag.what)
+		diag.what=utf8.sub(diag.what,1,pos-len)
+		newTab.loc=-utf8.len(diag.what)
 		
 		table.insert(self.content, diag)
 		if #self.content>10 then table.remove(self.content,1)end
@@ -97,11 +97,11 @@ function msg:draw()
 		if line.step then
 			line.loc=line.loc or 0
 			line.loc=line.loc+line.step 
-			if line.loc>string.len(line.what) then
+			if line.loc>utf8.len(line.what) then
 				line.step=nil
 			end
 			if line.loc>0 then
-				what=string.sub(line.what,1,math.floor(line.loc))
+				what=utf8.sub(line.what,1,math.floor(line.loc/2)*2)
 			else
 				what=""
 			end
@@ -128,7 +128,7 @@ function msg:draw()
 			local what_up
 
 			if line.who=="" then
-				what_up=self.content[i-1].who..": "..string.sub(self.content[i-1].what,1,math.floor(self.content[i-1].loc)) 
+				what_up=self.content[i-1].who..": "..utf8.sub(self.content[i-1].what,1,math.floor(self.content[i-1].loc)) 
 				love.graphics.print(what_up, 0.3*w, 0.55*h,0,2,2)
 				love.graphics.print(what, 0.3*w, 0.6*h,0,2,2)
 			else
@@ -180,7 +180,7 @@ function msg.keypressed(key)
 	end
 
 	if key=="backspace" and msg.isEdit then
-		msg.input=string.sub(msg.input,1,-2)
+		msg.input=utf8.sub(msg.input,1,-2)
 		msg:calCaretPos()
 	end
 end
@@ -207,5 +207,9 @@ function msg.mousepressed(key)
 		end
 	end
 end
+
+
+
+
 msg:calCaretPos()
 return msg

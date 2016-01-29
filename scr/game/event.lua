@@ -7,7 +7,7 @@ event.onDestroy={}
 event.onEvent={}
 event.story={}
 event.storyIndex=0
-
+event.storyTimer=0
 
 function event:new(obj,type,cond,cond_arg,act,act_arg,isOver) --参数引发物件，事件类型，条件，条件参数，行为，行为参数，是否为单次行为
 	local new={
@@ -25,12 +25,14 @@ end
 
 function event:check(eventType,arg)
 	if eventType=="story" then
+		self.storyTimer=self.storyTimer+ love.timer.getDelta()
 		local ev=self[eventType][1]
-		if ev and ev.cond(ev.cond_arg) then
+		if ev and ev.cond(self.storyTimer) then
 			ev:act(ev.act_arg)
 			if ev.isOver then
 				event:check("onEvent",ev)
 				table.remove(self[eventType], 1)
+				self.storyTimer=0
 			end
 		end
 		return

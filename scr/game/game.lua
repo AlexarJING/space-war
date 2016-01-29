@@ -31,9 +31,9 @@ game.locatedTarget=nil
 --game.rule=require "tasks/protectTheMotherShip"
 --game.rule=require "tasks/designer"
 --game.rule=require "tasks/encounter"
-game.rule=require "tasks/tutorial"
+game.rule=require "tasks/tutorial_1"
 ---game.debug=true
-game.money=0
+
 game.rock={}
 game.fog={}
 game.fogRate=100

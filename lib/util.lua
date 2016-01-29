@@ -688,3 +688,19 @@ function table.isEmpty(tab)
 	end
 	return true
 end
+
+function string.toTable(str)
+	local tab={}
+	for uchar in string.gfind(str, "[%z\1-\127\194-\244][\128-\191]*") do tab[#tab+1] = uchar end
+	return tab
+end
+
+
+function string.sub_utf8(s, n)    
+	local dropping = string.byte(s, n+1)    
+	if not dropping then return s end    
+	if dropping >= 128 and dropping < 192 then    
+		return string.sub_utf8(s, n-1)    
+	end    
+	return string.sub(s, 1, n)    
+end  

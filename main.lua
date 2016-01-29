@@ -1,6 +1,7 @@
 --if arg[2]=="-debug" then require('mobdebug').start() end
-path=arg[1]
 require "lib/util"
+path=arg[1]
+utf8=require "lib/utf8"
 Tween=require "lib/tween"
 Class=require "lib/middleclass"
 Gamestate = require "lib/gamestate"

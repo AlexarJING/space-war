@@ -41,6 +41,7 @@ function ship:initialize(parent,x,y,rot,mod)
 	self.ctrlCount=0
 	self.queue={}
 	self.engineAni={}
+	self.fireSys={}
 	self.abilities={}
 	self.buff={}
 
@@ -79,6 +80,12 @@ function ship:reset()
 	self.engineAni={}
 	for i,v in ipairs(self.engineSys) do
 		table.insert(self.engineAni, res.engineFire[v.anim]())
+	end
+	for i,weapon in pairs(self.fireParam) do
+		self.fireSys[i]={}
+		for k,param in pairs(weapon) do
+			self.fireSys[i][k]=param
+		end
 	end
 	self:getCanvas()
 end

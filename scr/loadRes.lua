@@ -125,12 +125,12 @@ function res.loadParam(cls,name)
 	
 
 	--------------------------init weapon---------------------------
-	cls.static.fireSys={}
+	cls.static.fireParam={}
 	for i,param in ipairs(res.shipParam[name].weapon) do
-		cls.static.fireSys[i]={}
+		cls.static.fireParam[i]={}
 		for k,v in pairs(param) do
 			if type(v)=="number" then
-				cls.static.fireSys[i][k]=v
+				cls.static.fireParam[i][k]=v
 			end
 		end
 
@@ -146,7 +146,7 @@ function res.loadParam(cls,name)
 				self[v]=weapon[v]
 			end
 		end
-		cls.static.fireSys[i].wpn=weapon
+		cls.static.fireParam[i].wpn=weapon
 	end
 	--------------------------init ship----------------------------------------
 	for k,v in pairs(res.shipParam[name].ship) do

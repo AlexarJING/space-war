@@ -15,12 +15,16 @@ function miniMap:update()
 	self.visible=game.uiCtrl.ui.miniMap.panel.visible
 	if game.mx>self.x and game.mx<self.x+self.w  --在miniMap内部
 		and game.my>self.y and game.my<self.y+self.h then
-		if love.mouse.isDown("l") or love.mouse.isDown("r") then
+		if love.mouse.isDown("l") then
 			local x=(game.mx-self.x)*(game.bg.limit.r-game.bg.limit.l)/self.w
 			local y=(game.my-self.y)*(game.bg.limit.b-game.bg.limit.t)/self.h
 			game.bg.cam.x=x
 			game.bg.cam.y=y
 			game.focus=nil
+		elseif love.mouse.isDown("r") then
+			local x=(game.mx-self.x)*(game.bg.limit.r-game.bg.limit.l)/self.w
+			local y=(game.my-self.y)*(game.bg.limit.b-game.bg.limit.t)/self.h
+			game.groupCtrl:moveTo(game.ctrlGroup,x,y,"direct")	
 		end
 	end
 end
@@ -69,7 +73,9 @@ function miniMap:draw()
 		local x=ship.x*miniMap.w/(game.bg.limit.r-game.bg.limit.l)
 		local y=ship.y*miniMap.h/(game.bg.limit.r-game.bg.limit.l)
 		love.graphics.setColor(c)
-		love.graphics.circle("fill", x+miniMap.x, y+miniMap.y, ship.size>5 and 5 or ship.size/2)
+		local r= ship.size>5 and 5 or ship.size
+		love.graphics.circle("fill", x+miniMap.x, y+miniMap.y, r)
+
 		if ship.side==game.userSide then
 			love.graphics.setCanvas(self.inSight)
 			love.graphics.setColor(0,0,0,250)
@@ -90,8 +96,16 @@ function miniMap:draw()
 		local x=rock.x*miniMap.w/(game.bg.limit.r-game.bg.limit.l)
 		local y=rock.y*miniMap.h/(game.bg.limit.r-game.bg.limit.l)
 		love.graphics.setColor(255,255,0,a)
-		love.graphics.circle("fill", x+miniMap.x, y+miniMap.y, rock.size>3 and 3 or rock.size/3)
+		love.graphics.circle("fill", x+miniMap.x, y+miniMap.y, rock.size>3 and 3 or rock.size/2)
 	end
+	love.graphics.setLineWidth(1)
+	for i,ind in ipairs(game.indicator) do
+		local x=ind.x*miniMap.w/(game.bg.limit.r-game.bg.limit.l)
+		local y=ind.y*miniMap.h/(game.bg.limit.r-game.bg.limit.l)
+		love.graphics.setColor(0,255,0)
+		love.graphics.circle("line", x+miniMap.x, y+miniMap.y, ind.r/10)
+	end
+
 	love.graphics.setColor(color.blue)
 	love.graphics.setLineWidth(1)
 	local w=self.w*resolution[1]/2/(game.bg.limit.r-game.bg.limit.l)/game.bg.cam.scale
@@ -99,10 +113,11 @@ function miniMap:draw()
 	local x=self.w*game.bg.cam.x/(game.bg.limit.r-game.bg.limit.l)+self.x
 	local y=self.h*game.bg.cam.y/(game.bg.limit.b-game.bg.limit.t)+self.y
 	local l,t,r,b=x-w,y-h,x+w,y+h
+
 	if l<self.x then l=self.x end
 	if r>self.w+self.x then r=self.w+self.x end
 	if t<self.y then t=self.y end
-	if b>self.h+self.y then t=self.h+self.y end
+	if b>self.h+self.y then b=self.h+self.y end
 	love.graphics.line(l,t,r,t,r,b,l,b,l,t)
 end
 
