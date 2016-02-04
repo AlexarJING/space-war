@@ -2,7 +2,11 @@ local task={}
 local enermyCD=15
 local enermyTime=-1
 local wave=0
-
+task.object={
+	{name="learn how to select units",state=true},
+	{name="learn how to move units",state=nil},
+	{name="learn how to combat",state=false},
+}
 function task:new()
 	self.unitLimit=30
 	for i=1,200 do

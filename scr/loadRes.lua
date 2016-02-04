@@ -84,6 +84,7 @@ res.ships={}
 	end
 	
 
+
 res.bullet={}
 
 res.font_25 = love.graphics.newFont("res/lcd.ttf", 25)

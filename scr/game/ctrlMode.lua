@@ -45,12 +45,12 @@ end
 
 function ctrl:clickCtrl()
 	self.click=false
-	if love.mouse.isDown("l") and not self.lisDown then
+	if love.mouse.isDown(MOUSE_LEFT) and not self.lisDown then
 		self.lisDown=true
 		self.click=true
 		game.cursorAura=20
 		game.cPosX,game.cPosY=game.mx,game.my
-	elseif not love.mouse.isDown("l") then
+	elseif not love.mouse.isDown(MOUSE_LEFT) then
 		self.lisDown=false
 	end
 
@@ -76,10 +76,10 @@ end
 
 function ctrl:single()
 	if not game.ctrlGroup[1] then return end
-	if love.mouse.isDown("l") then 
+	if love.mouse.isDown(MOUSE_LEFT) then 
 		game:teamMove(game.ctrlGroup,game.bx,game.by)
 	end
-	if love.mouse.isDown("r") then
+	if love.mouse.isDown(MOUSE_RIGHT) then
 		for i,v in ipairs(game.ctrlGroup) do
 			--v.rot=-Pi/2
 		end
@@ -105,14 +105,14 @@ end
 function ctrl:team()
 
 	if not game.ctrlGroup[1] then return end
-	if not game.isSelected and love.mouse.isDown("l") then
+	if not game.isSelected and love.mouse.isDown(MOUSE_LEFT) then
 		game.isSelected=true
 		game.trace={}
 		game.traceCD=traceDelay
 		table.insert(game.trace,{game.bx,game.by})
 	end
 
-	if game.isSelected and love.mouse.isDown("l") then
+	if game.isSelected and love.mouse.isDown(MOUSE_LEFT) then
 		local x,y=game.bx,game.by
 		local tx,ty=game.trace[#game.trace][1],game.trace[#game.trace][2]
 		local dist=math.getDistance(x,y,tx,ty)
@@ -124,14 +124,14 @@ function ctrl:team()
 		end
 	end
 
-	if game.isSelected and not love.mouse.isDown("l") then
+	if game.isSelected and not love.mouse.isDown(MOUSE_LEFT) then
 		game.isSelected=false	
 		game.ctrlTrace=game.trace
 		game:setForPos(game.ctrlGroup)
 		game:newForm(game.ctrlGroup)
 	end
 
-	if love.mouse.isDown("r") then 
+	if love.mouse.isDown(MOUSE_RIGHT) then 
 		game:teamMove(game.ctrlGroup,game.bx,game.by)
 	end
 end
@@ -161,14 +161,14 @@ function ctrl:traceCtrl()
 	if not game.teamCtrl then return false end
 	if (not game.ctrlGroup) or #game.ctrlGroup.units==0  then return false end
 
-	if not game.isSelected and love.mouse.isDown("l") then
+	if not game.isSelected and love.mouse.isDown(MOUSE_LEFT) then
 		game.isSelected=true
 		game.trace={}
 		game.traceCD=traceDelay
 		table.insert(game.trace,{game.bx,game.by})
 	end
 
-	if game.isSelected and love.mouse.isDown("l") then
+	if game.isSelected and love.mouse.isDown(MOUSE_LEFT) then
 		local x,y=game.bx,game.by
 		local tx,ty=game.trace[#game.trace][1],game.trace[#game.trace][2]
 		local dist=math.getDistance(x,y,tx,ty)
@@ -180,7 +180,7 @@ function ctrl:traceCtrl()
 		end
 	end
 
-	if game.isSelected and not love.mouse.isDown("l") then
+	if game.isSelected and not love.mouse.isDown(MOUSE_LEFT) then
 		game.isSelected=false
 		local x,y=game.groupCtrl:formByTrace(game.ctrlGroup)
 		game.groupCtrl:groupMove(game.ctrlGroup,x,y)
@@ -195,28 +195,28 @@ function ctrl:fleet()
 	if ctrl:traceCtrl() then return end
 
 
-	if love.mouse.isDown("r") and not game.rIsDown then --右键单击移动
+	if love.mouse.isDown(MOUSE_RIGHT) and not game.rIsDown then --右键单击移动
 		game.groupCtrl:moveTo(game.ctrlGroup,game.bx,game.by,"direct")
 		game.rIsDown=true
 		return
-	elseif not love.mouse.isDown("r") then
+	elseif not love.mouse.isDown(MOUSE_RIGHT) then
 		game.rIsDown=false
 	end
 
 
-	if not game.isSelected and love.mouse.isDown("l") then --初点
+	if not game.isSelected and love.mouse.isDown(MOUSE_LEFT) then --初点
 		game.isSelected=true
 		game.selectLT={game.bx,game.by} --left top
-	elseif not game.isSelected and not love.mouse.isDown("l") then
+	elseif not game.isSelected and not love.mouse.isDown(MOUSE_LEFT) then
 		game.selectLT=nil
 		game.selectRB=nil
 	end
 
-	if game.isSelected and love.mouse.isDown("l") then --拖动
+	if game.isSelected and love.mouse.isDown(MOUSE_LEFT) then --拖动
 		game.selectRB={game.bx,game.by}
 	end
 
-	if game.isSelected and not love.mouse.isDown("l") then --释放
+	if game.isSelected and not love.mouse.isDown(MOUSE_LEFT) then --释放
 		if not game.selectLT then 
 			game.isSelected=false
 			game.selectLT=nil

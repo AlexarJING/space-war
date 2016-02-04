@@ -163,6 +163,7 @@ function newobject:draw()
 		drawfunc(self)
 	end
 	
+
 	love.graphics.setStencil(stencilfunc)
 		
 	for k, v in ipairs(children) do

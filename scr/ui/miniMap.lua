@@ -15,13 +15,13 @@ function miniMap:update()
 	self.visible=game.uiCtrl.ui.miniMap.panel.visible
 	if game.mx>self.x and game.mx<self.x+self.w  --在miniMap内部
 		and game.my>self.y and game.my<self.y+self.h then
-		if love.mouse.isDown("l") then
+		if love.mouse.isDown(MOUSE_LEFT) then
 			local x=(game.mx-self.x)*(game.bg.limit.r-game.bg.limit.l)/self.w
 			local y=(game.my-self.y)*(game.bg.limit.b-game.bg.limit.t)/self.h
 			game.bg.cam.x=x
 			game.bg.cam.y=y
 			game.focus=nil
-		elseif love.mouse.isDown("r") then
+		elseif love.mouse.isDown(MOUSE_RIGHT) then
 			local x=(game.mx-self.x)*(game.bg.limit.r-game.bg.limit.l)/self.w
 			local y=(game.my-self.y)*(game.bg.limit.b-game.bg.limit.t)/self.h
 			game.groupCtrl:moveTo(game.ctrlGroup,x,y,"direct")	
@@ -59,8 +59,10 @@ function miniMap:draw()
 		love.graphics.draw(self.inSight, self.x, self.y)
 	end
 
-	self.inSight:clear()
+	
 	love.graphics.setCanvas(self.inSight)
+	--self.inSight:clear()
+	love.graphics.clear()
 	love.graphics.setColor(0,255,0,100)
 	love.graphics.rectangle("fill", 0, 0, self.w, self.h)
 	love.graphics.setCanvas()

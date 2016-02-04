@@ -239,7 +239,7 @@ function newobject:AddItem(object, row, column)
 	
 end
 
-function newobject:RemoveAll(data)
+function newobject:RemoveAll()
 	for i=#self.children,1,-1 do
 		self.children[i]:Remove()
 	end

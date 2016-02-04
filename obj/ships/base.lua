@@ -364,9 +364,15 @@ function ship:draw()
 	---设置alpha
 	self.alpha=game:getVisualAlpha(self)
 	local c={unpack(color[self.side])};c[4]=self.alpha
-	love.graphics.setBlendMode("additive")
+	
+	if version==9 then
+		love.graphics.setBlendMode("additive")
+	else
+		love.graphics.setBlendMode("add")
+	end
+	
 	love.graphics.setColor(c)
-	love.graphics.draw(sheet, self.quad , self.x, self.y, self.rot, self.size*1.2,self.size*1.2,8,8)
+	love.graphics.draw(sheet, self.quad , self.x, self.y, self.rot, self.size*1.1,self.size*1.1,8,8)
 	love.graphics.setBlendMode("alpha")
 	love.graphics.setColor(255,255,255,c[4])
 	love.graphics.draw(sheet, self.quad , self.x, self.y, self.rot, self.size,self.size,8,8)

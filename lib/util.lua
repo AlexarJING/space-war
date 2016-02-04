@@ -704,3 +704,13 @@ function string.sub_utf8(s, n)
 	end    
 	return string.sub(s, 1, n)    
 end  
+
+
+function love.graphics.setStencil(func)
+	if func then
+		love.graphics.stencil(func)
+		love.graphics.setStencilTest("greater", 0)
+	else
+		love.graphics.setStencilTest()
+	end
+end

@@ -322,8 +322,8 @@ function mission:new()
 			end,
 			_,
 			function()
-				delay:new(5,_,game.msg.sys,game.msg,"that's all for this time. well done!")
-				delay:new(10,_,mission.gameover,mission,"mission complete!")
+				delay:new(5,_,game.msg.sys,game.msg,"今天的训练就到这了，做得好!")
+				delay:new(10,_,mission.gameover,mission,"任务结束！")
 			end,
 			_,
 			true

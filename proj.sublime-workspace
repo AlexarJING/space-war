@@ -5,7 +5,11 @@
 		[
 			[
 				"for",
-				"forp	for k,v in pairs()"
+				"fori	for i,v in ipairs()"
+			],
+			[
+				"clear",
+				"love.graphics.clear"
 			],
 			[
 				"setline",
@@ -488,27 +492,42 @@
 	"buffers":
 	[
 		{
-			"file": "help.txt",
+			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 58,
-				"line_ending": "Windows",
-				"name": "help.txt"
+				"buffer_size": 2045,
+				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scr/game/game.lua",
+			"file": "tasks/tutorial_1.lua",
 			"settings":
 			{
-				"buffer_size": 13261,
+				"buffer_size": 8023,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "scr/game/message.lua",
+			"file": "scr/ui/options.lua",
 			"settings":
 			{
-				"buffer_size": 4796,
+				"buffer_size": 2783,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "tasks/encounter.lua",
+			"settings":
+			{
+				"buffer_size": 4757,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scr/game/ctrlMode.lua",
+			"settings":
+			{
+				"buffer_size": 8209,
 				"line_ending": "Windows"
 			}
 		}
@@ -687,25 +706,38 @@
 	[
 		"/F/Love2D Project/space war",
 		"/F/Love2D Project/space war/obj",
+		"/F/Love2D Project/space war/obj/ships",
 		"/F/Love2D Project/space war/scr",
-		"/F/Love2D Project/space war/scr/game"
+		"/F/Love2D Project/space war/scr/game",
+		"/F/Love2D Project/space war/scr/ui",
+		"/F/Love2D Project/space war/tasks"
 	],
 	"file_history":
 	[
-		"/F/Love2D Project/space war/tasks/tutorial_1.lua",
+		"/F/Love2D Project/space war/tasks/module.lua",
+		"/F/Love2D Project/space war/scr/ui/object.lua",
+		"/F/Love2D Project/space war/scr/ui/miniMap.lua",
+		"/F/Love2D Project/space war/scr/loadRes.lua",
+		"/F/Love2D Project/space war/obj/ships/base.lua",
 		"/F/Love2D Project/space war/scr/game/message.lua",
+		"/F/Love2D Project/space war/lib/loveframes/objects/grid.lua",
+		"/F/Love2D Project/space war/conf.lua",
+		"/F/Love2D Project/space war/lib/util.lua",
+		"/F/Love2D Project/space war/help.txt",
 		"/F/Love2D Project/space war/tasks/tutorial_2.lua",
 		"/F/Love2D Project/space war/scr/game/game.lua",
-		"/F/Love2D Project/space war/obj/ships/base.lua",
+		"/F/Love2D Project/space war/lib/loveframes/objects/list.lua",
+		"/F/Love2D Project/chinchilla/data.lua",
+		"/F/Love2D Project/space war/obj/ships/scr/ui/miniMap.lua",
+		"/F/Love2D Project/space war/scr/game/compatibility.lua",
+		"/F/Love2D Project/space war/scr/game/ctrlMode.lua",
+		"/F/Love2D Project/space war/scr/game/cmd.lua",
+		"/F/Love2D Project/space war/tasks/tutorial_1.lua",
 		"/F/Love2D Project/space war/main.lua",
-		"/F/Love2D Project/space war/scr/loadRes.lua",
 		"/F/Love2D Project/space war/lib/camera.lua",
 		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.609/camera.lua",
-		"/F/Love2D Project/space war/lib/util.lua",
 		"/F/Love2D Project/space war/lib/loveframes/libraries/util.lua",
-		"/F/Love2D Project/space war/scr/ui/miniMap.lua",
 		"/F/Love2D Project/space war/scr/game/event.lua",
-		"/F/Love2D Project/space war/scr/game/ctrlMode.lua",
 		"/C/Program Files (x86)/Sublime Text 3/Data/Packages/Default/Preferences.sublime-settings",
 		"/C/Program Files (x86)/Sublime Text 3/Data/Packages/User/Lua.sublime-settings",
 		"/F/Love2D Project/space war/obj/others/indicator.lua",
@@ -713,7 +745,6 @@
 		"/F/Love2D Project/space war/tasks/designer.lua",
 		"/F/Love2D Project/space war/tasks/encounter.lua",
 		"/F/Love2D Project/space war/obj/ships/abilities/leader.lua",
-		"/F/Love2D Project/space war/scr/game/cmd.lua",
 		"/F/Love2D Project/space war/obj/others/rock.lua",
 		"/F/Love2D Project/space war/obj/weapons/missile.lua",
 		"/F/Love2D Project/space war/obj/ships/abilities/fearless.lua",
@@ -810,20 +841,11 @@
 		"/F/Love2D Project/space war/obj/ships/cruiser.lua",
 		"/F/Love2D Project/space war/obj/ships/collector.lua",
 		"/F/Love2D Project/space war/obj/ships/bee.lua",
-		"/F/Love2D Project/space war/obj/ships/annihilator.lua",
-		"/F/Love2D Project/space war/obj/ships/leader.lua",
-		"/F/Love2D Project/space war/obj/ships_abilities/annihilator.lua",
-		"/F/Love2D Project/space war/obj/ships_abilities/leader.lua",
-		"/F/Love2D Project/space war/obj/ships_param/leader.lua",
-		"/F/Love2D Project/space war/obj/ships_param/leader_pm.lua",
-		"/F/Love2D Project/space war/obj/ships_init/leader.lua",
-		"/F/Love2D Project/space war/scr/shipParam.lua",
-		"/F/Love2D Project/space war/scr/abilities/build_miner.lua",
-		"/F/Love2D Project/space war/scr/abilities.lua"
+		"/F/Love2D Project/space war/obj/ships/annihilator.lua"
 	],
 	"find":
 	{
-		"height": 36.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -838,6 +860,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"remove",
+			"stencil",
+			"\"wu\"",
+			"wu",
+			"love.mouse.isDown(\"r\")",
+			"love.mouse.isDown(\"l\")",
+			"love.mouse.isDown",
+			"love.mouse",
+			"love.keyboard",
 			"game.cursorAura=20",
 			"aura",
 			"path",
@@ -956,16 +987,7 @@
 			"add",
 			"gamemenu",
 			"update",
-			"padd",
-			"grid",
-			"checkbox_text_default_color",
-			"directive",
-			"checkbox",
-			"grid",
-			"mumctrl",
-			"additem",
-			"grid",
-			"ctrlgrid"
+			"padd"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -973,6 +995,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"love.mouse.isDown(MOUSE_RIGHT)",
+			"love.mouse.isDown(MOUSE_LEFT)",
 			"fireParam",
 			"utf8",
 			"story",
@@ -1114,26 +1138,27 @@
 			[
 				{
 					"buffer": 0,
-					"file": "help.txt",
+					"file": "main.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 58,
+						"buffer_size": 2045,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								58,
-								58
+								59,
+								59
 							]
 						],
 						"settings":
 						{
-							"auto_name": "help.txt",
 							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1144,29 +1169,29 @@
 				},
 				{
 					"buffer": 1,
-					"file": "scr/game/game.lua",
+					"file": "tasks/tutorial_1.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13261,
+						"buffer_size": 8023,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								797,
-								797
+								287,
+								287
 							]
 						],
 						"settings":
 						{
-							"origin_encoding": "UTF-8",
+							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua/Lua.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 420.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1174,19 +1199,49 @@
 				},
 				{
 					"buffer": 2,
-					"file": "scr/game/message.lua",
+					"file": "scr/ui/options.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4796,
+						"buffer_size": 2783,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								523,
-								523
+								907,
+								907
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 198.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "tasks/encounter.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4757,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								214,
+								214
 							]
 						],
 						"settings":
@@ -1199,7 +1254,37 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "scr/game/ctrlMode.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8209,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]

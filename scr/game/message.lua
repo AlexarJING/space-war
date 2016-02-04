@@ -1,7 +1,7 @@
 local msg={}
 msg.content={}
 msg.pos={5,0.3*h,350,200}--{l,t,w,h}
-msg.font = love.graphics.newFont("res/chinese.ttf", 12)
+msg.font = love.graphics.newFont("res/chinese.ttf", 11)
 msg.font2=love.graphics.newFont("res/chinese.ttf", 12)
 msg.caretPos={5,520,5,540}
 msg.caretAlpha=0
@@ -12,7 +12,7 @@ msg.language="chinese"
 local function lookForShort(word)
 	for i=utf8.len(word),1,-1 do
 		local sub=utf8.sub(word,1,i)
-		if msg.font2:getWidth(sub)<msg.pos[3]-10 and utf8.sub(sub,i,i)==" " then
+		if msg.font2:getWidth(sub)<msg.pos[3]-10 and (utf8.sub(sub,i,i)==" " and msg.language~="chinese") then
 			return i
 		end
 	end
@@ -21,6 +21,7 @@ end
 function msg:send(diag)
 	local word=diag.who..": "..diag.what
 	local len=diag.who=="" and 0 or utf8.len(diag.who..": ")
+	
 	if msg.font2:getWidth(word)>self.pos[3]-10 then
 		local pos=lookForShort(word)
 		local newTab={

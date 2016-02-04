@@ -30,8 +30,8 @@ game.locatedTarget=nil
 
 --game.rule=require "tasks/protectTheMotherShip"
 --game.rule=require "tasks/designer"
---game.rule=require "tasks/encounter"
-game.rule=require "tasks/tutorial_1"
+game.rule=require "tasks/encounter"
+--game.rule=require "tasks/tutorial_2"
 ---game.debug=true
 
 game.rock={}
@@ -233,12 +233,12 @@ end
 function game:drawCursor()
 	love.graphics.setColor(255,255,255)
 	if game.cursorMode=="select" then
-		if love.mouse.isDown("l") or love.mouse.isDown("r") then
+		if love.mouse.isDown(MOUSE_LEFT) or love.mouse.isDown(MOUSE_RIGHT) then
 			love.graphics.setColor(255,0,0)
 		end
 		love.graphics.draw(res.cursorSelect,self.mx,self.my,0,1,1,15,15)
 	else
-		if love.mouse.isDown("l") or love.mouse.isDown("r") then
+		if love.mouse.isDown(MOUSE_LEFT) or love.mouse.isDown(MOUSE_RIGHT) then
 			love.graphics.draw(res.cursor,self.mx+3,self.my+3,0,1,1,2,2)
 		else
 			love.graphics.draw(res.cursor,self.mx,self.my,0,1,1,2,2)
@@ -394,7 +394,7 @@ function game:keypressed(key)
 		game.cmd="form"
 	end
 
-	if key==" "  then
+	if key==" "  or key=="space" then
 		game:getFocus()
 	end
 

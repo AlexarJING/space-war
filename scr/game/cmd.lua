@@ -96,7 +96,7 @@ end
 
 function cmd:form()
 	game.cursorMode="select"
-	if love.mouse.isDown("l") and game.teamCtrl==false then  
+	if love.mouse.isDown(MOUSE_LEFT) and game.teamCtrl==false then  
 		game.isSelected=false
 		game.teamCtrl=true
 	else

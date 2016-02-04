@@ -1,9 +1,9 @@
 local mission={}
 mission.name="tutorial_1"
 mission.object={
-	["learn how to select units"]=false,
-	["learn to move"]=false,
-	["learn to Ctrl Groups"]=false,
+	{name="learn how to select units",state=true},
+	{name="learn how to move units",state=nil},
+	{name="learn how to combat",state=false},
 }
 
 

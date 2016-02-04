@@ -22,10 +22,18 @@ function ui:init()
 	ui.grid:AddItem(txt,1,1)
 	local multichoice = loveframes.Create("multichoice")
 	multichoice:SetSize(350/2.5,500/15)
-	multichoice:AddChoice("800x600")
+	multichoice:AddChoice("1920x1080")
 	multichoice:AddChoice("1280x760")
-	multichoice:SetChoice("800x600")
+	multichoice:SetChoice("1280x760")
+	multichoice.OnChoiceSelected = function(object, choice)
+    	if choice=="1920x1080" then
+    		love.window.setMode( 1920, 1080 )
+    	else
+    		love.window.setMode( 1280, 760 )
+    	end
+	end
 	ui.grid:AddItem(multichoice,1,2)
+
 
 	local checkbox = loveframes.Create("checkbox")
 	checkbox:SetText("fullscreen")
