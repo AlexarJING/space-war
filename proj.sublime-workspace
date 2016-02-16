@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"update",
+				"updateCD"
+			],
+			[
+				"_",
+				"_SetStencil"
+			],
+			[
 				"for",
 				"fori	for i,v in ipairs()"
 			],
@@ -14,10 +22,6 @@
 			[
 				"setline",
 				"love.graphics.setLineWidth"
-			],
-			[
-				"update",
-				"updateTab"
 			],
 			[
 				"getd",
@@ -146,10 +150,6 @@
 			[
 				"destroy",
 				"destroyCallback"
-			],
-			[
-				"_",
-				"_G	_G"
 			],
 			[
 				"fro",
@@ -500,19 +500,12 @@
 			}
 		},
 		{
-			"file": "tasks/tutorial_1.lua",
+			"file": "tasks/standard.lua",
 			"settings":
 			{
-				"buffer_size": 8023,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "scr/ui/options.lua",
-			"settings":
-			{
-				"buffer_size": 2783,
-				"line_ending": "Windows"
+				"buffer_size": 3913,
+				"line_ending": "Windows",
+				"name": "standard.lua"
 			}
 		},
 		{
@@ -524,10 +517,10 @@
 			}
 		},
 		{
-			"file": "scr/game/ctrlMode.lua",
+			"file": "scr/game/game.lua",
 			"settings":
 			{
-				"buffer_size": 8209,
+				"buffer_size": 13191,
 				"line_ending": "Windows"
 			}
 		}
@@ -705,34 +698,39 @@
 	"expanded_folders":
 	[
 		"/F/Love2D Project/space war",
+		"/F/Love2D Project/space war/lib",
 		"/F/Love2D Project/space war/obj",
 		"/F/Love2D Project/space war/obj/ships",
+		"/F/Love2D Project/space war/obj/ships/abilities",
 		"/F/Love2D Project/space war/scr",
-		"/F/Love2D Project/space war/scr/game",
+		"/F/Love2D Project/space war/scr/map",
 		"/F/Love2D Project/space war/scr/ui",
 		"/F/Love2D Project/space war/tasks"
 	],
 	"file_history":
 	[
-		"/F/Love2D Project/space war/tasks/module.lua",
+		"/F/Love2D Project/space war/tasks/tasks/standard.lua",
+		"/F/Love2D Project/space war/scr/game/game.lua",
+		"/F/Love2D Project/space war/scr/ui/options.lua",
+		"/F/Love2D Project/space war/tasks/encounter.lua",
 		"/F/Love2D Project/space war/scr/ui/object.lua",
+		"/F/Love2D Project/space war/lib/util.lua",
+		"/F/Love2D Project/space war/scr/game/ctrlMode.lua",
+		"/F/Love2D Project/space war/tasks/tutorial_1.lua",
+		"/F/Love2D Project/space war/tasks/module.lua",
 		"/F/Love2D Project/space war/scr/ui/miniMap.lua",
 		"/F/Love2D Project/space war/scr/loadRes.lua",
 		"/F/Love2D Project/space war/obj/ships/base.lua",
 		"/F/Love2D Project/space war/scr/game/message.lua",
 		"/F/Love2D Project/space war/lib/loveframes/objects/grid.lua",
 		"/F/Love2D Project/space war/conf.lua",
-		"/F/Love2D Project/space war/lib/util.lua",
 		"/F/Love2D Project/space war/help.txt",
 		"/F/Love2D Project/space war/tasks/tutorial_2.lua",
-		"/F/Love2D Project/space war/scr/game/game.lua",
 		"/F/Love2D Project/space war/lib/loveframes/objects/list.lua",
 		"/F/Love2D Project/chinchilla/data.lua",
 		"/F/Love2D Project/space war/obj/ships/scr/ui/miniMap.lua",
 		"/F/Love2D Project/space war/scr/game/compatibility.lua",
-		"/F/Love2D Project/space war/scr/game/ctrlMode.lua",
 		"/F/Love2D Project/space war/scr/game/cmd.lua",
-		"/F/Love2D Project/space war/tasks/tutorial_1.lua",
 		"/F/Love2D Project/space war/main.lua",
 		"/F/Love2D Project/space war/lib/camera.lua",
 		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.609/camera.lua",
@@ -743,7 +741,6 @@
 		"/F/Love2D Project/space war/obj/others/indicator.lua",
 		"/F/Love2D Project/space war/obj/others/spark.lua",
 		"/F/Love2D Project/space war/tasks/designer.lua",
-		"/F/Love2D Project/space war/tasks/encounter.lua",
 		"/F/Love2D Project/space war/obj/ships/abilities/leader.lua",
 		"/F/Love2D Project/space war/obj/others/rock.lua",
 		"/F/Love2D Project/space war/obj/weapons/missile.lua",
@@ -839,9 +836,7 @@
 		"/F/Love2D Project/space war/obj/ships_param/defender.lua",
 		"/F/Love2D Project/space war/obj/ships/defender.lua",
 		"/F/Love2D Project/space war/obj/ships/cruiser.lua",
-		"/F/Love2D Project/space war/obj/ships/collector.lua",
-		"/F/Love2D Project/space war/obj/ships/bee.lua",
-		"/F/Love2D Project/space war/obj/ships/annihilator.lua"
+		"/F/Love2D Project/space war/obj/ships/collector.lua"
 	],
 	"find":
 	{
@@ -860,6 +855,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"unitlimit",
+			"close",
 			"remove",
 			"stencil",
 			"\"wu\"",
@@ -985,9 +982,7 @@
 			"width",
 			"v.width",
 			"add",
-			"gamemenu",
-			"update",
-			"padd"
+			"gamemenu"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1133,7 +1128,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1149,8 +1144,8 @@
 						"selection":
 						[
 							[
-								59,
-								59
+								408,
+								408
 							]
 						],
 						"settings":
@@ -1169,68 +1164,38 @@
 				},
 				{
 					"buffer": 1,
-					"file": "tasks/tutorial_1.lua",
+					"file": "tasks/standard.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8023,
+						"buffer_size": 3913,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								287,
-								287
+								3913,
+								3913
 							]
 						],
 						"settings":
 						{
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua/Lua.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"auto_name": "standard.lua",
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua/Lua.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "scr/ui/options.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2783,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								907,
-								907
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua/Lua.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 198.0,
+						"translation.y": 330.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "tasks/encounter.lua",
-					"semi_transient": false,
+					"semi_transient": true,
 					"settings":
 					{
 						"buffer_size": 4757,
@@ -1240,8 +1205,8 @@
 						"selection":
 						[
 							[
-								214,
-								214
+								1405,
+								1418
 							]
 						],
 						"settings":
@@ -1250,28 +1215,28 @@
 							"syntax": "Packages/Lua/Lua.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": -0.0,
+						"translation.y": 990.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "scr/game/ctrlMode.lua",
+					"buffer": 3,
+					"file": "scr/game/game.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8209,
+						"buffer_size": 13191,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								591,
+								591
 							]
 						],
 						"settings":
@@ -1281,10 +1246,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 330.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]

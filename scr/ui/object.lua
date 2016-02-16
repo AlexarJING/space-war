@@ -5,12 +5,13 @@ function ui:init()
 				:SetPos(5,h/18)
 				:SetSize(350,150)
 				:SetName(" Mission Object")
-
+				:ShowCloseButton(false)
 	ui.list=loveframes.Create("list", ui.frame)
 		:SetPos(0,23)
 		:SetSize(350,127)
 		:SetPadding(2)
 
+	self.updateCD=100
 	for i=1,5 do
 		local txt=loveframes.Create("text")
 			:SetDefaultColor(0,255,0)
@@ -22,6 +23,25 @@ end
 
 function ui:update()
 	if not game.rule.object then return end
+	
+	if self.updateCD<0 then
+		self:change()
+		self.updateCD=100
+	else
+		self.updateCD=self.updateCD-1
+	end
+
+
+	if self.temp then
+		self.temp=self.temp-love.timer.getDelta()
+		if self.temp<0 then
+			self.temp=nil
+			self.frame:SetVisible(false)
+		end
+	end
+end
+
+function ui:change()
 	self.list:RemoveItem("all")
 	for i,mission in pairs(game.rule.object) do
 		local txt=loveframes.Create("text")
@@ -35,14 +55,8 @@ function ui:update()
 		txt:SetText("("..i..") "..mission.name )
 		ui.list:AddItem(txt)
 	end
-	if self.temp then
-		self.temp=self.temp-love.timer.getDelta()
-		if self.temp<0 then
-			self.temp=nil
-			self.frame:SetVisible(false)
-		end
-	end
 end
+
 
 function ui:showTemp(time)
 	if self.frame:GetVisible() then return end

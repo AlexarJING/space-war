@@ -705,12 +705,16 @@ function string.sub_utf8(s, n)
 	return string.sub(s, 1, n)    
 end  
 
-
+local _SetStencil=love.graphics.setStencil
 function love.graphics.setStencil(func)
-	if func then
-		love.graphics.stencil(func)
-		love.graphics.setStencilTest("greater", 0)
+	if  _SetStencil then 
+		_SetStencil(func)
 	else
-		love.graphics.setStencilTest()
+		if func then
+			love.graphics.stencil(func)
+			love.graphics.setStencilTest("greater", 0)
+		else
+			love.graphics.setStencilTest()
+		end
 	end
 end

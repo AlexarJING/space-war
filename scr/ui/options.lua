@@ -2,7 +2,7 @@ local ui={}
 
 function ui:init()
 	ui.frame=loveframes.Create("frame")
-				:SetPos(w/2,150,true)
+				:SetPos(w/2,h/5,true)
 				:SetSize(350,500)
 				:SetName("Options Menu")
 				:SetState("opt")
@@ -37,7 +37,22 @@ function ui:init()
 
 	local checkbox = loveframes.Create("checkbox")
 	checkbox:SetText("fullscreen")
+	checkbox.OnChanged=function(obj,toggle) 
+		game.fullscreen=toggle
+		if game.fullscreen then 
+			love.window.setMode( _, _,{fullscreen=true}) 
+		else
+			love.window.setMode( 1280, 720) 
+		end
+		resolution={ love.graphics.getDimensions() }
+		w=resolution[1]
+		h=resolution[2]
+		game.uiCtrl.ui.miniMap.map:reSize()
+		game.uiCtrl:uiReset()
+		ui.frame:SetPos(w/2,h/2,true)
+	end
 	ui.grid:AddItem(checkbox,2,1)
+
 
 	local checkbox = loveframes.Create("checkbox")
 	checkbox:SetText("Auto Save the game every minuts")
@@ -46,6 +61,9 @@ function ui:init()
 
 	local checkbox = loveframes.Create("checkbox")
 	checkbox:SetText("Limit mouse to the window")
+	checkbox.OnChanged=function(obj,toggle)
+		love.mouse.setRelativeMode( toggle )
+	end
 	ui.grid:AddItem(checkbox,4,1)
 
 	local checkbox = loveframes.Create("checkbox")

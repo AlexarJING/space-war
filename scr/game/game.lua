@@ -30,7 +30,7 @@ game.locatedTarget=nil
 
 --game.rule=require "tasks/protectTheMotherShip"
 --game.rule=require "tasks/designer"
-game.rule=require "tasks/encounter"
+game.rule=require "tasks/standard"
 --game.rule=require "tasks/tutorial_2"
 ---game.debug=true
 
@@ -405,13 +405,11 @@ function game:keypressed(key)
 	if key=="f9" then
 		game.fullscreen=not game.fullscreen
 		if game.fullscreen then 
-			love.window.setMode( 1600, 900,{fullscreen=true,fullscreentype="normal"}) 
+			love.window.setMode( _, _,{fullscreen=true}) 
 		else
 			love.window.setMode( 1280, 720) 
 		end
 		resolution={ love.graphics.getDimensions() }
-		scaleX=resolution[1]/designResolution[1]
-		scaleY=resolution[2]/designResolution[2]
 		w=resolution[1]
 		h=resolution[2]
 		game.uiCtrl.ui.miniMap.map:reSize()
